@@ -33,13 +33,18 @@ export const Label = styled.span`
   color: #222;
 `;
 
-
 export const LabelUF = styled.span`
   font-weight: 600;
   min-width: 140px;
   color: #222;
   margin-left: 158px;
 `
+
+export const LabelFilter = styled.span`
+  font-weight: 600;
+  min-width: 140px;
+  color: #FFFF;
+`;
 
 export const Input = styled.input`
   width: 100%;
@@ -78,16 +83,6 @@ export const Panel = styled.div`
   border-radius: 12px;
   padding: 2rem;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-`;
-
-export const Section = styled.div`
-  margin-bottom: 2rem;
-`;
-
-export const SectionTitle = styled.h2`
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
-  color: #0077cc;
 `;
 
 export const Row = styled.div`

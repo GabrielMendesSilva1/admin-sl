@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { useSegurado } from './use-segurado';
 import {
   Container, FilterBox, Field, Label, Input, Button,
-  Panel, Section, SectionTitle, Row, Col, Value, LabelUF, ValueUF, PageTitle
+  Panel, Row, Value, LabelUF, ValueUF, PageTitle,
+  LabelFilter
 } from './styles';
+import Header from '../../components/Header';
 
 const Segurado = () => {
   const { segurados, loading } = useSegurado();
@@ -28,22 +30,22 @@ const Segurado = () => {
 
   return (
     <Container>
-      <PageTitle>Consulta de Apólices</PageTitle>
+      <Header />
       <FilterBox>
         <Field>
-          <Label>PLACA:</Label>
+          <LabelFilter>PLACA:</LabelFilter>
           <Input value={placa} onChange={e => setPlaca(e.target.value)} />
         </Field>
         <Field>
-          <Label>NOME:</Label>
+          <LabelFilter>NOME:</LabelFilter>
           <Input value={nome} onChange={e => setNome(e.target.value)} />
         </Field>
         <Field>
-          <Label>APÓLICE:</Label>
+          <LabelFilter>APÓLICE:</LabelFilter>
           <Input value={apolice} onChange={e => setApolice(e.target.value)} />
         </Field>
         <Field>
-          <Label>CPF/CNPJ:</Label>
+          <LabelFilter>CPF/CNPJ:</LabelFilter>
           <Input value={cpfCnpj} onChange={e => setCpfCnpj(e.target.value)} />
         </Field>
         <Button
