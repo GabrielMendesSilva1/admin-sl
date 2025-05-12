@@ -1,18 +1,28 @@
-import React from "react";
-import { Container, Title, Menu, MenuItem } from "../login/styles";
+import React from 'react';
+import { Container, Grid, Card, Title } from './styles';
+import { FiLogOut } from 'react-icons/fi';
 
 const Dashboard = () => {
-    return ( 
-        <Container>
-            <Title> SL Assistência de Seguros </Title>
-            <Menu>
-                <MenuItem onClick={() => alert('Ir para Cadastro')}>Cadastro</MenuItem>
-                <MenuItem onClick={() => alert('Ir para Segurados')}>Segurados</MenuItem>
-                <MenuItem onClick={() => alert('Ir para Seeguradora')}>Seguradora</MenuItem>
-                <MenuItem onClick={() => alert('Sair')}>Sair</MenuItem>
-            </Menu>
-        </Container>
-    );
+  const cards = [
+    { title: 'Segurados', icon: '🧑‍🤝‍🧑', path: '/segurados' },
+    { title: 'Seguradora', icon: '🏢', path: '/seguradora' },
+    { title: 'Cadastro', icon: '📝', path: '/cadastro' },
+    { title: 'Sair', icon: <FiLogOut size={24} />, path: '/' },
+  ];
+
+  return (
+    <Container>
+      <Title>SL Assistência de Seguros</Title>
+      <Grid>
+        {cards.map((card, idx) => (
+          <Card key={idx} onClick={() => window.location.href = card.path}>
+            <span className="icon">{card.icon}</span>
+            <h3>{card.title}</h3>
+          </Card>
+        ))}
+      </Grid>
+    </Container>
+  );
 };
 
 export default Dashboard;
