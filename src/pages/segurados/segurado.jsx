@@ -3,7 +3,7 @@ import { useSegurado } from './use-segurado';
 import {
   Container, FilterBox, Field, Label, Input, Button,
   Panel, Row, Value, LabelUF, ValueUF, PageTitle,
-  LabelFilter
+  LabelFilter, ButtonNavContainer
 } from './styles';
 import Header from '../../components/Header';
 
@@ -58,52 +58,58 @@ const Segurado = () => {
       )}
 
       {resultado && (
-        <Panel>
-          {/* DADOS BÁSICOS */}
-          <Row>
-            <Label>Segurado:</Label> <Value>{resultado.nome}</Value>
-            <Label>Data de Cadastro:</Label> <Value>{resultado.dataCadastro}</Value>
-          </Row>
+        <>
+          <ButtonNavContainer>
+            <Button onClick={() => alert('Navegar para Automóvel')}>AUTOMÓVEL</Button>
+            <Button onClick={() => alert('Navegar para Patrimonial')}>PATRIMONIAL</Button>
+          </ButtonNavContainer>
+          <Panel>
+            <PageTitle>Dados do Segurado</PageTitle>
+            {/* DADOS BÁSICOS */}
+            <Row>
+              <Label>Segurado:</Label> <Value>{resultado.nome}</Value>
+              <Label>Data de Cadastro:</Label> <Value>{resultado.dataCadastro}</Value>
+            </Row>
 
-          {/* ENDEREÇO */}
-          <Row>
-            <Label>Endereço:</Label> <Value>{resultado.endereco}</Value>
-            <Label>Bairro:</Label> <Value>{resultado.bairro}</Value>
-          </Row>
-          <Row>
-            <Label>Cidade:</Label> <Value>{resultado.cidade}</Value>
-            <LabelUF>UF:</LabelUF> <ValueUF>{resultado.uf}</ValueUF>
-            <Label>CEP:</Label> <ValueUF>{resultado.cep}</ValueUF>
-          </Row>
+            {/* ENDEREÇO */}
+            <Row>
+              <Label>Endereço:</Label> <Value>{resultado.endereco}</Value>
+              <Label>Bairro:</Label> <Value>{resultado.bairro}</Value>
+            </Row>
+            <Row>
+              <Label>Cidade:</Label> <Value>{resultado.cidade}</Value>
+              <LabelUF>UF:</LabelUF> <ValueUF>{resultado.uf}</ValueUF>
+              <Label>CEP:</Label> <ValueUF>{resultado.cep}</ValueUF>
+            </Row>
 
-          {/* CONTATO */}
-          <Row>
-            <Label>Telefone 1:</Label> <Value>{resultado.tel1}</Value>
-            <Label>Telefone 2:</Label> <Value>{resultado.tel2}</Value>
-          </Row>
-          <Row>
-            <Label>E-mail:</Label> <Value>{resultado.email}</Value>
-            <Label>Contato:</Label> <Value>{resultado.contato}</Value>
-          </Row>
+            {/* CONTATO */}
+            <Row>
+              <Label>Telefone 1:</Label> <Value>{resultado.tel1}</Value>
+              <Label>Telefone 2:</Label> <Value>{resultado.tel2}</Value>
+            </Row>
+            <Row>
+              <Label>E-mail:</Label> <Value>{resultado.email}</Value>
+              <Label>Contato:</Label> <Value>{resultado.contato}</Value>
+            </Row>
 
-          {/* DOCUMENTOS */}
-          <Row>
-            <Label>Tipo Pessoa:</Label> <Value>{resultado.tipoPessoa}</Value>
-            <Label>CPF/CNPJ:</Label> <Value>{resultado.cpfCnpj}</Value>
-            <Label>RG:</Label> <Value>{resultado.rg}</Value>
-          </Row>
+            {/* DOCUMENTOS */}
+            <Row>
+              <Label>Tipo Pessoa:</Label> <Value>{resultado.tipoPessoa}</Value>
+              <Label>CPF/CNPJ:</Label> <Value>{resultado.cpfCnpj}</Value>
+              <Label>RG:</Label> <Value>{resultado.rg}</Value>
+            </Row>
 
-          {/* PESSOAIS */}
-          <Row>
-            <Label>Data Nascimento:</Label> <Value>{resultado.dataNascimento}</Value>
-            <Label>Estado Civil:</Label> <Value>{resultado.estadoCivil}</Value>
-            <Label>1ª Habilitação:</Label> <Value>{resultado.habilitacao}</Value>
-          </Row>
-          {/* OBSERVACOES */}
-          <Row>
-            <Label>Observações:</Label> <Value>{resultado.observacao}</Value>
-          </Row>
-        </Panel>
+            {/* PESSOAIS */}
+            <Row>
+              <Label>Data Nascimento:</Label> <Value>{resultado.dataNascimento}</Value>
+              <Label>Estado Civil:</Label> <Value>{resultado.estadoCivil}</Value>
+              <Label>1ª Habilitação:</Label> <Value>{resultado.habilitacao}</Value>
+            </Row>
+            {/* OBSERVACOES */}
+            <Row>
+              <Label>Observações:</Label> <Value>{resultado.observacao}</Value>
+            </Row>
+          </Panel></>
 
       )}
     </Container>
