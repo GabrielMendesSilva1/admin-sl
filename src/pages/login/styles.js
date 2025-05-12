@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import bgImage from '../../assets/insurance-bg.svg';
+import bgImage from '../../assets/insurance-bg.jpeg';
 
 export const Container = styled.div`
   position: relative;
@@ -24,13 +24,15 @@ export const LoginBox = styled.div`
   margin: auto;
   top: 25%;
   padding: 2rem;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.25); /* super leve */
+  backdrop-filter: blur(6px);
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
   gap: 1rem;
 `;
+
 
 export const Logo = styled.h1`
   text-align: center;
@@ -59,3 +61,26 @@ export const Button = styled.button`
     background-color: #005fa3;
   }
 `;
+
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2rem;
+  background-color: rgba(255, 255, 255, 0.25); 
+  backdrop-filter: blur(6px);
+  border-radius: 12px;
+  max-width: 350px;
+  margin: 0 auto;
+  position: relative;
+  top: 25%;
+  z-index: 1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+`;
+
+export const Title = styled.h1`
+  text-align: center;
+  font-size: 1.8rem;
+  color: #003366;
+`;
+
