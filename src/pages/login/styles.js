@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import bgImage from '../../assets/insurance-bg.jpg'; // Coloque a imagem na pasta /assets
+import bgImage from '../../assets/insurance-bg.svg';
 
 export const Container = styled.div`
   position: relative;
@@ -11,7 +11,6 @@ export const Background = styled.div`
   background-image: url(${bgImage});
   background-size: cover;
   background-position: center;
-  filter: blur(4px);
   position: absolute;
   width: 100%;
   height: 100%;
@@ -25,7 +24,7 @@ export const LoginBox = styled.div`
   margin: auto;
   top: 25%;
   padding: 2rem;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.9); /* Você pode ajustar a opacidade */
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   display: flex;
