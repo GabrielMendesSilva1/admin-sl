@@ -24,7 +24,7 @@ export const LoginBox = styled.div`
   margin: auto;
   top: 25%;
   padding: 2rem;
-  background-color: rgba(255, 255, 255, 0.9); /* Você pode ajustar a opacidade */
+  background-color: rgba(255, 255, 255, 0.9);
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   display: flex;
