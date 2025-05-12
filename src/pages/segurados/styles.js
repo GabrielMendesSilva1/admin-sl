@@ -76,6 +76,12 @@ export const Button = styled.button`
   }
 `;
 
+export const ButtonNavContainer = styled.div`
+ display: flex;
+ gap: 1rem; 
+ margin-bottom: 1.5rem;;
+`;
+
 export const Panel = styled.div`
   width: 100%;
   max-width: 1000px;
@@ -100,6 +106,7 @@ export const PageTitle = styled.h1`
   font-weight: 700;
   color: #333;
   margin-bottom: 2rem;
+  margin-top: 0rem;
   text-align: center;
 `;
 
