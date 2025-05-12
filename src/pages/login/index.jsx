@@ -6,7 +6,7 @@ const Login = () => {
         <Container>
             <Background>
                 <LoginBox>
-                    <Logo> SL Assistência de SEGUROS</Logo>
+                    <Logo> SL Assistência de Seguros</Logo>
                     <Input type="email" placeholder="E-mail" />
                     <Input type="password" placeholder="Senha" />
                     <Button> Entrar </Button>
