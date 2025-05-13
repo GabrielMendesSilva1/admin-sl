@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, NavItem, NavGroup, Logout } from './styles';
 import { useNavigate } from 'react-router-dom';
 
-const Header = ({ onLogout }) => {
+const Header = () => {
   const navigate = useNavigate();
 
   return (

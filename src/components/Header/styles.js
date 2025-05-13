@@ -10,8 +10,6 @@ export const Container = styled.header`
   justify-content: space-between;
   padding: 0 2rem;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  margin-top: -35px;
-  margin-bottom: 20px;
 `;
 
 export const NavGroup = styled.nav`
@@ -24,7 +22,7 @@ export const NavItem = styled.a`
   text-decoration: none;
   font-weight: 500;
   cursor: pointer;
-  margin-left: 200px;
+  margin-left: 130px;
   align-items: center;
   &:hover {
     text-decoration: underline;
@@ -37,7 +35,7 @@ export const Logout = styled.button`
   color: white;
   font-weight: bold;
   cursor: pointer;
-
+  margin-right: 160px;
   &:hover {
     text-decoration: underline;
   }
