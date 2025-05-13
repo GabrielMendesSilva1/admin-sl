@@ -3,6 +3,7 @@ import Login from "../pages/login";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Dashboard from "../pages/dashboard";
 import Segurado from "../pages/segurados/segurado";
+import Automovel from "../pages/seguros/automovel/automovel";
 
 const AppRoutes = () => {
     return (
@@ -11,6 +12,7 @@ const AppRoutes = () => {
                 <Route path="/" element={<Login />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/segurados" element={<Segurado />} />
+                <Route path="/automovel/:cpfCnpj" element={<Automovel />} />
             </Routes>
         </Router>
     );
