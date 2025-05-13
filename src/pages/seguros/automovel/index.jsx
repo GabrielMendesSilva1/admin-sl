@@ -8,25 +8,53 @@ import {
 import { getAutomovelByCpfCnpj } from "../../../services/AutomovelService";
 import Header from '../../../components/Header';
 import Loading from "../../../components/Loading/loading";
+import AlertMessage from "../../../components/Alert";
 
 const Automovel = () => {
     const { cpfCnpj } = useParams();
     const [dados, setDados] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [showAlert, setShowAlert] = useState(false);
 
     useEffect(() => {
         const fetchDados = async () => {
-            const resultado = await getAutomovelByCpfCnpj(cpfCnpj);
-            setDados(resultado);
+            try {
+                setIsLoading(true)
+                const dados = await getAutomovelByCpfCnpj(cpfCnpj);
+                if (!dados) {
+                    setShowAlert(true);
+                } else {
+                    setDados(dados);
+                }
+            } catch (error) {
+                setShowAlert(true);
+            } finally {
+                setIsLoading(false);
+            }
         };
 
         fetchDados();
     }, [cpfCnpj]);
 
-    if (!dados) return <Loading />;
+    if (isLoading) {
+        return (
+            <Loading />
+        );
+    }
+
+    if (showAlert) {
+        return (
+            <AlertMessage
+                message="Nenhum Automóvel Encontrado."
+                onClose={() => window.history.back()}
+            />
+        );
+    }
+
 
     return (
         <>
-         <Header />
+            <Header />
             <PageWrapper>
                 <Container>
                     <Title>Seguro Automóvel</Title>
