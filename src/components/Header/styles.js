@@ -22,7 +22,7 @@ export const NavItem = styled.a`
   text-decoration: none;
   font-weight: 500;
   cursor: pointer;
-  margin-left: 130px;
+  margin-left: 120px;
   align-items: center;
   &:hover {
     text-decoration: underline;
