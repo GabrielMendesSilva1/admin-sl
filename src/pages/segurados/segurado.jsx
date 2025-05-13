@@ -41,6 +41,17 @@ const Segurado = () => {
     };
   };
 
+  const handleNavigatePatrimonial = () => {
+    try {
+      if (resultado) {
+        navigate(`/patrimonial/${resultado.cpfCnpj}`);
+      }
+    } catch (e) {
+      console.error("Erro inesperado", e)
+      return
+    };
+  };
+
   return (
     <><Header />
       <Container>
@@ -74,7 +85,7 @@ const Segurado = () => {
           <>
             <ButtonNavContainer>
               <Button onClick={() => handleNavigateAutomovel()}>AUTOMÓVEL</Button>
-              <Button onClick={() => alert('Navegar para Patrimonial')}>PATRIMONIAL</Button>
+              <Button onClick={() => handleNavigatePatrimonial()}>PATRIMONIAL</Button>
             </ButtonNavContainer>
             <Panel>
               <PageTitle>Dados do Segurado</PageTitle>
