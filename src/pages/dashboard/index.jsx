@@ -1,26 +1,27 @@
 import React from 'react';
 import { Container, Grid, Card, Title } from './styles';
 import { FiLogOut } from 'react-icons/fi';
+import ModalCadastro from '../cadastro/components/ModalCadastro';
+import { useDashboard } from './useDashboard';
 
 const Dashboard = () => {
-  const cards = [
-    { title: 'Segurados', icon: '🧑‍🤝‍🧑', path: '/segurados' },
-    { title: 'Seguradoras', icon: '🏢', path: '/seguradoras' },
-    { title: 'Cadastro', icon: '📝', path: '/cadastro' },
-    { title: 'Sair', icon: <FiLogOut size={24} />, path: '/' },
-  ];
+  const { cards, showModal, handleCardClick, closeModal } = useDashboard();
 
   return (
     <Container>
       <Title>SL Assistência de Seguros</Title>
       <Grid>
         {cards.map((card, idx) => (
-          <Card key={idx} onClick={() => window.location.href = card.path}>
-            <span className="icon">{card.icon}</span>
+          <Card key={idx} onClick={() => handleCardClick(card)}>
+            <span className="icon">
+              {card.iconComponent === 'logout' ? <FiLogOut size={24} /> : card.icon}
+            </span>
             <h3>{card.title}</h3>
           </Card>
         ))}
       </Grid>
+
+      {showModal && <ModalCadastro onClose={closeModal} />}
     </Container>
   );
 };
