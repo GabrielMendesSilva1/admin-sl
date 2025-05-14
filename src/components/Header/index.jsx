@@ -19,7 +19,7 @@ const Header = () => {
         <NavItem href="/segurados">Segurado</NavItem>
         <NavItem href="/seguradoras">Seguradora</NavItem>
         <NavItem onClick={handleOpenModal}>Cadastro</NavItem>
-        <NavItem href="/apolice">Apólice</NavItem>
+        {/*<NavItem href="/apolice">Apólice</NavItem>*/}
         {showModal && <ModalCadastro onClose={() => setShowModal(false)} />}
       </NavGroup>
 
