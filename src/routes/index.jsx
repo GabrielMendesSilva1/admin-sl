@@ -10,6 +10,7 @@ import Seguradoras from "../pages/ConsultaSeguradoras";
 import CadastroSegurado from "../pages/Cadastro/Segurado";
 import CadastroSeguradora from "../pages/Cadastro/Seguradora";
 import CadastroAuto from "../pages/Cadastro/Seguros/Automovel";
+import CadastroPatrimonial from "../pages/Cadastro/Seguros/Patrimonial";
 
 const AppRoutes = () => {
     return (
@@ -26,7 +27,7 @@ const AppRoutes = () => {
                 <Route path="/cadastro/Segurado" element={<CadastroSegurado />} />
                 <Route path="/cadastro/Seguradora" element={<CadastroSeguradora />} />
                 <Route path="/cadastro/Automovel" element={<CadastroAuto />} />
-                <Route path="/cadastro/Patrimonio" element={<Login />} />
+                <Route path="/cadastro/Patrimonio" element={<CadastroPatrimonial />} />
                 
             </Routes>
         </Router>
