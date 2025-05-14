@@ -14,6 +14,7 @@ import CadastroPatrimonial from "../pages/Cadastro/Seguros/Patrimonial";
 
 const AppRoutes = () => {
     return (
+        <Router>
             <Routes>
                 <Route path="/" element={<Login />} />
                 <Route path="/dashboard" element={<Dashboard />} />
@@ -21,14 +22,14 @@ const AppRoutes = () => {
                 <Route path="/segurados" element={<Segurado />} />
                 <Route path="/automovel/:cpfCnpj" element={<Automovel />} />
                 <Route path="/patrimonial/:cpfCnpj" element={<Patrimonial />} />
-                <Route path="/seguradoras" element={<Seguradoras />}/>\
+                <Route path="/seguradoras" element={<Seguradoras />} />\
 
                 <Route path="/cadastro/Segurado" element={<CadastroSegurado />} />
                 <Route path="/cadastro/Seguradora" element={<CadastroSeguradora />} />
                 <Route path="/cadastro/Automovel" element={<CadastroAuto />} />
                 <Route path="/cadastro/Patrimonio" element={<CadastroPatrimonial />} />
-                
             </Routes>
+        </Router>
     );
 };
 

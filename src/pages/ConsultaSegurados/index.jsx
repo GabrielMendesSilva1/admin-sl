@@ -7,6 +7,7 @@ import {
   LabelFilter, ButtonNavContainer
 } from './styles';
 import Header from '../../components/Header';
+import { formatCPF } from '../cadastro/utils';
 
 const Segurado = () => {
   const navigate = useNavigate();
@@ -70,7 +71,7 @@ const Segurado = () => {
           </Field>
           <Field>
             <LabelFilter>CPF/CNPJ:</LabelFilter>
-            <Input value={cpfCnpj} onChange={e => setCpfCnpj(e.target.value)} />
+            <Input value={cpfCnpj} onChange={e => setCpfCnpj(formatCPF(e.target.value))} />
           </Field>
           <Button
             onClick={handleBuscar}>Buscar</Button>
