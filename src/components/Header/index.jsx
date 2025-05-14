@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Container, NavItem, NavGroup, Logout } from './styles';
 import { useNavigate } from 'react-router-dom';
 import { FiLogOut } from 'react-icons/fi';
-import ModalCadastro from '../../pages/cadastro/components/ModalCadastro';
+import ModalCadastro from '../../pages/Cadastro/components/ModalCadastro';
 
 const Header = () => {
   const navigate = useNavigate();

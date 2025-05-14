@@ -1,15 +1,15 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Login from "../pages/login";
-import Dashboard from "../pages/dashboard";
+import Login from "../pages/Login";
+import Dashboard from "../pages/Dashboard";
 import Segurado from "../pages/ConsultaSegurados";
 import Automovel from "../pages/ConsultaSeguros/automovel";
 import Patrimonial from "../pages/ConsultaSeguros/patrimonial";
 import Seguradoras from "../pages/ConsultaSeguradoras";
 
-import CadastroSegurado from "../pages/cadastro/Segurado";
-import CadastroSeguradora from "../pages/cadastro/Seguradora";
-import CadastroAuto from "../pages/cadastro/Seguros/Automovel";
+import CadastroSegurado from "../pages/Cadastro/Segurado";
+import CadastroSeguradora from "../pages/Cadastro/Seguradora";
+import CadastroAuto from "../pages/Cadastro/Seguros/Automovel";
 
 const AppRoutes = () => {
     return (
