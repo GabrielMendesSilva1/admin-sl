@@ -31,6 +31,8 @@ export const useSegurado = (onSave) => {
         observacao: '',
     });
 
+    const [emailError, setEmailError] = useState('');
+
     const handleChange = (field, value) => {
         let formattedValue = value;
 
@@ -43,11 +45,6 @@ export const useSegurado = (onSave) => {
             formattedValue = formatCEP(value);
         } else if (field === 'tel1' || field === 'tel2') {
             formattedValue = formatTelefone(value);
-        } else if (field === 'email') {
-            // Validação do email
-            if (!validateEmail(value)) {
-                alert('E-mail inválido!');
-            }
         }
 
         // Atualiza o estado do formulário
@@ -74,14 +71,46 @@ export const useSegurado = (onSave) => {
         }
     };
 
+    const handleEmailBlur = () => {
+        if (!validateEmail(form.email)) {
+            setEmailError('E-mail inválido!');
+        } else {
+            setEmailError('');
+        }
+    };
+
     const handleSubmit = () => {
-        if (onSave) onSave(form);
+        if (onSave) onSave(form); // Chama a função de salvar, caso exista.
         else alert('Cadastro enviado: ' + JSON.stringify(form, null, 2));
+
+        // Limpa o formulário após o envio
+        setForm({
+            nome: '',
+            dataCadastro: '',
+            endereco: '',
+            bairro: '',
+            cidade: '',
+            uf: '',
+            cep: '',
+            tel1: '',
+            tel2: '',
+            email: '',
+            contato: '',
+            tipoPessoa: 'Física',
+            cpfCnpj: '',
+            rg: '',
+            dataNascimento: '',
+            estadoCivil: '',
+            habilitacao: '',
+            observacao: '',
+        });
     };
 
     return {
         form,
         handleChange,
-        handleSubmit
+        handleSubmit,
+        handleEmailBlur,
+        emailError,
     };
 };

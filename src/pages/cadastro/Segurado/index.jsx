@@ -39,6 +39,10 @@ const CadastroSegurado = ({ onSave }) => {
                     {/* ENDEREÇO */}
                     <FormRow>
                         <Field>
+                            <Label>CEP:</Label>
+                            <Input value={form.cep} onChange={e => handleChange('cep', e.target.value)} />
+                        </Field>
+                        <Field>
                             <Label>Endereço:</Label>
                             <Input value={form.endereco} onChange={e => handleChange('endereco', e.target.value)} />
                         </Field>
@@ -55,10 +59,6 @@ const CadastroSegurado = ({ onSave }) => {
                         <Field>
                             <Label>UF:</Label>
                             <Input value={form.uf} onChange={e => handleChange('uf', e.target.value)} />
-                        </Field>
-                        <Field>
-                            <Label>CEP:</Label>
-                            <Input value={form.cep} onChange={e => handleChange('cep', e.target.value)} />
                         </Field>
                     </FormRow>
 

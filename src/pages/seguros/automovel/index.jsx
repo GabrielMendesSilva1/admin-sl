@@ -8,7 +8,7 @@ import {
 import { getAutomovelByCpfCnpj } from "../../../services/AutomovelService";
 import Header from '../../../components/Header';
 import Loading from "../../../components/Loading/loading";
-import AlertMessage from "../../../components/Alert";
+import AlertMessage from "../../../components/ModalAlert";
 
 const Automovel = () => {
     const { cpfCnpj } = useParams();
