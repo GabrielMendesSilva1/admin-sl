@@ -1,9 +1,8 @@
 {
   "name": "admin-sl",
   "private": true,
-  "version": "1.0.4",
+  "version": "1.0.5",
   "type": "module",
-  "homepage": "https://GabrielMendesSilva1.github.io/admin-sl",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
