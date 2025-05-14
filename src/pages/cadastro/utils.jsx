@@ -1,13 +1,5 @@
 import React from "react";
 
-// Função de formatação de CPF
-export const formatCPF = (cpf) => {
-    return cpf.replace(/\D/g, '')
-              .replace(/(\d{3})(\d)/, '$1.$2')
-              .replace(/(\d{3})(\d)/, '$1.$2')
-              .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
-};
-
 // Função de formatação de RG
 export const formatRG = (rg) => {
     return rg.replace(/\D/g, '')
@@ -33,3 +25,22 @@ export const validateEmail = (email) => {
     const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return re.test(String(email).toLowerCase());
 };
+
+// Função de validação de CNPJ
+export function formatCPF(value) {
+    value = value.replace(/\D/g, '');
+    return value
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+}
+
+export function formatCNPJ(value) {
+    value = value.replace(/\D/g, '');
+    return value
+        .replace(/^(\d{2})(\d)/, '$1.$2')
+        .replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3')
+        .replace(/\.(\d{3})(\d)/, '.$1/$2')
+        .replace(/(\d{4})(\d)/, '$1-$2');
+}
+
