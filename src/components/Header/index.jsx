@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, NavItem, NavGroup, Logout } from './styles';
 import { useNavigate } from 'react-router-dom';
 import { FiLogOut } from 'react-icons/fi';
+import ModalCadastro from '../../pages/cadastro/components/ModalCadastro';
 
 const Header = () => {
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
 
   return (
     <Container>
@@ -12,8 +18,9 @@ const Header = () => {
         <NavItem href="/dashboard">Home</NavItem>
         <NavItem href="/segurados">Segurado</NavItem>
         <NavItem href="/seguradoras">Seguradora</NavItem>
-        <NavItem href="/cadastro">Cadastro</NavItem>
+        <NavItem onClick={handleOpenModal}>Cadastro</NavItem>
         <NavItem href="/apolice">Apólice</NavItem>
+        {showModal && <ModalCadastro onClose={() => setShowModal(false)} />}
       </NavGroup>
 
       <Logout onClick={() => navigate('/')}>
