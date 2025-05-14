@@ -1,7 +1,7 @@
 {
   "name": "admin-sl",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "homepage": "https://GabrielMendesSilva1.github.io/admin-sl",
   "scripts": {
