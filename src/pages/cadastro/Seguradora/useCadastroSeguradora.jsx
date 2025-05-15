@@ -5,8 +5,9 @@ import {
     validateEmail,
     formatCEP
 } from '../utils';
+import { postSeguradora } from '../../../services/SeguradoraService'; // importa aqui
 
-export const useCadastroSeguradora = (onSave) => {
+export const useCadastroSeguradora = () => {
     const [form, setForm] = useState({
         nome: '',
         endereco: '',
@@ -22,7 +23,7 @@ export const useCadastroSeguradora = (onSave) => {
     });
 
     const [emailError, setEmailError] = useState('');
-    const [loadingCep, setLoadingCep] = useState(false); // Estado para indicar que está buscando o CEP
+    const [loadingCep, setLoadingCep] = useState(false);
     const [cepError, setCepError] = useState('');
 
     const handleChange = (field, value) => {
@@ -38,9 +39,8 @@ export const useCadastroSeguradora = (onSave) => {
 
         setForm(prev => ({ ...prev, [field]: formattedValue }));
 
-        // Quando o campo for CEP e tiver 8 dígitos, chama o ViaCEP
         if (field === 'cep' && value.replace(/\D/g, '').length === 8) {
-            setLoadingCep(true); // Inicia o carregamento
+            setLoadingCep(true);
             setCepError('');
             fetch(`https://viacep.com.br/ws/${value}/json/`)
                 .then(res => res.json())
@@ -62,7 +62,7 @@ export const useCadastroSeguradora = (onSave) => {
                     console.error('Erro ao buscar CEP:', err);
                 })
                 .finally(() => {
-                    setLoadingCep(false); // Finaliza o carregamento
+                    setLoadingCep(false);
                 });
         }
     };
@@ -75,24 +75,27 @@ export const useCadastroSeguradora = (onSave) => {
         }
     };
 
-    const handleSubmit = () => {
-        if (onSave) onSave(form); // Passa para a função onSave, caso exista.
-        else alert('Cadastro enviado: ' + JSON.stringify(form, null, 2));
-
-        // Limpa o formulário após o envio
-        setForm({
-            nome: '',
-            endereco: '',
-            bairro: '',
-            cidade: '',
-            uf: '',
-            cep: '',
-            fone1: '',
-            fone2: '',
-            contato: '',
-            cgc: '',
-            email: '',
-        });
+    const handleSubmit = async () => {
+        try {
+            await postSeguradora(form);
+            alert('Seguradora cadastrada com sucesso!');
+            setForm({
+                nome: '',
+                endereco: '',
+                bairro: '',
+                cidade: '',
+                uf: '',
+                cep: '',
+                fone1: '',
+                fone2: '',
+                contato: '',
+                cgc: '',
+                email: '',
+            });
+        } catch (error) {
+            console.error('Erro ao cadastrar seguradora:', error.message);
+            alert('Erro ao cadastrar seguradora.');
+        }
     };
 
     return {
@@ -101,7 +104,7 @@ export const useCadastroSeguradora = (onSave) => {
         handleSubmit,
         handleEmailBlur,
         emailError,
-        loadingCep, // Estado que indica o carregamento
-        cepError,   // Para exibir erros no CEP
+        loadingCep,
+        cepError,
     };
 };

@@ -15,8 +15,16 @@ import {
     Button,
 } from './styles';
 
-const CadastroSeguradora = ({ onSave }) => {
-    const { form, handleChange, handleSubmit, handleEmailBlur, emailError } = useCadastroSeguradora(onSave);
+const CadastroSeguradora = () => {
+    const {
+        form,
+        handleChange,
+        handleSubmit,
+        handleEmailBlur,
+        emailError,
+        loadingCep,
+        cepError
+    } = useCadastroSeguradora();
 
     return (
         <>
