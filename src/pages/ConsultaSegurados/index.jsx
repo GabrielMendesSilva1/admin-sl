@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSegurado } from './use-segurado';
+//import { useSegurado } from './use-segurado';
 import {
   Container, FilterBox, Field, Label, Input, Button,
   Panel, Row, Value, LabelUF, ValueUF, PageTitle,
@@ -8,33 +8,41 @@ import {
 } from './styles';
 import Header from '../../components/Header';
 import { formatCPF } from '../cadastro/utils';
+import { getSegurados } from '../../services/SeguradoService';
 
 const Segurado = () => {
   const navigate = useNavigate();
-  const { segurados, loading } = useSegurado();
   const [placa, setPlaca] = useState('');
   const [nome, setNome] = useState('');
   const [apolice, setApolice] = useState('');
-  const [cpfCnpj, setCpfCnpj] = useState('');
+  const [cpfcnpj, setCpfCnpj] = useState('');
   const [resultado, setResultado] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const handleBuscar = async () => {
+    setLoading(true);
 
+    try {
+      const response = await getSegurados({
+        placa,
+        nome,
+        apolice,
+        cpfcnpj,
+      });
 
-  const handleBuscar = () => {
-    const found = segurados.find(item => {
-      return (
-        (!placa || item.placa.toLowerCase().includes(placa.toLowerCase())) &&
-        (!nome || item.nome.toLowerCase().includes(nome.toLowerCase())) &&
-        (!apolice || item.apolice.toLowerCase().includes(apolice.toLowerCase())) &&
-        (!cpfCnpj || item.cpfCnpj.toLowerCase().includes(cpfCnpj.toLowerCase()))
-      );
-    });
-    setResultado(found || null);
+      setResultado(response[0] || null); // pega o primeiro encontrado
+    } catch (error) {
+      console.error("Erro ao buscar segurado:", error);
+      setResultado(null);
+    }
+
+    setLoading(false);
   };
+
 
   const handleNavigateAutomovel = () => {
     try {
       if (resultado) {
-        navigate(`/automovel/${resultado.cpfCnpj}`);
+        navigate(`/automovel/${resultado.cpfcnpj}`);
       }
     } catch (e) {
       console.error("Erro inesperado", e)
@@ -45,7 +53,7 @@ const Segurado = () => {
   const handleNavigatePatrimonial = () => {
     try {
       if (resultado) {
-        navigate(`/patrimonial/${resultado.cpfCnpj}`);
+        navigate(`/patrimonial/${resultado.cpfcnpj}`);
       }
     } catch (e) {
       console.error("Erro inesperado", e)
@@ -71,7 +79,7 @@ const Segurado = () => {
           </Field>
           <Field>
             <LabelFilter>CPF/CNPJ:</LabelFilter>
-            <Input value={cpfCnpj} onChange={e => setCpfCnpj(formatCPF(e.target.value))} />
+            <Input value={cpfcnpj} onChange={e => setCpfCnpj(formatCPF(e.target.value))} />
           </Field>
           <Button
             onClick={handleBuscar}>Buscar</Button>
@@ -93,7 +101,7 @@ const Segurado = () => {
               {/* DADOS BÁSICOS */}
               <Row>
                 <Label>Segurado:</Label> <Value>{resultado.nome}</Value>
-                <Label>Data de Cadastro:</Label> <Value>{resultado.dataCadastro}</Value>
+                <Label>Data de Cadastro:</Label> <Value>{resultado.datacadastro}</Value>
               </Row>
 
               {/* ENDEREÇO */}
@@ -119,15 +127,15 @@ const Segurado = () => {
 
               {/* DOCUMENTOS */}
               <Row>
-                <Label>Tipo Pessoa:</Label> <Value>{resultado.tipoPessoa}</Value>
-                <Label>CPF/CNPJ:</Label> <Value>{resultado.cpfCnpj}</Value>
+                <Label>Tipo Pessoa:</Label> <Value>{resultado.tipopessoa}</Value>
+                <Label>CPF/CNPJ:</Label> <Value>{resultado.cpfcnpj}</Value>
                 <Label>RG:</Label> <Value>{resultado.rg}</Value>
               </Row>
 
               {/* PESSOAIS */}
               <Row>
-                <Label>Data Nascimento:</Label> <Value>{resultado.dataNascimento}</Value>
-                <Label>Estado Civil:</Label> <Value>{resultado.estadoCivil}</Value>
+                <Label>Data Nascimento:</Label> <Value>{resultado.datanascimento}</Value>
+                <Label>Estado Civil:</Label> <Value>{resultado.estadocivil}</Value>
                 <Label>1ª Habilitação:</Label> <Value>{resultado.habilitacao}</Value>
               </Row>
               {/* OBSERVACOES */}

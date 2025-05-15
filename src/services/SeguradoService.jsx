@@ -1,119 +1,27 @@
-export const getSegurados = async () => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve([
-          {
-            nome: 'João da Silva',
-            dataCadastro: '12/04/2023',
-            endereco: 'Rua das Flores, 123',
-            bairro: 'Jardim Primavera',
-            cidade: 'Fortaleza',
-            uf: 'CE',
-            cep: '60000-000',
-            tel1: '(85) 99999-1111',
-            tel2: '(85) 98888-2222',
-            tipoPessoa: 'Física',
-            cpfCnpj: '123.456.789-00',
-            rg: '12.345.678-9',
-            contato: 'Maria Silva',
-            dataNascimento: '05/05/1980',
-            estadoCivil: 'Casado(a)',
-            email: 'joao@example.com',
-            habilitacao: 'MG-1234567',
-            placa: 'ABC-1234',
-            apolice: 'AUTO-001',
-            observacao: 'Observacao de Teste'
-          },
-          {
-            nome: 'Ana Pereira',
-            dataCadastro: '01/02/2024',
-            endereco: 'Av. Beira Mar, 456',
-            bairro: 'Meireles',
-            cidade: 'Fortaleza',
-            uf: 'CE',
-            cep: '60165-121',
-            tel1: '(85) 98765-4321',
-            tel2: '(85) 97654-3210',
-            tipoPessoa: 'Física',
-            cpfCnpj: '987.654.321-00',
-            rg: '98.765.432-1',
-            contato: 'Carlos Pereira',
-            dataNascimento: '10/10/1990',
-            estadoCivil: 'Solteiro(a)',
-            email: 'ana@example.com',
-            habilitacao: 'CE-7654321',
-            placa: 'XYZ-5678',
-            apolice: 'AUTO-002',
-            observacao: 'Observacao de Teste'
-          },
-          {
-            nome: 'Empresa Tech Ltda',
-            dataCadastro: '15/06/2023',
-            endereco: 'Rua Inovação, 789',
-            bairro: 'Aldeota',
-            cidade: 'Fortaleza',
-            uf: 'CE',
-            cep: '60120-230',
-            tel1: '(85) 4002-8922',
-            tel2: '',
-            tipoPessoa: 'Jurídica',
-            cpfCnpj: '12.345.678/0001-90',
-            rg: '',
-            contato: 'Marcos Silva',
-            dataNascimento: '',
-            estadoCivil: '',
-            email: 'contato@empretech.com',
-            habilitacao: '',
-            placa: 'EMP-0001',
-            apolice: 'PJ-001',
-            observacao: 'Observacao de Teste'
-          },
-          {
-            nome: 'Carlos Souza',
-            dataCadastro: '23/09/2023',
-            endereco: 'Rua do Sol, 321',
-            bairro: 'Montese',
-            cidade: 'Fortaleza',
-            uf: 'CE',
-            cep: '60740-180',
-            tel1: '(85) 91234-5678',
-            tel2: '(85) 90123-4567',
-            tipoPessoa: 'Física',
-            cpfCnpj: '321.654.987-00',
-            rg: '32.165.498-7',
-            contato: 'Patrícia Souza',
-            dataNascimento: '20/12/1985',
-            estadoCivil: 'Casado(a)',
-            email: 'carlos@example.com',
-            habilitacao: 'CE-1122334',
-            placa: 'CAR-4321',
-            apolice: 'AUTO-003',
-            observacao: 'Observacao de Teste'
-          },
-          {
-            nome: 'Luciana Almeida',
-            dataCadastro: '30/11/2023',
-            endereco: 'Av. Santos Dumont, 101',
-            bairro: 'Papicu',
-            cidade: 'Fortaleza',
-            uf: 'CE',
-            cep: '60811-300',
-            tel1: '(85) 93333-4444',
-            tel2: '(85) 94444-5555',
-            tipoPessoa: 'Física',
-            cpfCnpj: '456.123.789-00',
-            rg: '45.612.378-6',
-            contato: 'José Almeida',
-            dataNascimento: '15/03/1975',
-            estadoCivil: 'Divorciado(a)',
-            email: 'luciana@example.com',
-            habilitacao: 'CE-5566778',
-            placa: 'LUC-2025',
-            apolice: 'AUTO-004',
-            observacao: 'Observacao de Teste'
-          }
-        ]);
-      }, 500);
-    });
-  };
-  
+import { supabase } from '../lib/supaBaseClient';
+
+export const getSegurados = async ({ placa, nome, apolice, cpfCnpj }) => {
+  let query = supabase.from('segurados').select('*');
+
+  if (placa) {
+    query = query.ilike('placa', `%${placa}%`);
+  }
+  if (nome) {
+    query = query.ilike('nome', `%${nome}%`);
+  }
+  if (apolice) {
+    query = query.ilike('apolice', `%${apolice}%`);
+  }
+  if (cpfCnpj) {
+    query = query.ilike('cpfcnpj', `%${cpfCnpj}%`);
+  }
+
+  const { data, error } = await query;
+
+  if (error) {
+    console.error('Erro ao buscar segurados:', error);
+    return [];
+  }
+
+  return data;
+};

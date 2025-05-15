@@ -15,7 +15,7 @@ const Header = () => {
   return (
     <Container>
       <NavGroup>
-        <NavItem onClick={() => navigate('/dashboard')}>Home</NavItem>
+        <NavItem onClick={() => navigate('/dashboard')}>Início</NavItem>
         <NavItem onClick={() => navigate('/segurados')}>Segurado</NavItem>
         <NavItem onClick={() => navigate('/seguradoras')}>Seguradora</NavItem>
         <NavItem onClick={handleOpenModal}>Cadastro</NavItem>
