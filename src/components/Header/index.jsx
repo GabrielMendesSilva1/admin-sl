@@ -15,9 +15,9 @@ const Header = () => {
   return (
     <Container>
       <NavGroup>
-        <NavItem href="/dashboard">Home</NavItem>
-        <NavItem href="/segurados">Segurado</NavItem>
-        <NavItem href="/seguradoras">Seguradora</NavItem>
+        <NavItem onClick={() => navigate('/dashboard')}>Home</NavItem>
+        <NavItem onClick={() => navigate('/segurados')}>Segurado</NavItem>
+        <NavItem onClick={() => navigate('/seguradoras')}>Seguradora</NavItem>
         <NavItem onClick={handleOpenModal}>Cadastro</NavItem>
         {/*<NavItem href="/apolice">Apólice</NavItem>*/}
         {showModal && <ModalCadastro onClose={() => setShowModal(false)} />}

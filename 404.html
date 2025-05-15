@@ -1,0 +1,7 @@
+<script>
+  // redireciona qualquer rota desconhecida de volta para o index.html
+  const path = window.location.pathname;
+  const query = window.location.search;
+  const hash = window.location.hash;
+  window.location.replace('/admin-sl/' + '?' + 'redirect=' + encodeURIComponent(path + query + hash));
+</script>

@@ -1,10 +1,14 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ModalContainer, ModalContent, ModalTitle, OptionButton, CancelButton } from './styles';
 
 const ModalCadastro = ({ onClose }) => {
+  const navigate = useNavigate();
+
   const handleOptionClick = (path) => {
-    window.location.href = path;
-  };
+    navigate(path);
+    onClose(); // fecha o modal após navegar, se desejar
+  };  
 
   return (
     <ModalContainer>
