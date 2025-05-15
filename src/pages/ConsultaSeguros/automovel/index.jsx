@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {
     Container, Section, Title, Label, ValueRow, Value,
     Subsection, Grid,
-    PageWrapper, SubsectionTitle
+    PageWrapper, SubsectionTitle, ButtonNavContainer, Button
 } from "./styles";
 import { getAutomovelByCpfCnpj } from "../../../services/AutomovelService";
 import Header from '../../../components/Header';
@@ -15,6 +15,7 @@ const Automovel = () => {
     const [dados, setDados] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [showAlert, setShowAlert] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchDados = async () => {
@@ -51,11 +52,26 @@ const Automovel = () => {
         );
     }
 
+    const handleNavigatePatrimonial = () => {
+        try {
+            if (dados) {
+                navigate(`/patrimonial/${dados.cpfCnpj}`);
+            }
+            console.log(dados)
+        } catch (e) {
+            console.error("Erro inesperado", e)
+            return
+        };
+    };
 
     return (
         <>
             <Header />
             <PageWrapper>
+                <ButtonNavContainer>
+                    <Button onClick={() => handleNavigateAutomovel()}>AUTOMÓVEL</Button>
+                    <Button onClick={() => handleNavigatePatrimonial()}>PATRIMONIAL</Button>
+                </ButtonNavContainer>
                 <Container>
                     <Title>Seguro Automóvel</Title>
 

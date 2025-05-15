@@ -2,6 +2,7 @@ export const getAutomovelByCpfCnpj = (cpfCnpj) => {
     const database = {
       '123.456.789-00': { // João da Silva
         segurado: "João da Silva",
+        cpfCnpj:"123.456.789-00",
         veiculo: {
           descricao: "FIAT PALIO FIRE 1.0 FLEX ECONOMY",
           anoModelo: "2013/2014",

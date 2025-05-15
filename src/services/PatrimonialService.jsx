@@ -1,6 +1,7 @@
 export const getPatrimonialByCpfCnpj = (cpfCnpj) => {
     const database = {
       '123.456.789-00': {
+        cpfCnpj:"123.456.789-00",
         seguradora: {
           nome: "Tokio Marine",
           apolice: "PAT-001",

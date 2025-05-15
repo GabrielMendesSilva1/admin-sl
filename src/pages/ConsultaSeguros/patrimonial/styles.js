@@ -21,6 +21,29 @@ export const Container = styled.div`
   overflow-x: hidden;  /* Impede rolagem lateral */
 `;
 
+export const Button = styled.button`
+  padding: 0.75rem 1.5rem;
+  background: #0077cc;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.2s;
+  margin-top: 26px;
+  margin-left: 12px;
+  &:hover {
+    background: #005fa3;
+  }
+`;
+
+export const ButtonNavContainer = styled.div`
+ display: flex;
+ gap: 1rem; 
+ margin-bottom: -30px;
+ margin-left: 555px;
+`;
+
 export const Title = styled.h1`
   font-size: 28px;
   font-weight: 700;

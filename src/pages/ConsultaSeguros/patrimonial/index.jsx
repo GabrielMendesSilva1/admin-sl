@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   Container, Section, Title, Label, ValueRow, Value,
-  Subsection, Grid, PageWrapper, SubsectionTitle
+  Subsection, Grid, PageWrapper, SubsectionTitle, ButtonNavContainer, Button
 } from "./styles";
 import { getPatrimonialByCpfCnpj } from "../../../services/PatrimonialService";
 import Header from '../../../components/Header';
@@ -11,6 +11,7 @@ import Loading from "../../../components/Loading/loading";
 const Patrimonial = () => {
   const { cpfCnpj } = useParams();
   const [dados, setDados] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchDados = async () => {
@@ -22,10 +23,26 @@ const Patrimonial = () => {
 
   if (!dados) return <Loading />;
 
+  const handleNavigateAutomovel = () => {
+    try {
+      if (dados) {
+        navigate(`/automovel/${dados.cpfCnpj}`);
+        console.log(dados)
+      }
+    } catch (e) {
+      console.error("Erro inesperado", e)
+      return
+    };
+  };
+
   return (
     <>
       <Header />
       <PageWrapper>
+        <ButtonNavContainer>
+          <Button onClick={() => handleNavigateAutomovel()}>AUTOMÓVEL</Button>
+          <Button onClick={() => handleNavigatePatrimonial()}>PATRIMONIAL</Button>
+        </ButtonNavContainer>
         <Container>
           <Title>Seguro Patrimonial</Title>
 
