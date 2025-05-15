@@ -1,6 +1,6 @@
 import { supabase } from '../lib/supaBaseClient';
 
-export const getSegurados = async ({ placa, nome, apolice, cpfCnpj }) => {
+export const getSegurados = async ({ placa, nome, apolice, cpfcnpj }) => {
   let query = supabase.from('segurados').select('*');
 
   if (placa) {
@@ -12,8 +12,8 @@ export const getSegurados = async ({ placa, nome, apolice, cpfCnpj }) => {
   if (apolice) {
     query = query.ilike('apolice', `%${apolice}%`);
   }
-  if (cpfCnpj) {
-    query = query.ilike('cpfcnpj', `%${cpfCnpj}%`);
+  if (cpfcnpj) {
+    query = query.ilike('cpfcnpj', `%${cpfcnpj}%`);
   }
 
   const { data, error } = await query;
@@ -21,6 +21,19 @@ export const getSegurados = async ({ placa, nome, apolice, cpfCnpj }) => {
   if (error) {
     console.error('Erro ao buscar segurados:', error);
     return [];
+  }
+
+  return data;
+};
+
+export const postSegurado = async (segurado) => {
+  const { data, error } = await supabase
+    .from('segurados')
+    .insert([segurado]);
+
+  if (error) {
+    console.error('Erro ao cadastrar segurado:', error.message);
+    throw error;
   }
 
   return data;

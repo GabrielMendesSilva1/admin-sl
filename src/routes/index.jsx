@@ -20,8 +20,8 @@ const AppRoutes = () => {
                 <Route path="/dashboard" element={<Dashboard />} />
 
                 <Route path="/segurados" element={<Segurado />} />
-                <Route path="/automovel/:cpfCnpj" element={<Automovel />} />
-                <Route path="/patrimonial/:cpfCnpj" element={<Patrimonial />} />
+                <Route path="/automovel/:cpfcnpj" element={<Automovel />} />
+                <Route path="/patrimonial/:cpfcnpj" element={<Patrimonial />} />
                 <Route path="/seguradoras" element={<Seguradoras />} />\
 
                 <Route path="/cadastro/Segurado" element={<CadastroSegurado />} />

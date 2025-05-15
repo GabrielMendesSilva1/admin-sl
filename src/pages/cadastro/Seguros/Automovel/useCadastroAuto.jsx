@@ -5,7 +5,7 @@ export const useCadastroAuto = (onSave) => {
     const [form, setForm] = useState({
         pessoal: {
             nome: '',
-            cpfCnpj: '',
+            cpfcnpj: '',
         },
         veiculo: {
             descricao: '',
@@ -48,7 +48,7 @@ export const useCadastroAuto = (onSave) => {
         if (section === 'carnes') {
             setForm(prev => ({ ...prev, carnes: value }));
         } else if (typeof form[section] === 'object') {
-            if (field === 'cpfCnpj') {
+            if (field === 'cpfcnpj') {
                 if (value.replace(/\D/g, '').length <= 11) {
                     value = formatCPF(value);
                 } else {
@@ -90,7 +90,7 @@ export const useCadastroAuto = (onSave) => {
         setForm({
             pessoal: {
                 nome: '',
-                cpfCnpj: '',
+                cpfcnpj: '',
             },
             veiculo: {
                 descricao: '',

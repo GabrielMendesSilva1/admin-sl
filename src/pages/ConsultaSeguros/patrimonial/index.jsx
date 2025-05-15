@@ -4,29 +4,29 @@ import {
   Container, Section, Title, Label, ValueRow, Value,
   Subsection, Grid, PageWrapper, SubsectionTitle, ButtonNavContainer, Button
 } from "./styles";
-import { getPatrimonialByCpfCnpj } from "../../../services/PatrimonialService";
+import { getPatrimonialBycpfcnpj } from "../../../services/PatrimonialService";
 import Header from '../../../components/Header';
 import Loading from "../../../components/Loading/loading";
 
 const Patrimonial = () => {
-  const { cpfCnpj } = useParams();
+  const { cpfcnpj } = useParams();
   const [dados, setDados] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchDados = async () => {
-      const resultado = await getPatrimonialByCpfCnpj(cpfCnpj);
+      const resultado = await getPatrimonialBycpfcnpj(cpfcnpj);
       setDados(resultado);
     };
     fetchDados();
-  }, [cpfCnpj]);
+  }, [cpfcnpj]);
 
   if (!dados) return <Loading />;
 
   const handleNavigateAutomovel = () => {
     try {
       if (dados) {
-        navigate(`/automovel/${dados.cpfCnpj}`);
+        navigate(`/automovel/${dados.cpfcnpj}`);
         console.log(dados)
       }
     } catch (e) {

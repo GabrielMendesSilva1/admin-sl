@@ -1,5 +1,3 @@
-// cadastro/Segurado/useCadastroSegurado.js
-
 import { useState } from 'react';
 import {
     formatCPF,
@@ -8,11 +6,12 @@ import {
     formatCEP,
     validateEmail
 } from '../utils';
+import { postSegurado } from '../../../services/SeguradoService';
 
 export const useSegurado = (onSave) => {
     const [form, setForm] = useState({
         nome: '',
-        dataCadastro: '',
+        datacadastro: '',
         endereco: '',
         bairro: '',
         cidade: '',
@@ -22,11 +21,11 @@ export const useSegurado = (onSave) => {
         tel2: '',
         email: '',
         contato: '',
-        tipoPessoa: 'Física',
-        cpfCnpj: '',
+        tipopessoa: '',
+        cpfcnpj: '',
         rg: '',
-        dataNascimento: '',
-        estadoCivil: '',
+        datanascimento: '',
+        estadocivil: '',
         habilitacao: '',
         observacao: '',
     });
@@ -37,7 +36,7 @@ export const useSegurado = (onSave) => {
         let formattedValue = value;
 
         // Formatando os campos de acordo com o tipo
-        if (field === 'cpfCnpj') {
+        if (field === 'cpfcnpj') {
             formattedValue = formatCPF(value);
         } else if (field === 'rg') {
             formattedValue = formatRG(value);
@@ -79,31 +78,40 @@ export const useSegurado = (onSave) => {
         }
     };
 
-    const handleSubmit = () => {
-        if (onSave) onSave(form); // Chama a função de salvar, caso exista.
-        else alert('Cadastro enviado: ' + JSON.stringify(form, null, 2));
+    const handleSubmit = async () => {
+        try {
+            const dados = {
+                ...form
+            };
 
-        // Limpa o formulário após o envio
-        setForm({
-            nome: '',
-            dataCadastro: '',
-            endereco: '',
-            bairro: '',
-            cidade: '',
-            uf: '',
-            cep: '',
-            tel1: '',
-            tel2: '',
-            email: '',
-            contato: '',
-            tipoPessoa: 'Física',
-            cpfCnpj: '',
-            rg: '',
-            dataNascimento: '',
-            estadoCivil: '',
-            habilitacao: '',
-            observacao: '',
-        });
+            await postSegurado(dados);
+            alert('Segurado cadastrado com sucesso!');
+
+            // Limpa o formulário após cadastro
+            setForm({
+                nome: '',
+                datacadastro: '',
+                endereco: '',
+                bairro: '',
+                cidade: '',
+                uf: '',
+                cep: '',
+                tel1: '',
+                tel2: '',
+                email: '',
+                contato: '',
+                tipopessoa: 'Física',
+                cpfcnpj: '',
+                rg: '',
+                datanascimento: '',
+                estadocivil: '',
+                habilitacao: '',
+                observacao: '',
+            });
+        } catch (error) {
+            alert('Erro ao cadastrar segurado.');
+            console.error(error);
+        }
     };
 
     return {

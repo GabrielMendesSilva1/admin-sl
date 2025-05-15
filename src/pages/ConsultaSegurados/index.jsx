@@ -15,7 +15,7 @@ const Segurado = () => {
   const [placa, setPlaca] = useState('');
   const [nome, setNome] = useState('');
   const [apolice, setApolice] = useState('');
-  const [cpfcnpj, setCpfCnpj] = useState('');
+  const [cpfcnpj, setcpfcnpj] = useState('');
   const [resultado, setResultado] = useState(null);
   const [loading, setLoading] = useState(false);
   const handleBuscar = async () => {
@@ -79,7 +79,7 @@ const Segurado = () => {
           </Field>
           <Field>
             <LabelFilter>CPF/CNPJ:</LabelFilter>
-            <Input value={cpfcnpj} onChange={e => setCpfCnpj(formatCPF(e.target.value))} />
+            <Input value={cpfcnpj} onChange={e => setcpfcnpj(formatCPF(e.target.value))} />
           </Field>
           <Button
             onClick={handleBuscar}>Buscar</Button>

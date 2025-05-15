@@ -32,7 +32,10 @@ const CadastroSegurado = ({ onSave }) => {
                         </Field>
                         <Field>
                             <Label>Data de Cadastro:</Label>
-                            <Input type="date" value={form.dataCadastro} onChange={e => handleChange('dataCadastro', e.target.value)} />
+                            <Input
+                                type="date"
+                                value={form.datacadastro}
+                                onChange={e => handleChange('datacadastro', e.target.value)} />
                         </Field>
                     </FormRow>
 
@@ -88,14 +91,14 @@ const CadastroSegurado = ({ onSave }) => {
                     <FormRow>
                         <Field>
                             <Label>Tipo Pessoa:</Label>
-                            <Select value={form.tipoPessoa} onChange={e => handleChange('tipoPessoa', e.target.value)}>
+                            <Select value={form.tipopessoa} onChange={e => handleChange('tipoPessoa', e.target.value)}>
                                 <Option value="Física">Física</Option>
                                 <Option value="Jurídica">Jurídica</Option>
                             </Select>
                         </Field>
                         <Field>
                             <Label>CPF/CNPJ:</Label>
-                            <Input value={form.cpfCnpj} onChange={e => handleChange('cpfCnpj', e.target.value)} />
+                            <Input value={form.cpfcnpj} onChange={e => handleChange('cpfcnpj', e.target.value)} />
                         </Field>
                         <Field>
                             <Label>RG:</Label>
@@ -107,13 +110,13 @@ const CadastroSegurado = ({ onSave }) => {
                     <FormRow>
                         <Field>
                             <Label>Data Nascimento:</Label>
-                            <Input type="date" value={form.dataNascimento} onChange={e => handleChange('dataNascimento', e.target.value)} />
+                            <Input type="date" value={form.datanascimento} onChange={e => handleChange('datanascimento', e.target.value)} />
                         </Field>
                         <Field>
                             <Label>Estado Civil:</Label>
                             <Select
-                                value={form.estadoCivil}
-                                onChange={e => handleChange('estadoCivil', e.target.value)}
+                                value={form.estadocivil}
+                                onChange={e => handleChange('estadocivil', e.target.value)}
                             >
                                 <Option value="">Selecione</Option>
                                 <Option value="solteiro">Solteiro(a)</Option>

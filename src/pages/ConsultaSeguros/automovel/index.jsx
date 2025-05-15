@@ -5,13 +5,13 @@ import {
     Subsection, Grid,
     PageWrapper, SubsectionTitle, ButtonNavContainer, Button
 } from "./styles";
-import { getAutomovelByCpfCnpj } from "../../../services/AutomovelService";
+import { getAutomovelBycpfcnpj } from "../../../services/AutomovelService";
 import Header from '../../../components/Header';
 import Loading from "../../../components/Loading/loading";
 import AlertMessage from "../../../components/ModalAlert";
 
 const Automovel = () => {
-    const { cpfCnpj } = useParams();
+    const { cpfcnpj } = useParams();
     const [dados, setDados] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [showAlert, setShowAlert] = useState(false);
@@ -21,7 +21,7 @@ const Automovel = () => {
         const fetchDados = async () => {
             try {
                 setIsLoading(true)
-                const dados = await getAutomovelByCpfCnpj(cpfCnpj);
+                const dados = await getAutomovelBycpfcnpj(cpfcnpj);
                 if (!dados) {
                     setShowAlert(true);
                 } else {
@@ -35,7 +35,7 @@ const Automovel = () => {
         };
 
         fetchDados();
-    }, [cpfCnpj]);
+    }, [cpfcnpj]);
 
     if (isLoading) {
         return (
@@ -55,7 +55,7 @@ const Automovel = () => {
     const handleNavigatePatrimonial = () => {
         try {
             if (dados) {
-                navigate(`/patrimonial/${dados.cpfCnpj}`);
+                navigate(`/patrimonial/${dados.cpfcnpj}`);
             }
             console.log(dados)
         } catch (e) {
