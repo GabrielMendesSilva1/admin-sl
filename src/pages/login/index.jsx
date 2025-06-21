@@ -8,24 +8,31 @@ import {
     Input,
     Button
 } from "./styles";
+import { supabase } from "../../lib/supaBaseClient"; // ajuste o caminho conforme seu projeto
 
 const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+    const [errorMsg, setErrorMsg] = useState('');
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
-        if (email === 'gabriel@gmail.com' && senha === '12345') {
-            navigate('/dashboard');
+        setErrorMsg('');
+        const { error } = await supabase.auth.signInWithPassword({
+            email,
+            password: senha,
+        });
+        if (error) {
+            setErrorMsg(error.message);
         } else {
-            alert('Dados inválidos!');
+            navigate('/dashboard');
         }
     };
 
     return (
         <Container>
-            <Background /> {/* <-- Isso estava faltando! */}
+            <Background />
             <Form onSubmit={handleLogin}>
                 <Title>SL Assistência de SEGUROS</Title>
                 <Input
@@ -33,14 +40,17 @@ const Login = () => {
                     placeholder="E-mail"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    required
                 />
                 <Input
                     type="password"
                     placeholder="Senha"
                     value={senha}
                     onChange={(e) => setSenha(e.target.value)}
+                    required
                 />
                 <Button type="submit">Entrar</Button>
+                {errorMsg && <p style={{color: 'red', marginTop: '10px'}}>{errorMsg}</p>}
             </Form>
         </Container>
     );
