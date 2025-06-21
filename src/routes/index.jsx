@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from "../pages/login";
 import Dashboard from "../pages/dashboard";
-import Segurado from "../pages/ConsultaSegurados";
+import ConsultaSegurado from "../pages/ConsultaSegurados";
 import Automovel from "../pages/ConsultaSeguros/automovel";
 import Patrimonial from "../pages/ConsultaSeguros/patrimonial";
 import Seguradoras from "../pages/ConsultaSeguradoras";
@@ -19,7 +19,7 @@ const AppRoutes = () => {
                 <Route path="/" element={<Login />} />
                 <Route path="/dashboard" element={<Dashboard />} />
 
-                <Route path="/segurados" element={<Segurado />} />
+                <Route path="/segurados" element={<ConsultaSegurado />} />
                 <Route path="/automovel/:cpfcnpj" element={<Automovel />} />
                 <Route path="/patrimonial/:cpfcnpj" element={<Patrimonial />} />
                 <Route path="/seguradoras" element={<Seguradoras />} />\

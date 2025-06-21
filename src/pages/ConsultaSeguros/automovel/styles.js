@@ -8,6 +8,19 @@ export const PageWrapper = styled.div`
   overflow-x: hidden;
 `;
 
+export const Input = styled.input`
+  padding: 8px 12px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 100%;
+  box-sizing: border-box;
+  &:focus {
+    outline: none;
+    border-color: #0077cc;
+  }
+`;
+
 export const Container = styled.div`
   padding: 32px;
   max-width: 960px;

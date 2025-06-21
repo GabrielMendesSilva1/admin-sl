@@ -8,6 +8,7 @@ import { getPatrimonialBycpfcnpj } from "../../../services/PatrimonialService";
 import Header from '../../../components/Header';
 import Loading from "../../../components/Loading/loading";
 import AlertMessage from "../../../components/ModalAlert";
+import EditPatrimonial from './editPatrimonial';
 
 const Patrimonial = () => {
   const { cpfcnpj } = useParams();
@@ -15,6 +16,7 @@ const Patrimonial = () => {
   const [seguroSelecionadoIndex, setSeguroSelecionadoIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [showAlert, setShowAlert] = useState(false);
+  const [modoEdicao, setModoEdicao] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -55,6 +57,29 @@ const Patrimonial = () => {
     setSeguroSelecionadoIndex(Number(event.target.value));
   };
 
+  const handleAtualizacao = (dadosAtualizados) => {
+    const novosSeguros = [...seguros];
+    novosSeguros[seguroSelecionadoIndex] = dadosAtualizados;
+    setSeguros(novosSeguros);
+    setModoEdicao(false);
+  };
+
+  const Modal = ({ children, onClose }) => (
+    <div style={{
+      position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+      backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex',
+      justifyContent: 'center', alignItems: 'center', zIndex: 1000
+    }}>
+      <div style={{
+        backgroundColor: 'white', padding: 20, borderRadius: 8, maxHeight: '90vh', overflowY: 'auto',
+        width: '90%', maxWidth: 600
+      }}>
+        <button onClick={onClose} style={{ float: 'right' }}>X</button>
+        {children}
+      </div>
+    </div>
+  );
+
   const handleNavigateAutomovel = () => {
     navigate(`/automovel/${dados.cpfcnpj}`);
   };
@@ -66,6 +91,9 @@ const Patrimonial = () => {
         <ButtonNavContainer>
           <Button onClick={handleNavigateAutomovel}>AUTOMÓVEL</Button>
           <Button disabled>PATRIMONIAL</Button>
+          {!modoEdicao && (
+            <Button onClick={() => setModoEdicao(true)}>Editar Seguro</Button>
+          )}
         </ButtonNavContainer>
 
         <Container>
@@ -83,6 +111,7 @@ const Patrimonial = () => {
                 </option>
               ))}
             </select>
+
           </Container>
 
           <Section>
@@ -132,6 +161,18 @@ const Patrimonial = () => {
             </Subsection>
           </Section>
         </Container>
+
+        {modoEdicao &&(
+          <Modal onClose={() => setModoEdicao(false)}>
+            <EditPatrimonial
+              seguro={seguros[seguroSelecionadoIndex]}
+              onClose={() => setModoEdicao(false)}
+              onAtualizado={handleAtualizacao}
+            />
+          </Modal>
+        )}
+
+
       </PageWrapper>
     </>
   );
