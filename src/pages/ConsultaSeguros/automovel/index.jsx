@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
     Container, Section, Title, Label, ValueRow, Value,
-    Subsection, Grid,
-    PageWrapper, SubsectionTitle, ButtonNavContainer, Button
-} from "./styles";
+    Subsection, Grid, PageWrapper, SubsectionTitle, ButtonNavContainer, Button
+} from "./styles"; 
 import { getAutomovelBycpfcnpj } from "../../../services/AutomovelService";
 import Header from '../../../components/Header';
 import Loading from "../../../components/Loading/loading";
@@ -12,22 +11,24 @@ import AlertMessage from "../../../components/ModalAlert";
 
 const Automovel = () => {
     const { cpfcnpj } = useParams();
-    const [dados, setDados] = useState(null);
+    const [veiculos, setVeiculos] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [showAlert, setShowAlert] = useState(false);
+    const [selectedIndex, setSelectedIndex] = useState(0);
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchDados = async () => {
             try {
-                setIsLoading(true)
-                const dados = await getAutomovelBycpfcnpj(cpfcnpj);
-                if (!dados) {
+                setIsLoading(true);
+                const resultado = await getAutomovelBycpfcnpj(cpfcnpj);
+                if (!resultado || resultado.length === 0) {
                     setShowAlert(true);
                 } else {
-                    setDados(dados);
+                    setVeiculos(resultado);
                 }
             } catch (error) {
+                console.error(error);
                 setShowAlert(true);
             } finally {
                 setIsLoading(false);
@@ -37,12 +38,11 @@ const Automovel = () => {
         fetchDados();
     }, [cpfcnpj]);
 
-    if (isLoading) {
-        return (
-            <Loading />
-        );
-    }
+    const handleNavigatePatrimonial = () => {
+        navigate(`/patrimonial/${cpfcnpj}`);
+    };
 
+    if (isLoading) return <Loading />;
     if (showAlert) {
         return (
             <AlertMessage
@@ -52,92 +52,106 @@ const Automovel = () => {
         );
     }
 
-    const handleNavigatePatrimonial = () => {
-        try {
-            if (dados) {
-                navigate(`/patrimonial/${dados.cpfcnpj}`);
-            }
-            console.log(dados)
-        } catch (e) {
-            console.error("Erro inesperado", e)
-            return
-        };
-    };
+    const selectedVeiculo = veiculos[selectedIndex];
+
+    const formatDate = (str) => {
+        if (!str) return "";
+        const d = new Date(str);
+        if (isNaN(d)) return str; // caso não seja data válida, retorna original
+        return d.toLocaleDateString("pt-BR");
+      };
 
     return (
         <>
             <Header />
             <PageWrapper>
                 <ButtonNavContainer>
-                    <Button onClick={() => handleNavigateAutomovel()}>AUTOMÓVEL</Button>
-                    <Button onClick={() => handleNavigatePatrimonial()}>PATRIMONIAL</Button>
+                    <Button onClick={() => navigate(`/automovel/${cpfcnpj}`)}>AUTOMÓVEL</Button>
+                    <Button onClick={handleNavigatePatrimonial}>PATRIMONIAL</Button>
                 </ButtonNavContainer>
+
                 <Container>
-                    <Title>Seguro Automóvel</Title>
-
-                    <Section>
-                        <Label>Segurado:</Label> <Value>{dados.segurado}</Value>
-                    </Section>
-
-                    <Section>
-                        <Subsection>
-                            <SubsectionTitle>Seguradora</SubsectionTitle>
-                            <ValueRow><Label>Seguradora:</Label> <Value>{dados.seguradora.nome}</Value></ValueRow>
-                            <ValueRow><Label>Apólice:</Label> <Value>{dados.seguradora.apolice}</Value></ValueRow>
-                        </Subsection>
-
-                        <Subsection>
-                            <SubsectionTitle>Vigência</SubsectionTitle>
-                            <ValueRow><Label>Início:</Label> <Value>{dados.vigencia.inicio}</Value></ValueRow>
-                            <ValueRow><Label>Fim:</Label> <Value>{dados.vigencia.fim}</Value></ValueRow>
-                            <ValueRow><Label>Cobertura:</Label> <Value>{dados.vigencia.cobertura}</Value></ValueRow>
-                        </Subsection>
-                    </Section>
-
-                    <Section>
-                        <Subsection>
-                            <SubsectionTitle>Veículo</SubsectionTitle>
-                            <ValueRow><Label>Modelo:</Label> <Value>{dados.veiculo.descricao}</Value></ValueRow>
-                            <ValueRow><Label>Ano/Modelo:</Label> <Value>{dados.veiculo.anoModelo}</Value></ValueRow>
-                            <ValueRow><Label>Placa:</Label> <Value>{dados.veiculo.placa}</Value></ValueRow>
-                        </Subsection>
-                    </Section>
-
-                    <Section>
-                        <Subsection>
-                            <SubsectionTitle>Importâncias Seguradas</SubsectionTitle>
-                            <Grid>
-                                <ValueRow><Label>Casco:</Label> <Value>{dados.importancias.casco}</Value></ValueRow>
-                                <ValueRow><Label>Franquia:</Label> <Value>{dados.importancias.franquia}</Value></ValueRow>
-                                <ValueRow><Label>DMateriais:</Label> <Value>{dados.importancias.dmateriais}</Value></ValueRow>
-                                <ValueRow><Label>DPessoais:</Label> <Value>{dados.importancias.dpessoais}</Value></ValueRow>
-                                <ValueRow><Label>APP/Morte:</Label> <Value>{dados.importancias.appMorte}</Value></ValueRow>
-                                <ValueRow><Label>Outras:</Label> <Value>{dados.importancias.outras}</Value></ValueRow>
-                            </Grid>
-                        </Subsection>
-                    </Section>
-
-                    <Section>
-                        <Subsection>
-                            <SubsectionTitle>Prêmios</SubsectionTitle>
-                            <ValueRow><Label>Total:</Label> <Value>R$ {dados.premios.total}</Value></ValueRow>
-                            <ValueRow><Label>Forma de Pagamento:</Label> <Value>{dados.premios.pagamento}</Value></ValueRow>
-                            <ValueRow><Label>Parcelas:</Label> <Value>{dados.premios.parcelas}</Value></ValueRow>
-                        </Subsection>
-                    </Section>
-
-                    <Section>
-                        <Subsection>
-                            <SubsectionTitle>Carnês</SubsectionTitle>
-                            {dados.carnes.map((item, index) => (
-                                <ValueRow key={index}>
-                                    <Label>Vencimento:</Label> <Value>{item.vencimento}</Value>
-                                    <Label>Valor:</Label> <Value>{item.valor}</Value>
-                                </ValueRow>
-                            ))}
-                        </Subsection>
-                    </Section>
+                    <Title>Selecione o Seguro Automóvel</Title>
+                    <select
+                        value={selectedIndex}
+                        onChange={e => setSelectedIndex(Number(e.target.value))}
+                    >
+                        {veiculos.map((v, i) => (
+                            <option key={v.id} value={i}>
+                                {v.descricao} - {v.placa}
+                            </option>
+                        ))}
+                    </select>
                 </Container>
+
+                {selectedVeiculo && (
+                    <Container>
+                        <Title>Detalhes do Seguro</Title>
+
+                        <Section>
+                            <Label>Segurado:</Label> <Value>{selectedVeiculo.segurado}</Value>
+                        </Section>
+
+                        <Section>
+                            <Subsection>
+                                <SubsectionTitle>Seguradora</SubsectionTitle>
+                                <ValueRow><Label>Seguradora:</Label> <Value>{selectedVeiculo.nomeseguradora}</Value></ValueRow>
+                                <ValueRow><Label>Apólice:</Label> <Value>{selectedVeiculo.apolice}</Value></ValueRow>
+                            </Subsection>
+
+                            <Subsection>
+                                <SubsectionTitle>Vigência</SubsectionTitle>
+                                <ValueRow><Label>Início:</Label> <Value>{selectedVeiculo.vigenciainicio}</Value></ValueRow>
+                                <ValueRow><Label>Fim:</Label> <Value>{selectedVeiculo.vigenciafim}</Value></ValueRow>
+                                <ValueRow><Label>Cobertura:</Label> <Value>{selectedVeiculo.cobertura}</Value></ValueRow>
+                            </Subsection>
+                        </Section>
+
+                        <Section>
+                            <Subsection>
+                                <SubsectionTitle>Veículo</SubsectionTitle>
+                                <ValueRow><Label>Modelo:</Label> <Value>{selectedVeiculo.descricao}</Value></ValueRow>
+                                <ValueRow><Label>Ano/Modelo:</Label> <Value>{selectedVeiculo.anomodelo}</Value></ValueRow>
+                                <ValueRow><Label>Placa:</Label> <Value>{selectedVeiculo.placa}</Value></ValueRow>
+                            </Subsection>
+                        </Section>
+
+                        <Section>
+                            <Subsection>
+                                <SubsectionTitle>Importâncias Seguradas</SubsectionTitle>
+                                <Grid>
+                                    <ValueRow><Label>Casco:</Label> <Value>{selectedVeiculo.importancias?.casco}</Value></ValueRow>
+                                    <ValueRow><Label>Franquia:</Label> <Value>{selectedVeiculo.importancias?.franquia}</Value></ValueRow>
+                                    <ValueRow><Label>DMateriais:</Label> <Value>{selectedVeiculo.importancias?.dmateriais}</Value></ValueRow>
+                                    <ValueRow><Label>DPessoais:</Label> <Value>{selectedVeiculo.importancias?.dpessoais}</Value></ValueRow>
+                                    <ValueRow><Label>APP/Morte:</Label> <Value>{selectedVeiculo.importancias?.appMorte}</Value></ValueRow>
+                                    <ValueRow><Label>Outras:</Label> <Value>{selectedVeiculo.importancias?.outras}</Value></ValueRow>
+                                </Grid>
+                            </Subsection>
+                        </Section>
+
+                        <Section>
+                            <Subsection>
+                                <SubsectionTitle>Prêmios</SubsectionTitle>
+                                <ValueRow><Label>Total:</Label> <Value>R$ {selectedVeiculo.premios?.total}</Value></ValueRow>
+                                <ValueRow><Label>Forma de Pagamento:</Label> <Value>{selectedVeiculo.premios?.pagamento}</Value></ValueRow>
+                                <ValueRow><Label>Parcelas:</Label> <Value>{selectedVeiculo.premios?.parcelas}</Value></ValueRow>
+                            </Subsection>
+                        </Section>
+
+                        <Section>
+                            <Subsection>
+                                <SubsectionTitle>Carnês</SubsectionTitle>
+                                {selectedVeiculo.carnes?.map((item, index) => (
+                                    <ValueRow key={index}>
+                                        <Label>Vencimento:</Label> <Value>{item.vencimento}</Value>
+                                        <Label>Valor:</Label> <Value>{item.valor}</Value>
+                                    </ValueRow>
+                                ))}
+                            </Subsection>
+                        </Section>
+                    </Container>
+                )}
             </PageWrapper>
         </>
     );

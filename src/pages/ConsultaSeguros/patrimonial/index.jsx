@@ -7,32 +7,54 @@ import {
 import { getPatrimonialBycpfcnpj } from "../../../services/PatrimonialService";
 import Header from '../../../components/Header';
 import Loading from "../../../components/Loading/loading";
+import AlertMessage from "../../../components/ModalAlert";
 
 const Patrimonial = () => {
   const { cpfcnpj } = useParams();
   const [dados, setDados] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [showAlert, setShowAlert] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchDados = async () => {
-      const resultado = await getPatrimonialBycpfcnpj(cpfcnpj);
-      setDados(resultado);
+      try {
+        setIsLoading(true);
+        const resultado = await getPatrimonialBycpfcnpj(cpfcnpj);
+        if (!resultado) {
+          setShowAlert(true);
+        } else {
+          setDados(resultado);
+        }
+      } catch (error) {
+        setShowAlert(true);
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchDados();
   }, [cpfcnpj]);
 
-  if (!dados) return <Loading />;
+  if (isLoading) return <Loading />;
+
+  if (showAlert) {
+    return (
+      <AlertMessage
+        message="Nenhum Patrimonial Encontrado."
+        onClose={() => window.history.back()}
+      />
+    );
+  }
 
   const handleNavigateAutomovel = () => {
     try {
       if (dados) {
         navigate(`/automovel/${dados.cpfcnpj}`);
-        console.log(dados)
+        console.log(dados);
       }
     } catch (e) {
-      console.error("Erro inesperado", e)
-      return
-    };
+      console.error("Erro inesperado", e);
+    }
   };
 
   return (
@@ -40,8 +62,8 @@ const Patrimonial = () => {
       <Header />
       <PageWrapper>
         <ButtonNavContainer>
-          <Button onClick={() => handleNavigateAutomovel()}>AUTOMÓVEL</Button>
-          <Button onClick={() => handleNavigatePatrimonial()}>PATRIMONIAL</Button>
+          <Button onClick={handleNavigateAutomovel}>AUTOMÓVEL</Button>
+          <Button onClick={handleNavigatePatrimonial}>PATRIMONIAL</Button>
         </ButtonNavContainer>
         <Container>
           <Title>Seguro Patrimonial</Title>

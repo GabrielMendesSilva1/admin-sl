@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSegurado } from './useSegurado';
 import Header from '../../../components/Header';
+import ModalCadastroSugestao from '../components/ModalCadSugestao';
 import {
     Container,
     Panel,
@@ -15,8 +16,12 @@ import {
     Button,
 } from './styles';
 
-const CadastroSegurado = ({ onSave }) => {
-    const { form, handleChange, handleSubmit } = useSegurado(onSave);
+const CadastroSegurado = () => {
+    const [modalVisible, setModalVisible] = useState(false);
+    const { form, handleChange, handleSubmitCustom } = useSegurado(() => {
+        setModalVisible(true);
+    });
+
 
     return (
         <><Header />
@@ -91,7 +96,11 @@ const CadastroSegurado = ({ onSave }) => {
                     <FormRow>
                         <Field>
                             <Label>Tipo Pessoa:</Label>
-                            <Select value={form.tipopessoa} onChange={e => handleChange('tipoPessoa', e.target.value)}>
+                            <Select
+                                value={form.tipopessoa}
+                                onChange={e => handleChange('tipopessoa', e.target.value)}
+                            >
+                                <Option value="" disabled hidden>Selecione</Option>
                                 <Option value="Física">Física</Option>
                                 <Option value="Jurídica">Jurídica</Option>
                             </Select>
@@ -144,10 +153,14 @@ const CadastroSegurado = ({ onSave }) => {
                     </FormRow>
 
                     <ButtonRow>
-                        <Button onClick={handleSubmit}>Salvar</Button>
+                        <Button onClick={handleSubmitCustom}>Salvar</Button>
                     </ButtonRow>
                 </Panel>
-            </Container></>
+            </Container>
+            {modalVisible && (
+                <ModalCadastroSugestao onClose={() => setModalVisible(false)} />
+            )}
+        </>
     );
 };
 

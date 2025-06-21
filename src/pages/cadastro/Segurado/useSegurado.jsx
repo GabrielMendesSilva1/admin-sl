@@ -5,14 +5,14 @@ import {
     formatTelefone,
     formatCEP,
     validateEmail
-} from '../utils';
+} from '../utils'
 import { postSegurado } from '../../../services/SeguradoService';
 
-export const useSegurado = (onSave) => {
+export const useSegurado = (onSuccess) => {
     const [form, setForm] = useState({
         nome: '',
         datacadastro: '',
-        endereco: '',
+        endereco: '',   
         bairro: '',
         cidade: '',
         uf: '',
@@ -35,7 +35,6 @@ export const useSegurado = (onSave) => {
     const handleChange = (field, value) => {
         let formattedValue = value;
 
-        // Formatando os campos de acordo com o tipo
         if (field === 'cpfcnpj') {
             formattedValue = formatCPF(value);
         } else if (field === 'rg') {
@@ -46,10 +45,8 @@ export const useSegurado = (onSave) => {
             formattedValue = formatTelefone(value);
         }
 
-        // Atualiza o estado do formulário
         setForm(prev => ({ ...prev, [field]: formattedValue }));
 
-        // Quando o campo for CEP e tiver 8 dígitos, chama o ViaCEP
         if (field === 'cep' && value.replace(/\D/g, '').length === 8) {
             fetch(`https://viacep.com.br/ws/${value}/json/`)
                 .then(res => res.json())
@@ -78,16 +75,16 @@ export const useSegurado = (onSave) => {
         }
     };
 
-    const handleSubmit = async () => {
+    const handleSubmitCustom = async () => {
         try {
-            const dados = {
-                ...form
-            };
+            const dados = { ...form };
 
             await postSegurado(dados);
             alert('Segurado cadastrado com sucesso!');
 
-            // Limpa o formulário após cadastro
+            if (onSuccess) onSuccess();  // chama callback sem argumento
+
+            // limpa o formulário
             setForm({
                 nome: '',
                 datacadastro: '',
@@ -100,7 +97,7 @@ export const useSegurado = (onSave) => {
                 tel2: '',
                 email: '',
                 contato: '',
-                tipopessoa: 'Física',
+                tipopessoa: '',
                 cpfcnpj: '',
                 rg: '',
                 datanascimento: '',
@@ -108,6 +105,7 @@ export const useSegurado = (onSave) => {
                 habilitacao: '',
                 observacao: '',
             });
+
         } catch (error) {
             alert('Erro ao cadastrar segurado.');
             console.error(error);
@@ -117,7 +115,7 @@ export const useSegurado = (onSave) => {
     return {
         form,
         handleChange,
-        handleSubmit,
+        handleSubmitCustom,
         handleEmailBlur,
         emailError,
     };

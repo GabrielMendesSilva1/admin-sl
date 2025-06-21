@@ -32,10 +32,10 @@ const CadastroAuto = () => {
                     {/* DADOS DO SEGURADO */}
                     <FormRow>
                         <Field>
-                            <Label>Nome do Segurado:</Label>
+                            <Label>CPF/CNPJ do Segurado:</Label>
                             <Input
-                                value={form.segurado}
-                                onChange={(e) => handleChange('segurado', e.target.value)}
+                                value={form.pessoal.cpfcnpj}
+                                onChange={(e) => handleChange('pessoal', 'cpfcnpj', e.target.value)}
                             />
                         </Field>
                     </FormRow>
