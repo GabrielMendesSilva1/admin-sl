@@ -30,4 +30,3 @@ export const getMockedSeguradoras = () => [
       email: "atendimento@beta.com.br"
     }
   ];
-  

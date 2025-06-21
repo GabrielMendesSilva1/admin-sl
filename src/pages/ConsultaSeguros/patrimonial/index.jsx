@@ -11,7 +11,8 @@ import AlertMessage from "../../../components/ModalAlert";
 
 const Patrimonial = () => {
   const { cpfcnpj } = useParams();
-  const [dados, setDados] = useState(null);
+  const [seguros, setSeguros] = useState([]);
+  const [seguroSelecionadoIndex, setSeguroSelecionadoIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [showAlert, setShowAlert] = useState(false);
   const navigate = useNavigate();
@@ -21,12 +22,14 @@ const Patrimonial = () => {
       try {
         setIsLoading(true);
         const resultado = await getPatrimonialBycpfcnpj(cpfcnpj);
-        if (!resultado) {
+
+        if (!resultado || resultado.length === 0) {
           setShowAlert(true);
         } else {
-          setDados(resultado);
+          setSeguros(resultado);
         }
       } catch (error) {
+        console.error("Erro ao buscar dados patrimoniais:", error);
         setShowAlert(true);
       } finally {
         setIsLoading(false);
@@ -46,15 +49,14 @@ const Patrimonial = () => {
     );
   }
 
+  const dados = seguros[seguroSelecionadoIndex];
+
+  const handleChangeSeguro = (event) => {
+    setSeguroSelecionadoIndex(Number(event.target.value));
+  };
+
   const handleNavigateAutomovel = () => {
-    try {
-      if (dados) {
-        navigate(`/automovel/${dados.cpfcnpj}`);
-        console.log(dados);
-      }
-    } catch (e) {
-      console.error("Erro inesperado", e);
-    }
+    navigate(`/automovel/${dados.cpfcnpj}`);
   };
 
   return (
@@ -63,60 +65,68 @@ const Patrimonial = () => {
       <PageWrapper>
         <ButtonNavContainer>
           <Button onClick={handleNavigateAutomovel}>AUTOMÓVEL</Button>
-          <Button onClick={handleNavigatePatrimonial}>PATRIMONIAL</Button>
+          <Button disabled>PATRIMONIAL</Button>
         </ButtonNavContainer>
+
         <Container>
           <Title>Seguro Patrimonial</Title>
 
+          <Container>
+            <Title>Selecione o Seguro Patrimonial</Title>
+            <select
+              value={seguroSelecionadoIndex}
+              onChange={(e) => setSeguroSelecionadoIndex(Number(e.target.value))}
+            >
+              {seguros.map((s, i) => (
+                <option key={s.id} value={i}>
+                  {s.nomeseguradora} - Apólice {s.apolice}
+                </option>
+              ))}
+            </select>
+          </Container>
+
           <Section>
             <Subsection>
-              <SubsectionTitle>Seguradora</SubsectionTitle>
-              <ValueRow><Label>Seguradora:</Label> <Value>{dados.seguradora.nome}</Value></ValueRow>
-              <ValueRow><Label>Apólice:</Label> <Value>{dados.seguradora.apolice}</Value></ValueRow>
-              <ValueRow><Label>Endoso:</Label> <Value>{dados.seguradora.endoso}</Value></ValueRow>
-              <ValueRow><Label>Vigência:</Label> <Value>{dados.seguradora.vigencia.inicio} até {dados.seguradora.vigencia.fim}</Value></ValueRow>
-              <ValueRow><Label>Local Segurado:</Label> <Value>Bairro: {dados.seguradora.local.bairro} - Cidade: {dados.seguradora.local.cidade}</Value></ValueRow>
-              <ValueRow><Label>Item:</Label> <Value>{dados.seguradora.item}</Value></ValueRow>
-              <ValueRow><Label>Atividade:</Label> <Value>{dados.seguradora.atividade}</Value></ValueRow>
+              <ValueRow><Label>Seguradora:</Label> <Value>{dados.nomeseguradora}</Value></ValueRow>
+              <ValueRow><Label>Apólice:</Label> <Value>{dados.apolice}</Value></ValueRow>
+              <ValueRow><Label>Endoso:</Label> <Value>{dados.endoso}</Value></ValueRow>
+              <ValueRow><Label>Vigência:</Label> <Value>{dados.vigenciainicio} até {dados.vigenciafim}</Value></ValueRow>
+              <ValueRow><Label>Local Segurado:</Label> <Value>Bairro: {dados.bairro} - Cidade: {dados.cidade}</Value></ValueRow>
+              <ValueRow><Label>Item:</Label> <Value>{dados.item}</Value></ValueRow>
+              <ValueRow><Label>Atividade:</Label> <Value>{dados.atividade}</Value></ValueRow>
             </Subsection>
           </Section>
 
           <Section>
             <Subsection>
               <SubsectionTitle>Importâncias Seguradas</SubsectionTitle>
-              {dados.importancias.map((item, idx) => (
-                <ValueRow key={idx}>
-                  <Label>Cobertura:</Label> <Value>{item.cobertura}</Value>
-                  <Label>IS:</Label> <Value>{item.is}</Value>
-                  <Label>Franquia:</Label> <Value>{item.franquia}</Value>
-                </ValueRow>
-              ))}
+              <ValueRow>
+                <Label>Avaliação:</Label> <Value>{dados.importancias?.avaliacao}</Value>
+                <Label>Cobertura:</Label> <Value>{dados.importancias?.cobertura}</Value>
+              </ValueRow>
             </Subsection>
           </Section>
 
           <Section>
             <Subsection>
               <SubsectionTitle>Prêmios</SubsectionTitle>
-              <ValueRow><Label>Indexador:</Label> <Value>{dados.premios.indexador}</Value></ValueRow>
-              <ValueRow><Label>Data Cotação:</Label> <Value>{dados.premios.dataCotacao}</Value></ValueRow>
-              <ValueRow><Label>Valor:</Label> <Value>R$ {dados.premios.valor}</Value></ValueRow>
-              <ValueRow><Label>Forma de Pagamento:</Label> <Value>{dados.premios.pagamento}</Value></ValueRow>
-              <ValueRow><Label>Parcelas:</Label> <Value>{dados.premios.parcelas}</Value></ValueRow>
-              <ValueRow><Label>P. Líquido:</Label> <Value>R$ {dados.premios.liquido}</Value></ValueRow>
-              <ValueRow><Label>P. Total:</Label> <Value>R$ {dados.premios.total}</Value></ValueRow>
-              <ValueRow><Label>Observações:</Label> <Value>{dados.premios.observacoes}</Value></ValueRow>
+              <ValueRow><Label>Data Cotação:</Label> <Value>{dados.premios?.dataCotacao}</Value></ValueRow>
+              <ValueRow><Label>Valor:</Label> <Value>R$ {dados.premios?.valor}</Value></ValueRow>
+              <ValueRow><Label>Forma de Pagamento:</Label> <Value>{dados.premios?.pagamento}</Value></ValueRow>
+              <ValueRow><Label>Parcelas:</Label> <Value>{dados.premios?.parcelas}</Value></ValueRow>
+              <ValueRow><Label>P. Líquido:</Label> <Value>R$ {dados.premios?.liquido}</Value></ValueRow>
+              <ValueRow><Label>P. Total:</Label> <Value>R$ {dados.premios?.total}</Value></ValueRow>
+              <ValueRow><Label>Observações:</Label> <Value>{dados.premios?.observacoes}</Value></ValueRow>
             </Subsection>
           </Section>
 
           <Section>
             <Subsection>
               <SubsectionTitle>Carnês</SubsectionTitle>
-              {dados.carnes.map((item, index) => (
+              {dados.carnes?.map((item, index) => (
                 <ValueRow key={index}>
-                  <Label>Venc. 1:</Label> <Value>{item.vencimento1}</Value>
-                  <Label>Parcela 1:</Label> <Value>{item.parcela1}</Value>
-                  <Label>Venc. 2:</Label> <Value>{item.vencimento2}</Value>
-                  <Label>Parcela 2:</Label> <Value>{item.parcela2}</Value>
+                  <Label>Vencimento {index + 1}:</Label> <Value>{item.vencimento}</Value>
+                  <Label>Valor:</Label> <Value>R$ {item.valor}</Value>
                 </ValueRow>
               ))}
             </Subsection>

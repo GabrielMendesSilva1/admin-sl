@@ -5,7 +5,6 @@ import {
     validateEmail,
     formatCEP
 } from '../utils';
-import { postSeguradora } from '../../../services/SeguradoraService'; // importa aqui
 
 export const useCadastroSeguradora = () => {
     const [form, setForm] = useState({
