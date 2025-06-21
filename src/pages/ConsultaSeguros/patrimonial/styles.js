@@ -21,6 +21,19 @@ export const Container = styled.div`
   overflow-x: hidden;  /* Impede rolagem lateral */
 `;
 
+export const Input = styled.input`
+  padding: 8px 12px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 100%;
+  box-sizing: border-box;
+  &:focus {
+    outline: none;
+    border-color: #0077cc;
+  }
+`;
+
 export const Button = styled.button`
   padding: 0.75rem 1.5rem;
   background: #0077cc;

@@ -26,3 +26,17 @@ export const postPatrimonial = async (data) => {
 
   return { status: 200, message: 'Cadastro patrimonial salvo com sucesso.' };
 };
+
+export const updatePatrimonial = async (id, dadosAtualizados) => {
+  const { data, error } = await supabase
+    .from('seguros_patrimoniais')
+    .update(dadosAtualizados)
+    .eq('id', id);
+
+  if (error) {
+    console.error('Erro ao atualizar seguro patrimonial:', error.message);
+    throw error;
+  }
+
+  return data;
+};
