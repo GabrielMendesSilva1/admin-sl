@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Grid, Card, Title } from './styles';
 import { FiLogOut } from 'react-icons/fi';
-import ModalCadastro from '../Cadastro/components/ModalCadastro';
+import ModalCadastro from '../cadastro/components/ModalCadastro';
 import { useDashboard } from './useDashboard';
 
 const Dashboard = () => {
