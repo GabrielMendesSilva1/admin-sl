@@ -30,6 +30,6 @@ const AppRoutes = () => {
                 <Route path="/cadastro/Patrimonio" element={<CadastroPatrimonial />} />
             </Routes>
     );
-};
+}
 
 export default AppRoutes;
