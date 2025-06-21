@@ -19,7 +19,7 @@ const AppRoutes = () => {
                 <Route path="/" element={<Login />} />
                 <Route path="/dashboard" element={<Dashboard />} />
 
-                <Route path="/segurados" element={<Segurado />} />
+                <Route path="/segurados" element={<ConsultaSegurado />} />
                 <Route path="/automovel/:cpfcnpj" element={<Automovel />} />
                 <Route path="/patrimonial/:cpfcnpj" element={<Patrimonial />} />
                 <Route path="/seguradoras" element={<Seguradoras />} />\
