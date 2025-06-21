@@ -7,10 +7,10 @@ import Automovel from "../pages/ConsultaSeguros/automovel";
 import Patrimonial from "../pages/ConsultaSeguros/patrimonial";
 import Seguradoras from "../pages/ConsultaSeguradoras";
 
-import CadastroSegurado from "../pages/Cadastro/Segurado";
-import CadastroSeguradora from "../pages/Cadastro/Seguradora";
-import CadastroAuto from "../pages/Cadastro/Seguros/Automovel";
-import CadastroPatrimonial from "../pages/Cadastro/Seguros/Patrimonial";
+import CadastroSegurado from "../pages/cadastro/Segurado";
+import CadastroSeguradora from "../pages/cadastro/Seguradora";
+import CadastroAuto from "../pages/cadastro/Seguros/Automovel";
+import CadastroPatrimonial from "../pages/cadastro/Seguros/Patrimonial";
 
 const AppRoutes = () => {
     return (
