@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
     Container, Section, Title, Label, ValueRow, Value,
-    Subsection, Grid, PageWrapper, SubsectionTitle, ButtonNavContainer, Button
-} from "./styles"; 
+    Subsection, Grid, PageWrapper, SubsectionTitle, ButtonNavContainer, Button, Input
+} from "./styles";
 import { getAutomovelBycpfcnpj } from "../../../services/AutomovelService";
 import Header from '../../../components/Header';
 import Loading from "../../../components/Loading/loading";
 import AlertMessage from "../../../components/ModalAlert";
+import EditAutomovel from "./editAutomovel";
 
 const Automovel = () => {
     const { cpfcnpj } = useParams();
@@ -16,6 +17,8 @@ const Automovel = () => {
     const [showAlert, setShowAlert] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(0);
     const navigate = useNavigate();
+    const [modoEdicao, setModoEdicao] = useState(false);
+    const selectedVeiculo = veiculos[selectedIndex]
 
     useEffect(() => {
         const fetchDados = async () => {
@@ -52,14 +55,28 @@ const Automovel = () => {
         );
     }
 
-    const selectedVeiculo = veiculos[selectedIndex];
+    const handleUpdate = (veiculoAtualizado) => {
+        const novosVeiculos = [...veiculos];
+        novosVeiculos[selectedIndex] = veiculoAtualizado;
+        setVeiculos(novosVeiculos);
+        setModoEdicao(false);
+    };;
 
-    const formatDate = (str) => {
-        if (!str) return "";
-        const d = new Date(str);
-        if (isNaN(d)) return str; // caso não seja data válida, retorna original
-        return d.toLocaleDateString("pt-BR");
-      };
+    const Modal = ({ children, onClose }) => (
+        <div style={{
+            position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+            backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex',
+            justifyContent: 'center', alignItems: 'center', zIndex: 1000
+        }}>
+            <div style={{
+                backgroundColor: 'white', padding: 20, borderRadius: 8, maxHeight: '90vh', overflowY: 'auto',
+                width: '90%', maxWidth: 600
+            }}>
+                <button onClick={onClose} style={{ float: 'right' }}>X</button>
+                {children}
+            </div>
+        </div>
+    );
 
     return (
         <>
@@ -68,6 +85,11 @@ const Automovel = () => {
                 <ButtonNavContainer>
                     <Button onClick={() => navigate(`/automovel/${cpfcnpj}`)}>AUTOMÓVEL</Button>
                     <Button onClick={handleNavigatePatrimonial}>PATRIMONIAL</Button>
+
+                    {selectedVeiculo && (
+                        <Button onClick={() => setModoEdicao(true)}>Editar Dados</Button>
+                    )}
+                    {console.log("modoEdicao setado para true")}
                 </ButtonNavContainer>
 
                 <Container>
@@ -152,6 +174,17 @@ const Automovel = () => {
                         </Section>
                     </Container>
                 )}
+
+                {selectedVeiculo && modoEdicao && (
+                    <Modal onClose={() => setModoEdicao(false)}>
+                        <EditAutomovel
+                            veiculo={selectedVeiculo}
+                            onCancel={() => setModoEdicao(false)}
+                            onUpdate={handleUpdate}
+                        />
+                    </Modal>
+                )}
+
             </PageWrapper>
         </>
     );

@@ -18,3 +18,11 @@ export async function getAutomovelBycpfcnpj(cpfcnpj) {
   return data;
 }
 
+export async function updateAutomovel(id, dados) {
+  const { error } = await supabase
+    .from('seguros_automotivos')
+    .update(dados)
+    .eq('id', id);
+
+  if (error) throw error;
+}
