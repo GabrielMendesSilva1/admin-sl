@@ -12,23 +12,26 @@ import CadastroSeguradora from "../pages/cadastro/Seguradora";
 import CadastroAuto from "../pages/cadastro/Seguros/Automovel";
 import CadastroPatrimonial from "../pages/cadastro/Seguros/Patrimonial";
 
+import SegurosAVencer from "../pages/relatorios/seguros-a-vencer";
+
 const AppRoutes = () => {
     return (
-        
-            <Routes>
-                <Route path="/" element={<Login />} />
-                <Route path="/dashboard" element={<Dashboard />} />
+        <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/dashboard" element={<Dashboard />} />
 
-                <Route path="/segurados" element={<ConsultaSegurado />} />
-                <Route path="/automovel/:cpfcnpj" element={<Automovel />} />
-                <Route path="/patrimonial/:cpfcnpj" element={<Patrimonial />} />
-                <Route path="/seguradoras" element={<Seguradoras />} />\
+            <Route path="/segurados" element={<ConsultaSegurado />} />
+            <Route path="/automovel/:cpfcnpj" element={<Automovel />} />
+            <Route path="/patrimonial/:cpfcnpj" element={<Patrimonial />} />
+            <Route path="/seguradoras" element={<Seguradoras />} />
 
-                <Route path="/cadastro/Segurado" element={<CadastroSegurado />} />
-                <Route path="/cadastro/Seguradora" element={<CadastroSeguradora />} />
-                <Route path="/cadastro/Automovel" element={<CadastroAuto />} />
-                <Route path="/cadastro/Patrimonio" element={<CadastroPatrimonial />} />
-            </Routes>
+            <Route path="/cadastro/Segurado" element={<CadastroSegurado />} />
+            <Route path="/cadastro/Seguradora" element={<CadastroSeguradora />} />
+            <Route path="/cadastro/Automovel" element={<CadastroAuto />} />
+            <Route path="/cadastro/Patrimonio" element={<CadastroPatrimonial />} />
+
+            <Route path="/relatorios/seguros-a-vencer" element={<SegurosAVencer />} />
+        </Routes>
     );
 }
 
