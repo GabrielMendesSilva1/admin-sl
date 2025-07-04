@@ -111,7 +111,7 @@ const Automovel = () => {
                         <Title>Detalhes do Seguro</Title>
 
                         <Section>
-                            <Label>Segurado:</Label> <Value>{selectedVeiculo.segurado}</Value>
+                            <Label>Segurado:</Label> <Value>{selectedVeiculo.segurado?.nome || 'Nome não disponível'}</Value>
                         </Section>
 
                         <Section>

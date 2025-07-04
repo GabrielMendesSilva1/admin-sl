@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import { supabase } from '../../../lib/supaBaseClient';
+import { insertSeguradora, Seguradora } from "../../../services/SeguradoraService";
+
 import {
     formatCNPJ,
     formatTelefone,
@@ -24,8 +27,9 @@ export const useCadastroSeguradora = () => {
     const [emailError, setEmailError] = useState('');
     const [loadingCep, setLoadingCep] = useState(false);
     const [cepError, setCepError] = useState('');
+    const [loadingSubmit, setLoadingSubmit] = useState(false);
 
-    const handleChange = (field, value) => {
+    const handleChange = (field: string, value: string) => {
         let formattedValue = value;
 
         if (field === 'cgc') {
@@ -41,7 +45,7 @@ export const useCadastroSeguradora = () => {
         if (field === 'cep' && value.replace(/\D/g, '').length === 8) {
             setLoadingCep(true);
             setCepError('');
-            fetch(`https://viacep.com.br/ws/${value}/json/`)
+            fetch(`https://viacep.com.br/ws/${value.replace(/\D/g, '')}/json/`)
                 .then(res => res.json())
                 .then(data => {
                     if (!data.erro) {
@@ -56,9 +60,8 @@ export const useCadastroSeguradora = () => {
                         setCepError('CEP não encontrado!');
                     }
                 })
-                .catch(err => {
+                .catch(() => {
                     setCepError('Erro ao buscar CEP');
-                    console.error('Erro ao buscar CEP:', err);
                 })
                 .finally(() => {
                     setLoadingCep(false);
@@ -67,7 +70,7 @@ export const useCadastroSeguradora = () => {
     };
 
     const handleEmailBlur = () => {
-        if (!validateEmail(form.email)) {
+        if (form.email && !validateEmail(form.email)) {
             setEmailError('E-mail inválido!');
         } else {
             setEmailError('');
@@ -75,8 +78,16 @@ export const useCadastroSeguradora = () => {
     };
 
     const handleSubmit = async () => {
+        if (emailError) {
+            alert('Corrija os erros antes de salvar.');
+            return;
+        }
+
+        setLoadingSubmit(true);
+
         try {
-            await postSeguradora(form);
+            await insertSeguradora(form); // <- usando service centralizado
+
             alert('Seguradora cadastrada com sucesso!');
             setForm({
                 nome: '',
@@ -91,11 +102,14 @@ export const useCadastroSeguradora = () => {
                 cgc: '',
                 email: '',
             });
-        } catch (error) {
+        } catch (error: any) {
             console.error('Erro ao cadastrar seguradora:', error.message);
-            alert('Erro ao cadastrar seguradora.');
+            alert('Erro ao cadastrar seguradora. ' + error.message);
+        } finally {
+            setLoadingSubmit(false);
         }
     };
+
 
     return {
         form,
@@ -105,5 +119,6 @@ export const useCadastroSeguradora = () => {
         emailError,
         loadingCep,
         cepError,
+        loadingSubmit,
     };
 };

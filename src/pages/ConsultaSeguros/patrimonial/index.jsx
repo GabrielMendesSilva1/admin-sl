@@ -113,6 +113,9 @@ const Patrimonial = () => {
             </select>
 
           </Container>
+          <Section>
+            <Label>Segurado:</Label> <Value>{dados.segurado?.nome || 'Nome não disponível'}</Value>
+          </Section>
 
           <Section>
             <Subsection>
@@ -162,7 +165,7 @@ const Patrimonial = () => {
           </Section>
         </Container>
 
-        {modoEdicao &&(
+        {modoEdicao && (
           <Modal onClose={() => setModoEdicao(false)}>
             <EditPatrimonial
               seguro={seguros[seguroSelecionadoIndex]}

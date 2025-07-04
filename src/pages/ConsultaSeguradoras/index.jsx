@@ -10,7 +10,7 @@ import {
     Value,
     Grid
 } from "./styles";
-import { getMockedSeguradoras } from "../../services/SeguradoraService";
+import { getSeguradoras } from "../../services/SeguradoraService";
 import Header from "../../components/Header";
 
 const Seguradoras = () => {
@@ -18,9 +18,13 @@ const Seguradoras = () => {
     const [selected, setSelected] = useState(null);
 
     useEffect(() => {
-        const data = getMockedSeguradoras();
-        setSeguradoras(data);
-    }, []);
+        getSeguradoras()
+            .then(data => setSeguradoras(data))
+            .catch(err => {
+                console.error('Erro ao carregar seguradoras:', err.message);
+                alert('Erro ao carregar seguradoras.');
+            });
+    }, []);    
 
     const handleChange = (e) => {
         const selectedId = e.target.value;
