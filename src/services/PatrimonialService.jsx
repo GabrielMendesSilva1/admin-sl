@@ -3,7 +3,12 @@ import { supabase } from '../lib/supaBaseClient';
 export const getPatrimonialBycpfcnpj = async (cpfcnpj) => {
   const { data, error } = await supabase
     .from('seguros_patrimoniais')
-    .select('*')
+    .select(`
+      *,
+      segurado:segurados (
+        nome
+      )
+    `)
     .eq('cpfcnpj', cpfcnpj);
 
   if (error) {

@@ -4,19 +4,24 @@ import { useSegurosAVencer } from "./hooks/useSegurosAVencer";
 import FiltroMesAno from "./components/FiltroMesAno";
 import TabelaSeguros from "./components/TabelaSeguros";
 import ResumoSeguros from "./components/ResumoSeguros";
-import { Container, Wrapper, Title } from './styles';
+import { Container, Wrapper, Title, PrintStyles } from './styles';
 import Header from "../../../components/Header";
 
-
 const SegurosAVencerPage: React.FC = () => {
-  const [mesAno, setMesAno] = useState<Dayjs | null>(dayjs());
-  const mes = mesAno?.month()! + 1;
-  const ano = mesAno?.year()!;
+  const [mesAno, setMesAno] = useState<Dayjs | null>(null); // INICIALIZA NULL
+
+  const mes = mesAno ? mesAno.month() + 1 : undefined;
+  const ano = mesAno ? mesAno.year() : undefined;
 
   const { seguros, resumo } = useSegurosAVencer(mes, ano);
 
+  const handlePrint = () => {
+    window.print();
+  };
+
   return (
     <>
+      <PrintStyles />  {/* IMPORTANTE */}
       <Header />
       <Container>
         <Wrapper>
@@ -31,6 +36,10 @@ const SegurosAVencerPage: React.FC = () => {
           />
 
           <TabelaSeguros dados={seguros} />
+
+          <button onClick={handlePrint} style={{ marginTop: '1rem' }}>
+            Imprimir Relatório
+          </button>
         </Wrapper>
       </Container>
     </>

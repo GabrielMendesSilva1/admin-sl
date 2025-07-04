@@ -1,4 +1,6 @@
-import styled from 'styled-components';
+// styles.ts (ou onde estiver seus estilos)
+
+import styled, { createGlobalStyle } from 'styled-components';
 import background from '../../../assets/insurance-bg.jpeg';
 
 export const Container = styled.div`
@@ -28,4 +30,48 @@ export const Title = styled.h1`
   margin-bottom: 2rem;
   color: #003366;
   text-align: center;
+`;
+
+// Global style para impressão
+export const PrintStyles = createGlobalStyle`
+  @media print {
+    body {
+      margin: 1cm;
+      font-size: 12pt;
+      background: white !important;
+    }
+
+    /* Esconder o background da página */
+    ${Container} {
+      background: none !important;
+      padding: 0 !important;
+      min-height: auto !important;
+      width: 100% !important;
+      display: block !important;
+      justify-content: unset !important;
+      align-items: unset !important;
+    }
+
+    /* Ajustar o wrapper para ocupar 100% */
+    ${Wrapper} {
+      background: white !important;
+      box-shadow: none !important;
+      border-radius: 0 !important;
+      padding: 0 !important;
+      max-width: 100% !important;
+      width: 100% !important;
+    }
+
+    /* Esconder elementos que não devem aparecer na impressão, exemplo botão, header */
+    button, header {
+      display: none !important;
+    }
+
+    /* Ajuste geral para a tabela */
+    table {
+      width: 100% !important;
+      border-collapse: collapse !important;
+      font-size: 12pt !important;
+    }
+  }
 `;

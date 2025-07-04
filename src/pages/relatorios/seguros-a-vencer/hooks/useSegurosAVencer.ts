@@ -1,6 +1,17 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../../../../lib/supaBaseClient";
 
+interface Segurado {
+  nome: string;
+  cpfcnpj: string;
+}
+
+interface SeguroItemRaw {
+  vigenciafim: string;
+  nomeseguradora: string;
+  segurado?: Segurado;  // objeto único, não array
+}
+
 interface SeguroItem {
   data: string;
   nome: string;
@@ -14,7 +25,7 @@ function getMonthRange(ano: number, mes: number) {
   return { start, end };
 }
 
-export function useSegurosAVencer(mes: number, ano: number) {
+export function useSegurosAVencer(mes?: number, ano?: number) {
   const [seguros, setSeguros] = useState<SeguroItem[]>([]);
   const [resumo, setResumo] = useState({
     automovel: 0,
@@ -23,50 +34,42 @@ export function useSegurosAVencer(mes: number, ano: number) {
   });
 
   useEffect(() => {
+    if (!mes || !ano) return;  // NÃO busca se mês ou ano não estiverem definidos
+
     async function buscarSeguros() {
       const { start, end } = getMonthRange(ano, mes);
 
       const [auto, patri] = await Promise.all([
         supabase
           .from("seguros_automotivos")
-          .select("vigenciafim, segurado, nomeseguradora")
+          .select("vigenciafim, nomeseguradora, segurado:segurados(nome, cpfcnpj)")
           .gte("vigenciafim", start)
           .lte("vigenciafim", end),
 
         supabase
           .from("seguros_patrimoniais")
-          .select("vigenciafim, cpfcnpj, nomeseguradora")
+          .select("vigenciafim, nomeseguradora, segurado:segurados(nome, cpfcnpj)")
           .gte("vigenciafim", start)
           .lte("vigenciafim", end),
       ]);
 
-      const automovel: SeguroItem[] = (auto.data ?? []).map(item => ({
-        data: item.vigenciafim,
-        nome: item.segurado || "Não informado",
-        seguradora: item.nomeseguradora || "Desconhecida",
-        tipo: "Automóvel",
-      }));
+      const automovel: SeguroItem[] = (auto.data ?? []).map(
+        (item: SeguroItemRaw) => ({
+          data: item.vigenciafim,
+          nome: item.segurado?.nome || "Não informado",
+          seguradora: item.nomeseguradora || "Desconhecida",
+          tipo: "Automóvel",
+        })
+      );
 
-      const cpfs = patri.data?.map(p => p.cpfcnpj).filter(Boolean);
-      let nomesSeguradosMap: Record<string, string> = {};
-
-      if (cpfs?.length) {
-        const { data: segurados } = await supabase
-          .from("segurados")
-          .select("cpfcnpj, nome")
-          .in("cpfcnpj", cpfs);
-
-        segurados?.forEach(s => {
-          if (s.cpfcnpj) nomesSeguradosMap[s.cpfcnpj] = s.nome || "Desconhecido";
-        });
-      }
-
-      const patrimonio: SeguroItem[] = (patri.data ?? []).map(item => ({
-        data: item.vigenciafim,
-        nome: nomesSeguradosMap[item.cpfcnpj] || item.cpfcnpj || "Desconhecido",
-        seguradora: item.nomeseguradora || "Desconhecida",
-        tipo: "Patrimônio",
-      }));
+      const patrimonio: SeguroItem[] = (patri.data ?? []).map(
+        (item: SeguroItemRaw) => ({
+          data: item.vigenciafim,
+          nome: item.segurado?.nome || "Não informado",
+          seguradora: item.nomeseguradora || "Desconhecida",
+          tipo: "Patrimônio",
+        })
+      );
 
       const todos = [...automovel, ...patrimonio];
 
@@ -78,7 +81,7 @@ export function useSegurosAVencer(mes: number, ano: number) {
       });
     }
 
-    if (mes && ano) buscarSeguros();
+    buscarSeguros();
   }, [mes, ano]);
 
   return { seguros, resumo };

@@ -11,7 +11,12 @@ export async function postAutomovel(dados) {
 export async function getAutomovelBycpfcnpj(cpfcnpj) {
   const { data, error } = await supabase
     .from('seguros_automotivos')
-    .select('*')
+    .select(`
+      *,
+      segurado:segurados (
+        nome
+      )
+    `)
     .eq('cpfcnpj', cpfcnpj);
 
   if (error && error.code !== 'PGRST116') throw error;
