@@ -9,8 +9,6 @@ import {
     Field,
     Label,
     Input,
-    Select,
-    Option,
     ButtonRow,
     Button,
 } from './styles';
@@ -23,7 +21,8 @@ const CadastroSeguradora = () => {
         handleEmailBlur,
         emailError,
         loadingCep,
-        cepError
+        cepError,
+        loadingSubmit,
     } = useCadastroSeguradora();
 
     return (
@@ -33,67 +32,97 @@ const CadastroSeguradora = () => {
                 <Panel>
                     <PageTitle>Cadastro de Seguradora</PageTitle>
 
-                    {/* DADOS BÁSICOS */}
+                    {/* Campos */}
                     <FormRow>
                         <Field>
                             <Label>Seguradora:</Label>
-                            <Input value={form.nome} onChange={e => handleChange('nome', e.target.value)} />
+                            <Input
+                                value={form.nome}
+                                onChange={e => handleChange('nome', e.target.value)}
+                            />
                         </Field>
                     </FormRow>
 
-                    {/* ENDEREÇO */}
                     <FormRow>
                         <Field>
                             <Label>CEP:</Label>
-                            <Input value={form.cep} onChange={e => handleChange('cep', e.target.value)} />
+                            <Input
+                                value={form.cep}
+                                onChange={e => handleChange('cep', e.target.value)}
+                            />
+                            {cepError && <div style={{ color: 'red' }}>{cepError}</div>}
+                            {loadingCep && <div>Buscando endereço...</div>}
                         </Field>
                         <Field>
                             <Label>Endereço:</Label>
-                            <Input value={form.endereco} onChange={e => handleChange('endereco', e.target.value)} />
+                            <Input
+                                value={form.endereco}
+                                onChange={e => handleChange('endereco', e.target.value)}
+                            />
                         </Field>
                         <Field>
                             <Label>Bairro:</Label>
-                            <Input value={form.bairro} onChange={e => handleChange('bairro', e.target.value)} />
+                            <Input
+                                value={form.bairro}
+                                onChange={e => handleChange('bairro', e.target.value)}
+                            />
                         </Field>
                     </FormRow>
+
                     <FormRow>
                         <Field>
                             <Label>Cidade:</Label>
-                            <Input value={form.cidade} onChange={e => handleChange('cidade', e.target.value)} />
+                            <Input
+                                value={form.cidade}
+                                onChange={e => handleChange('cidade', e.target.value)}
+                            />
                         </Field>
                         <Field>
                             <Label>UF:</Label>
-                            <Input value={form.uf} onChange={e => handleChange('uf', e.target.value)} />
+                            <Input
+                                value={form.uf}
+                                onChange={e => handleChange('uf', e.target.value)}
+                            />
                         </Field>
                     </FormRow>
 
-                    {/* CONTATO */}
                     <FormRow>
                         <Field>
                             <Label>Telefone 1:</Label>
-                            <Input value={form.fone1} onChange={e => handleChange('fone1', e.target.value)} />
+                            <Input
+                                value={form.fone1}
+                                onChange={e => handleChange('fone1', e.target.value)}
+                            />
                         </Field>
                         <Field>
                             <Label>Telefone 2:</Label>
-                            <Input value={form.fone2} onChange={e => handleChange('fone2', e.target.value)} />
+                            <Input
+                                value={form.fone2}
+                                onChange={e => handleChange('fone2', e.target.value)}
+                            />
                         </Field>
                     </FormRow>
+
                     <FormRow>
                         <Field>
                             <Label>Contato:</Label>
-                            <Input value={form.contato} onChange={e => handleChange('contato', e.target.value)} />
+                            <Input
+                                value={form.contato}
+                                onChange={e => handleChange('contato', e.target.value)}
+                            />
                         </Field>
                     </FormRow>
 
-                    {/* DOCUMENTOS */}
                     <FormRow>
                         <Field>
                             <Label>CNPJ:</Label>
-                            <Input value={form.cgc} onChange={e => handleChange('cgc', e.target.value)} />
+                            <Input
+                                value={form.cgc}
+                                onChange={e => handleChange('cgc', e.target.value)}
+                            />
                         </Field>
                     </FormRow>
 
-                    {/* E-MAIL */}
                     <FormRow>
                         <Field>
                             <Label>E-mail:</Label>
@@ -107,7 +136,9 @@ const CadastroSeguradora = () => {
                     </FormRow>
 
                     <ButtonRow>
-                        <Button onClick={handleSubmit}>Salvar</Button>
+                        <Button onClick={handleSubmit} disabled={loadingSubmit}>
+                            {loadingSubmit ? 'Salvando...' : 'Salvar'}
+                        </Button>
                     </ButtonRow>
                 </Panel>
             </Container>
