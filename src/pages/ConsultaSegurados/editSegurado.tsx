@@ -63,7 +63,20 @@ const EditSegurado = ({ segurado, onCancel, onUpdate }) => {
             onChange={e => handleChange('endereco', e.target.value)}
           />
         </Row>
-
+        <Row>
+          <Label>Numero:</Label>
+          <Input
+            value={form.numero || ''}
+            onChange={e => handleChange('numero', e.target.value)}
+          />
+        </Row>
+        <Row>
+          <Label>Complemento:</Label>
+          <Input
+            value={form.complemento || ''}
+            onChange={e => handleChange('complemento', e.target.value)}
+          />
+        </Row>
         <Row>
           <Label>Bairro:</Label>
           <Input

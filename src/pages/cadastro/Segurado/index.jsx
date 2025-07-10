@@ -55,6 +55,14 @@ const CadastroSegurado = () => {
                             <Input value={form.endereco} onChange={e => handleChange('endereco', e.target.value)} />
                         </Field>
                         <Field>
+                            <Label>Numero:</Label>
+                            <Input value={form.numero} onChange={e => handleChange('endereco', e.target.value)} />
+                        </Field>
+                        <Field>
+                            <Label>Complemento:</Label>
+                            <Input value={form.complemento} onChange={e => handleChange('endereco', e.target.value)} />
+                        </Field>
+                        <Field>
                             <Label>Bairro:</Label>
                             <Input value={form.bairro} onChange={e => handleChange('bairro', e.target.value)} />
                         </Field>

@@ -91,15 +91,22 @@ const ConsultaSegurado = () => {
                 <Label>Segurado:</Label> <Value>{resultado.nome}</Value>
                 <Label>Data de Cadastro:</Label> <Value>{resultado.datacadastro}</Value>
               </Row>
+              <Row></Row>
+
               <Row>
                 <Label>Endereço:</Label> <Value>{resultado.endereco}</Value>
                 <Label>Bairro:</Label> <Value>{resultado.bairro}</Value>
+              </Row>
+              <Row>
+                <Label>Numero:</Label> <Value>{resultado.numero}</Value>
+                <Label>Complemento:</Label> <Value>{resultado.complemento}</Value>
               </Row>
               <Row>
                 <Label>Cidade:</Label> <Value>{resultado.cidade}</Value>
                 <LabelUF>UF:</LabelUF> <ValueUF>{resultado.uf}</ValueUF>
                 <Label>CEP:</Label> <ValueUF>{resultado.cep}</ValueUF>
               </Row>
+              <Row></Row>
               <Row>
                 <Label>Telefone 1:</Label> <Value>{resultado.tel1}</Value>
                 <Label>Telefone 2:</Label> <Value>{resultado.tel2}</Value>
