@@ -86,10 +86,6 @@ const CadastroSegurado = () => {
                             <Label>E-mail:</Label>
                             <Input value={form.email} onChange={e => handleChange('email', e.target.value)} />
                         </Field>
-                        <Field>
-                            <Label>Contato:</Label>
-                            <Input value={form.contato} onChange={e => handleChange('contato', e.target.value)} />
-                        </Field>
                     </FormRow>
 
                     {/* DOCUMENTOS */}
@@ -108,10 +104,6 @@ const CadastroSegurado = () => {
                         <Field>
                             <Label>CPF/CNPJ:</Label>
                             <Input value={form.cpfcnpj} onChange={e => handleChange('cpfcnpj', e.target.value)} />
-                        </Field>
-                        <Field>
-                            <Label>RG:</Label>
-                            <Input value={form.rg} onChange={e => handleChange('rg', e.target.value)} />
                         </Field>
                     </FormRow>
 
@@ -134,10 +126,6 @@ const CadastroSegurado = () => {
                                 <Option value="viuvo">Viúvo(a)</Option>
                                 <Option value="uniaoEstavel">União Estável</Option>
                             </Select>
-                        </Field>
-                        <Field>
-                            <Label>1ª Habilitação:</Label>
-                            <Input type="date" value={form.habilitacao} onChange={e => handleChange('habilitacao', e.target.value)} />
                         </Field>
                     </FormRow>
 

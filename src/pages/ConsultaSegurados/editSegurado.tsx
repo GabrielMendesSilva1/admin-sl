@@ -105,14 +105,6 @@ const EditSegurado = ({ segurado, onCancel, onUpdate }) => {
         </Row>
 
         <Row>
-          <Label>Contato:</Label>
-          <Input
-            value={form.contato || ''}
-            onChange={e => handleChange('contato', e.target.value)}
-          />
-        </Row>
-
-        <Row>
           <Label>Tipo Pessoa:</Label>
           <Input
             value={form.tipopessoa || ''}
@@ -125,14 +117,6 @@ const EditSegurado = ({ segurado, onCancel, onUpdate }) => {
           <Input
             value={form.estadocivil || ''}
             onChange={e => handleChange('estadocivil', e.target.value)}
-          />
-        </Row>
-
-        <Row>
-          <Label>1ª Habilitação:</Label>
-          <Input
-            value={form.habilitacao || ''}
-            onChange={e => handleChange('habilitacao', e.target.value)}
           />
         </Row>
 
@@ -153,11 +137,6 @@ const EditSegurado = ({ segurado, onCancel, onUpdate }) => {
         <Row>
           <Label>CPF/CNPJ:</Label>
           <Value>{form.cpfcnpj}</Value>
-        </Row>
-
-        <Row>
-          <Label>RG:</Label>
-          <Value>{form.rg}</Value>
         </Row>
 
         <Row>

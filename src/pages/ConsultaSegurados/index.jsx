@@ -106,17 +106,14 @@ const ConsultaSegurado = () => {
               </Row>
               <Row>
                 <Label>E-mail:</Label> <Value>{resultado.email}</Value>
-                <Label>Contato:</Label> <Value>{resultado.contato}</Value>
               </Row>
               <Row>
                 <Label>Tipo Pessoa:</Label> <Value>{resultado.tipopessoa}</Value>
                 <Label>CPF/CNPJ:</Label> <Value>{resultado.cpfcnpj}</Value>
-                <Label>RG:</Label> <Value>{resultado.rg}</Value>
               </Row>
               <Row>
                 <Label>Data Nascimento:</Label> <Value>{resultado.datanascimento}</Value>
                 <Label>Estado Civil:</Label> <Value>{resultado.estadocivil}</Value>
-                <Label>1ª Habilitação:</Label> <Value>{resultado.habilitacao}</Value>
               </Row>
               <Row>
                 <Label>Observações:</Label> <Value>{resultado.observacao}</Value>
