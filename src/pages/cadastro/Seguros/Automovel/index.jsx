@@ -12,6 +12,7 @@ import {
     ButtonRow,
     Button,
 } from './styles';
+import { formatCurrency, parseCurrency } from "../../utils";
 
 const CadastroAuto = () => {
     const {
@@ -152,106 +153,159 @@ const CadastroAuto = () => {
                     <PageTitle style={{ fontSize: 22 }}>Importâncias</PageTitle>
                     <FormRow>
                         <Field>
-                            <Label>Casco:</Label>
-                            <Input
-                                value={form.importancias.casco}
-                                onChange={(e) => handleChange('importancias', 'casco', e.target.value)}
-                            />
-                        </Field>
-                        <Field>
                             <Label>Franquia:</Label>
                             <Input
-                                value={form.importancias.franquia}
-                                onChange={(e) => handleChange('importancias', 'franquia', e.target.value)}
+                                value={formatCurrency(form.importancias.franquia)}
+                                onChange={(e) =>
+                                    handleChange('importancias', 'franquia', parseCurrency(e.target.value))
+                                }
                             />
                         </Field>
                     </FormRow>
+
                     <FormRow>
-                        <Field>
-                            <Label>Bônus:</Label>
-                            <Input
-                                value={form.importancias.bonus}
-                                onChange={(e) => handleChange('importancias', 'bonus', e.target.value)}
-                            />
-                        </Field>
                         <Field>
                             <Label>Carroceria:</Label>
                             <Input
-                                value={form.importancias.carroceria}
-                                onChange={(e) => handleChange('importancias', 'carroceria', e.target.value)}
+                                value={formatCurrency(form.importancias.carroceria)}
+                                onChange={(e) =>
+                                    handleChange('importancias', 'carroceria', parseCurrency(e.target.value))
+                                }
                             />
                         </Field>
-                    </FormRow>
-                    <FormRow>
                         <Field>
                             <Label>Franquia 2:</Label>
                             <Input
-                                value={form.importancias.franquia2}
-                                onChange={(e) => handleChange('importancias', 'franquia2', e.target.value)}
+                                value={formatCurrency(form.importancias.franquia2)}
+                                onChange={(e) =>
+                                    handleChange('importancias', 'franquia2', parseCurrency(e.target.value))
+                                }
                             />
                         </Field>
+                    </FormRow>
+
+                    <FormRow>
                         <Field>
                             <Label>Dan. Materiais:</Label>
                             <Input
-                                value={form.importancias.dmateriais}
-                                onChange={(e) => handleChange('importancias', 'dmateriais', e.target.value)}
+                                value={formatCurrency(form.importancias.dmateriais)}
+                                onChange={(e) =>
+                                    handleChange('importancias', 'dmateriais', parseCurrency(e.target.value))
+                                }
                             />
                         </Field>
-                    </FormRow>
-                    <FormRow>
-                        <Field>
-                            <Label>Acessórios:</Label>
-                            <Input
-                                value={form.importancias.acessorios}
-                                onChange={(e) => handleChange('importancias', 'acessorios', e.target.value)}
-                            />
-                        </Field>
-                        <Field>
-                            <Label>Assistência 24h:</Label>
-                            <Input
-                                value={form.importancias.assistencia24h}
-                                onChange={(e) => handleChange('importancias', 'assistencia24h', e.target.value)}
-                            />
-                        </Field>
-                    </FormRow>
-                    <FormRow>
                         <Field>
                             <Label>Dan. Pessoais:</Label>
                             <Input
-                                value={form.importancias.dpessoais}
-                                onChange={(e) => handleChange('importancias', 'dpessoais', e.target.value)}
-                            />
-                        </Field>
-                        <Field>
-                            <Label>Dan. Materiais (H):</Label>
-                            <Input
-                                value={form.importancias.dmh}
-                                onChange={(e) => handleChange('importancias', 'dmh', e.target.value)}
+                                value={formatCurrency(form.importancias.dpessoais)}
+                                onChange={(e) =>
+                                    handleChange('importancias', 'dpessoais', parseCurrency(e.target.value))
+                                }
                             />
                         </Field>
                     </FormRow>
+
+                    <FormRow>
+                        <Field>
+                            <Label>Dan. Materiais (H):</Label>
+                            <Input
+                                value={formatCurrency(form.importancias.dmh)}
+                                onChange={(e) =>
+                                    handleChange('importancias', 'dmh', parseCurrency(e.target.value))
+                                }
+                            />
+                        </Field>
+                        <Field>
+                            <Label>Bônus:</Label>
+                            <Input
+                                value={formatCurrency(form.importancias.bonus)}
+                                onChange={(e) =>
+                                    handleChange('importancias', 'bonus', parseCurrency(e.target.value))
+                                }
+                            />
+                        </Field>
+                    </FormRow>
+
                     <FormRow>
                         <Field>
                             <Label>Acidente Pessoal:</Label>
                             <Input
-                                value={form.importancias.appMorte}
-                                onChange={(e) => handleChange('importancias', 'appMorte', e.target.value)}
+                                value={formatCurrency(form.importancias.appMorte)}
+                                onChange={(e) =>
+                                    handleChange('importancias', 'appMorte', parseCurrency(e.target.value))
+                                }
                             />
                         </Field>
                         <Field>
                             <Label>Invalidez:</Label>
                             <Input
-                                value={form.importancias.invalidez}
-                                onChange={(e) => handleChange('importancias', 'invalidez', e.target.value)}
+                                value={formatCurrency(form.importancias.invalidez)}
+                                onChange={(e) =>
+                                    handleChange('importancias', 'invalidez', parseCurrency(e.target.value))
+                                }
                             />
                         </Field>
                     </FormRow>
+
+                    <FormRow>
+                        <Field>
+                            <Label>Martelinho:</Label>
+                            <Input
+                                value={formatCurrency(form.importancias.martelinho)}
+                                onChange={(e) =>
+                                    handleChange('importancias', 'martelinho', parseCurrency(e.target.value))
+                                }
+                            />
+                        </Field>
+                        <Field>
+                            <Label>Pequenos Reparos:</Label>
+                            <Input
+                                value={formatCurrency(form.importancias.pequenosReparos)}
+                                onChange={(e) =>
+                                    handleChange('importancias', 'pequenosReparos', parseCurrency(e.target.value))
+                                }
+                            />
+                        </Field>
+                    </FormRow>
+
+                    <FormRow>
+                        <Field>
+                            <Label>Pneu:</Label>
+                            <Input
+                                value={formatCurrency(form.importancias.pneu)}
+                                onChange={(e) =>
+                                    handleChange('importancias', 'pneu', parseCurrency(e.target.value))
+                                }
+                            />
+                        </Field>
+                        <Field>
+                            <Label>Rodas:</Label>
+                            <Input
+                                value={formatCurrency(form.importancias.rodas)}
+                                onChange={(e) =>
+                                    handleChange('importancias', 'rodas', parseCurrency(e.target.value))
+                                }
+                            />
+                        </Field>
+                    </FormRow>
+
                     <FormRow>
                         <Field>
                             <Label>Outras Importâncias:</Label>
                             <Input
-                                value={form.importancias.outras}
-                                onChange={(e) => handleChange('importancias', 'outras', e.target.value)}
+                                value={formatCurrency(form.importancias.outras)}
+                                onChange={(e) =>
+                                    handleChange('importancias', 'outras', parseCurrency(e.target.value))
+                                }
+                            />
+                        </Field>
+                        <Field>
+                            <Label>Acessórios:</Label>
+                            <Input
+                                value={formatCurrency(form.importancias.acessorios)}
+                                onChange={(e) =>
+                                    handleChange('importancias', 'acessorios', parseCurrency(e.target.value))
+                                }
                             />
                         </Field>
                     </FormRow>
@@ -260,60 +314,51 @@ const CadastroAuto = () => {
                     <PageTitle style={{ fontSize: 22 }}>Prêmios</PageTitle>
                     <FormRow>
                         <Field>
-                            <Label>Data da Cotação:</Label>
-                            <Input
-                                type="date"
-                                value={form.premios.dataCotacao}
-                                onChange={(e) => handleChange('premios', 'dataCotacao', e.target.value)}
-                            />
-                        </Field>
-                        <Field>
                             <Label>Valor do Prêmio:</Label>
                             <Input
-                                value={form.premios.valor}
-                                onChange={(e) => handleChange('premios', 'valor', e.target.value)}
+                                value={formatCurrency(form.premios.valor)}
+                                onChange={(e) =>
+                                    handleChange('premios', 'valor', parseCurrency(e.target.value))
+                                }
                             />
                         </Field>
                     </FormRow>
-                    <FormRow>
-                        <Field>
-                            <Label>Forma de Pagamento:</Label>
-                            <Input
-                                value={form.premios.pagamento}
-                                onChange={(e) => handleChange('premios', 'pagamento', e.target.value)}
-                            />
-                        </Field>
-                        <Field>
-                            <Label>Número de Parcelas:</Label>
-                            <Input
-                                type="number"
-                                value={form.premios.parcelas}
-                                onChange={(e) => handleChange('premios', 'parcelas', e.target.value)}
-                            />
-                        </Field>
-                    </FormRow>
+
                     <FormRow>
                         <Field>
                             <Label>Prêmio Líquido:</Label>
                             <Input
-                                value={form.premios.liquido}
-                                onChange={(e) => handleChange('premios', 'liquido', e.target.value)}
+                                value={formatCurrency(form.premios.liquido)}
+                                onChange={(e) =>
+                                    handleChange('premios', 'liquido', parseCurrency(e.target.value))
+                                }
                             />
                         </Field>
                         <Field>
                             <Label>Prêmio Total:</Label>
                             <Input
-                                value={form.premios.total}
-                                onChange={(e) => handleChange('premios', 'total', e.target.value)}
+                                value={formatCurrency(form.premios.total)}
+                                onChange={(e) =>
+                                    handleChange('premios', 'total', parseCurrency(e.target.value))
+                                }
                             />
                         </Field>
-                    </FormRow>
-                    <FormRow>
-                        <Field style={{ flex: 1 }}>
-                            <Label>Observações:</Label>
+                        <Field>
+                            <Label>Forma de Pagamento:</Label>
                             <Input
-                                value={form.premios.observacoes}
-                                onChange={(e) => handleChange('premios', 'observacoes', e.target.value)}
+                                value={formatCurrency(form.premios.pagamento)}
+                                onChange={(e) =>
+                                    handleChange('premios', 'pagamento', parseCurrency(e.target.value))
+                                }
+                            />
+                        </Field>
+                        <Field>
+                            <Label>Parcelas:</Label>
+                            <Input
+                                value={formatCurrency(form.premios.parcelas)}
+                                onChange={(e) =>
+                                    handleChange('premios', 'parcelas', parseCurrency(e.target.value))
+                                }
                             />
                         </Field>
                     </FormRow>
@@ -333,13 +378,14 @@ const CadastroAuto = () => {
                             <Field>
                                 <Label>Valor da Parcela {index + 1}:</Label>
                                 <Input
-                                    value={carne.valor}
-                                    onChange={(e) => handleCarneChange(index, 'valor', e.target.value)}
+                                    value={formatCurrency(carne.valor)}
+                                    onChange={(e) =>
+                                        handleCarneChange(index, 'valor', parseCurrency(e.target.value))
+                                    }
                                 />
                             </Field>
                         </FormRow>
                     ))}
-
                     {/* BOTÃO DE SALVAR */}
                     <ButtonRow>
                         <Button onClick={handleSubmit}>Salvar</Button>

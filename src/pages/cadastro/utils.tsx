@@ -44,3 +44,17 @@ export function formatCNPJ(value) {
         .replace(/(\d{4})(\d)/, '$1-$2');
 }
 
+// utils/formatCurrency.js
+export const formatCurrency = (value) => {
+    if (value === '' || value == null) return '';
+    const number = Number(value.toString().replace(/\D/g, '')) / 100;
+    return number.toLocaleString('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+    });
+  };
+  
+  export const parseCurrency = (formattedValue) => {
+    return formattedValue.replace(/\D/g, '');
+  };
+  

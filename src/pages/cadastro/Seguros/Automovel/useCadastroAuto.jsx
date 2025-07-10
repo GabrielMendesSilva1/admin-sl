@@ -30,6 +30,10 @@ export const useCadastroAuto = (onSave) => {
             franquia: '',
             bonus: '',
             carroceria: '',
+            martelinho: '',
+            pneu: '',
+            rodas: '',
+            pequenosReparos: '',
         },
         premios: {
             dataCotacao: '',

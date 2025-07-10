@@ -148,6 +148,10 @@ const Automovel = () => {
                                     <ValueRow><Label>DPessoais:</Label> <Value>{selectedVeiculo.importancias?.dpessoais}</Value></ValueRow>
                                     <ValueRow><Label>APP/Morte:</Label> <Value>{selectedVeiculo.importancias?.appMorte}</Value></ValueRow>
                                     <ValueRow><Label>Outras:</Label> <Value>{selectedVeiculo.importancias?.outras}</Value></ValueRow>
+                                    <ValueRow><Label>Martelinho:</Label> <Value>{selectedVeiculo.importancias?.martelinho}</Value></ValueRow>
+                                    <ValueRow><Label>Pequenos Reparos:</Label> <Value>{selectedVeiculo.importancias?.pequenosReparos}</Value></ValueRow>
+                                    <ValueRow><Label>Pneu:</Label> <Value>{selectedVeiculo.importancias?.pneu}</Value></ValueRow>
+                                    <ValueRow><Label>Rodas:</Label> <Value>{selectedVeiculo.importancias?.rodas}</Value></ValueRow>
                                 </Grid>
                             </Subsection>
                         </Section>
