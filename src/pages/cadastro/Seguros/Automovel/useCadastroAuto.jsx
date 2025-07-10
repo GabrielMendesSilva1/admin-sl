@@ -35,6 +35,7 @@ export const useCadastroAuto = (onSave) => {
             pneu: '',
             rodas: '',
             pequenosReparos: '',
+            franquia2: '',
         },
         premios: {
             dataCotacao: '',
