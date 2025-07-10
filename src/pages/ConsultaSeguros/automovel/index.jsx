@@ -121,6 +121,8 @@ const Automovel = () => {
                                 <ValueRow><Label>Seguradora:</Label> <Value>{selectedVeiculo.nomeseguradora}</Value></ValueRow>
                                 <ValueRow><Label>Corretora:</Label> <Value>{selectedVeiculo.corretora}</Value></ValueRow>
                                 <ValueRow><Label>Apólice:</Label> <Value>{selectedVeiculo.apolice}</Value></ValueRow>
+                                <ValueRow><Label>Endosso:</Label> <Value>{selectedVeiculo.endoso}</Value></ValueRow>
+                                <ValueRow><Label>Data do Endosso:</Label> <Value>{selectedVeiculo.dataendosso}</Value></ValueRow>
                             </Subsection>
 
                             <Subsection>
@@ -128,6 +130,7 @@ const Automovel = () => {
                                 <ValueRow><Label>Início:</Label> <Value>{selectedVeiculo.vigenciainicio}</Value></ValueRow>
                                 <ValueRow><Label>Fim:</Label> <Value>{selectedVeiculo.vigenciafim}</Value></ValueRow>
                                 <ValueRow><Label>Cobertura:</Label> <Value>{selectedVeiculo.cobertura}</Value></ValueRow>
+                                <ValueRow><Label>Item:</Label> <Value>{selectedVeiculo.item}</Value></ValueRow>
                             </Subsection>
                         </Section>
 
@@ -144,26 +147,30 @@ const Automovel = () => {
                             <Subsection>
                                 <SubsectionTitle>Importâncias Seguradas</SubsectionTitle>
                                 <Grid>
-                                    <ValueRow><Label>Casco:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.casco)}</Value></ValueRow>
                                     <ValueRow><Label>Franquia:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.franquia)}</Value></ValueRow>
-                                    <ValueRow><Label>Franquia Carroceria:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.franquia2)}</Value></ValueRow>
                                     <ValueRow><Label>Carroceria:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.carroceria)}</Value></ValueRow>
-                                    <ValueRow><Label>DMateriais:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.dmateriais)}</Value></ValueRow>
-                                    <ValueRow><Label>RCF MATERIAIS:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.dpessoais)}</Value></ValueRow>
-                                    <ValueRow><Label>APP/Morte:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.appMorte)}</Value></ValueRow>
-                                    <ValueRow><Label>Outras:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.outras)}</Value></ValueRow>
+                                    <ValueRow><Label>Franquia Carroceria:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.franquia2)}</Value></ValueRow>
+                                    <ValueRow><Label>RCF Morais:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.dmateriais)}</Value></ValueRow>
+                                    <ValueRow><Label>RCF Materiais:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.dpessoais)}</Value></ValueRow>
+                                    <ValueRow><Label>RCF Corporais:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.dmh)}</Value></ValueRow>
+                                    <ValueRow><Label>Bônus:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.bonus)}</Value></ValueRow>
+                                    <ValueRow><Label>APP Morte:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.appMorte)}</Value></ValueRow>
+                                    <ValueRow><Label>APP Invalidez:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.invalidez)}</Value></ValueRow>
                                     <ValueRow><Label>Martelinho:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.martelinho)}</Value></ValueRow>
                                     <ValueRow><Label>Pequenos Reparos:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.pequenosReparos)}</Value></ValueRow>
                                     <ValueRow><Label>Pneu:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.pneu)}</Value></ValueRow>
                                     <ValueRow><Label>Rodas:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.rodas)}</Value></ValueRow>
+                                    <ValueRow><Label>Acessórios:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.acessorios)}</Value></ValueRow>
+                                    <ValueRow><Label>Outras:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.outras)}</Value></ValueRow>
                                 </Grid>
-
                             </Subsection>
                         </Section>
 
                         <Section>
                             <Subsection>
                                 <SubsectionTitle>Prêmios</SubsectionTitle>
+                                <ValueRow><Label>Valor:</Label> <Value>{formatCurrency(selectedVeiculo.premios?.valor)}</Value></ValueRow>
+                                <ValueRow><Label>Prêmio Líquido:</Label> <Value>{formatCurrency(selectedVeiculo.premios?.liquido)}</Value></ValueRow>
                                 <ValueRow><Label>Total:</Label> <Value>{formatCurrency(selectedVeiculo.premios?.total)}</Value></ValueRow>
                                 <ValueRow><Label>Forma de Pagamento:</Label> <Value>{selectedVeiculo.premios?.pagamento}</Value></ValueRow>
                                 <ValueRow><Label>Parcelas:</Label> <Value>{selectedVeiculo.premios?.parcelas}</Value></ValueRow>
