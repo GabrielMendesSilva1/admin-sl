@@ -9,6 +9,7 @@ import Header from '../../../components/Header';
 import Loading from "../../../components/Loading/loading";
 import AlertMessage from "../../../components/ModalAlert";
 import EditAutomovel from "./editAutomovel";
+import { formatCurrency, parseCurrency } from "../../cadastro/utils";
 
 const Automovel = () => {
     const { cpfcnpj } = useParams();
@@ -142,24 +143,25 @@ const Automovel = () => {
                             <Subsection>
                                 <SubsectionTitle>Importâncias Seguradas</SubsectionTitle>
                                 <Grid>
-                                    <ValueRow><Label>Casco:</Label> <Value>{selectedVeiculo.importancias?.casco}</Value></ValueRow>
-                                    <ValueRow><Label>Franquia:</Label> <Value>{selectedVeiculo.importancias?.franquia}</Value></ValueRow>
-                                    <ValueRow><Label>DMateriais:</Label> <Value>{selectedVeiculo.importancias?.dmateriais}</Value></ValueRow>
-                                    <ValueRow><Label>DPessoais:</Label> <Value>{selectedVeiculo.importancias?.dpessoais}</Value></ValueRow>
-                                    <ValueRow><Label>APP/Morte:</Label> <Value>{selectedVeiculo.importancias?.appMorte}</Value></ValueRow>
-                                    <ValueRow><Label>Outras:</Label> <Value>{selectedVeiculo.importancias?.outras}</Value></ValueRow>
-                                    <ValueRow><Label>Martelinho:</Label> <Value>{selectedVeiculo.importancias?.martelinho}</Value></ValueRow>
-                                    <ValueRow><Label>Pequenos Reparos:</Label> <Value>{selectedVeiculo.importancias?.pequenosReparos}</Value></ValueRow>
-                                    <ValueRow><Label>Pneu:</Label> <Value>{selectedVeiculo.importancias?.pneu}</Value></ValueRow>
-                                    <ValueRow><Label>Rodas:</Label> <Value>{selectedVeiculo.importancias?.rodas}</Value></ValueRow>
+                                    <ValueRow><Label>Casco:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.casco)}</Value></ValueRow>
+                                    <ValueRow><Label>Franquia:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.franquia)}</Value></ValueRow>
+                                    <ValueRow><Label>DMateriais:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.dmateriais)}</Value></ValueRow>
+                                    <ValueRow><Label>DPessoais:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.dpessoais)}</Value></ValueRow>
+                                    <ValueRow><Label>APP/Morte:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.appMorte)}</Value></ValueRow>
+                                    <ValueRow><Label>Outras:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.outras)}</Value></ValueRow>
+                                    <ValueRow><Label>Martelinho:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.martelinho)}</Value></ValueRow>
+                                    <ValueRow><Label>Pequenos Reparos:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.pequenosReparos)}</Value></ValueRow>
+                                    <ValueRow><Label>Pneu:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.pneu)}</Value></ValueRow>
+                                    <ValueRow><Label>Rodas:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.rodas)}</Value></ValueRow>
                                 </Grid>
+
                             </Subsection>
                         </Section>
 
                         <Section>
                             <Subsection>
                                 <SubsectionTitle>Prêmios</SubsectionTitle>
-                                <ValueRow><Label>Total:</Label> <Value>R$ {selectedVeiculo.premios?.total}</Value></ValueRow>
+                                <ValueRow><Label>Total:</Label> <Value>{formatCurrency(selectedVeiculo.premios?.total)}</Value></ValueRow>
                                 <ValueRow><Label>Forma de Pagamento:</Label> <Value>{selectedVeiculo.premios?.pagamento}</Value></ValueRow>
                                 <ValueRow><Label>Parcelas:</Label> <Value>{selectedVeiculo.premios?.parcelas}</Value></ValueRow>
                             </Subsection>
@@ -171,7 +173,7 @@ const Automovel = () => {
                                 {selectedVeiculo.carnes?.map((item, index) => (
                                     <ValueRow key={index}>
                                         <Label>Vencimento:</Label> <Value>{item.vencimento}</Value>
-                                        <Label>Valor:</Label> <Value>{item.valor}</Value>
+                                        <Label>Valor:</Label> <Value>{formatCurrency(item.valor)}</Value>
                                     </ValueRow>
                                 ))}
                             </Subsection>
