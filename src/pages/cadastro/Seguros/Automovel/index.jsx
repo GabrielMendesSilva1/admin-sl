@@ -87,6 +87,13 @@ const CadastroAuto = () => {
                             />
                         </Field>
                         <Field>
+                            <Label>Corretora:</Label>
+                            <Input
+                                value={form.seguradora.corretora}
+                                onChange={(e) => handleChange('seguradora', 'corretora', e.target.value)}
+                            />
+                        </Field>
+                        <Field>
                             <Label>Apolice:</Label>
                             <Input
                                 value={form.seguradora.apolice}
@@ -186,7 +193,7 @@ const CadastroAuto = () => {
 
                     <FormRow>
                         <Field>
-                            <Label>Dan. Materiais:</Label>
+                            <Label>RCF MORAIS:</Label>
                             <Input
                                 value={formatCurrency(form.importancias.dmateriais)}
                                 onChange={(e) =>
@@ -195,7 +202,7 @@ const CadastroAuto = () => {
                             />
                         </Field>
                         <Field>
-                            <Label>Dan. Pessoais:</Label>
+                            <Label>RCF MATERIAIS:</Label>
                             <Input
                                 value={formatCurrency(form.importancias.dpessoais)}
                                 onChange={(e) =>
@@ -207,7 +214,7 @@ const CadastroAuto = () => {
 
                     <FormRow>
                         <Field>
-                            <Label>Dan. Materiais (H):</Label>
+                            <Label>RCF CORPORAIS:</Label>
                             <Input
                                 value={formatCurrency(form.importancias.dmh)}
                                 onChange={(e) =>
@@ -237,7 +244,7 @@ const CadastroAuto = () => {
                             />
                         </Field>
                         <Field>
-                            <Label>Invalidez:</Label>
+                            <Label>APP INVALIDEZ:</Label>
                             <Input
                                 value={formatCurrency(form.importancias.invalidez)}
                                 onChange={(e) =>

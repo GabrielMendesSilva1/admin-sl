@@ -119,6 +119,7 @@ const Automovel = () => {
                             <Subsection>
                                 <SubsectionTitle>Seguradora</SubsectionTitle>
                                 <ValueRow><Label>Seguradora:</Label> <Value>{selectedVeiculo.nomeseguradora}</Value></ValueRow>
+                                <ValueRow><Label>Corretora:</Label> <Value>{selectedVeiculo.corretora}</Value></ValueRow>
                                 <ValueRow><Label>Apólice:</Label> <Value>{selectedVeiculo.apolice}</Value></ValueRow>
                             </Subsection>
 
@@ -145,8 +146,10 @@ const Automovel = () => {
                                 <Grid>
                                     <ValueRow><Label>Casco:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.casco)}</Value></ValueRow>
                                     <ValueRow><Label>Franquia:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.franquia)}</Value></ValueRow>
+                                    <ValueRow><Label>Franquia Carroceria:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.franquia2)}</Value></ValueRow>
+                                    <ValueRow><Label>Carroceria:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.carroceria)}</Value></ValueRow>
                                     <ValueRow><Label>DMateriais:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.dmateriais)}</Value></ValueRow>
-                                    <ValueRow><Label>DPessoais:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.dpessoais)}</Value></ValueRow>
+                                    <ValueRow><Label>RCF MATERIAIS:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.dpessoais)}</Value></ValueRow>
                                     <ValueRow><Label>APP/Morte:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.appMorte)}</Value></ValueRow>
                                     <ValueRow><Label>Outras:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.outras)}</Value></ValueRow>
                                     <ValueRow><Label>Martelinho:</Label> <Value>{formatCurrency(selectedVeiculo.importancias?.martelinho)}</Value></ValueRow>

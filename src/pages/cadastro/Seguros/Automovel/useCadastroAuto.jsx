@@ -18,6 +18,7 @@ export const useCadastroAuto = (onSave) => {
             apolice: '',
             endoso: '',
             dataEndosso: '',
+            corretora: '',
         },
         vigencia: {
             inicio: '',
