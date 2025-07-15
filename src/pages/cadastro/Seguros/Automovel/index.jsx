@@ -21,6 +21,7 @@ const CadastroAuto = () => {
         handleCarneChange,
         handleAddCarne,
         handleSubmit,
+        handleSetParcelas
     } = useCadastroAuto();
 
     return (
@@ -181,7 +182,7 @@ const CadastroAuto = () => {
                             />
                         </Field>
                         <Field>
-                            <Label>Franquia 2:</Label>
+                            <Label>Franquia Carroceria:</Label>
                             <Input
                                 value={formatCurrency(form.importancias.franquia2)}
                                 onChange={(e) =>
@@ -353,19 +354,19 @@ const CadastroAuto = () => {
                         <Field>
                             <Label>Forma de Pagamento:</Label>
                             <Input
-                                value={formatCurrency(form.premios.pagamento)}
+                                value={form.premios.pagamento}
                                 onChange={(e) =>
-                                    handleChange('premios', 'pagamento', parseCurrency(e.target.value))
+                                    handleChange('premios', 'pagamento', (e.target.value))
                                 }
                             />
                         </Field>
                         <Field>
                             <Label>Parcelas:</Label>
                             <Input
-                                value={formatCurrency(form.premios.parcelas)}
-                                onChange={(e) =>
-                                    handleChange('premios', 'parcelas', parseCurrency(e.target.value))
-                                }
+                                type="number"
+                                min="1"
+                                value={form.premios.parcelas || ''}
+                                onChange={(e) => handleSetParcelas(Number(e.target.value))}
                             />
                         </Field>
                     </FormRow>

@@ -12,6 +12,7 @@ import {
   ButtonRow,
   Button,
 } from './styles';
+import { formatCurrency, parseCurrency } from '../../utils'; // ✅ Importação adicionada
 
 const CadastroPatrimonial = () => {
   const {
@@ -20,6 +21,7 @@ const CadastroPatrimonial = () => {
     handleCarneChange,
     handleSubmit,
     addCarne,
+    handleSetParcelas,
   } = useCadastroPatrimonial();
 
   return (
@@ -31,13 +33,6 @@ const CadastroPatrimonial = () => {
 
           {/* DADOS DO PROPRIETÁRIO */}
           <FormRow>
-            <Field>
-              <Label>Segurado:</Label>
-              <Input
-                value={form.pessoal.nome}
-                onChange={(e) => handleChange('pessoal', 'nome', e.target.value)}
-              />
-            </Field>
             <Field>
               <Label>CPF/CNPJ:</Label>
               <Input
@@ -177,15 +172,19 @@ const CadastroPatrimonial = () => {
             <Field>
               <Label>Avaliação do Imóvel:</Label>
               <Input
-                value={form.valores.avaliacao}
-                onChange={(e) => handleChange('valores', 'avaliacao', e.target.value)}
+                value={formatCurrency(form.valores.avaliacao)}
+                onChange={(e) =>
+                  handleChange("valores", "avaliacao", parseCurrency(e.target.value))
+                }
               />
             </Field>
             <Field>
               <Label>Valor da Cobertura:</Label>
               <Input
-                value={form.valores.cobertura}
-                onChange={(e) => handleChange('valores', 'cobertura', e.target.value)}
+                value={formatCurrency(form.valores.cobertura)}
+                onChange={(e) =>
+                  handleChange("valores", "cobertura", parseCurrency(e.target.value))
+                }
               />
             </Field>
           </FormRow>
@@ -204,8 +203,10 @@ const CadastroPatrimonial = () => {
             <Field>
               <Label>Valor do Prêmio:</Label>
               <Input
-                value={form.premios.valor}
-                onChange={(e) => handleChange("premios", "valor", e.target.value)}
+                value={formatCurrency(form.premios.valor)}
+                onChange={(e) =>
+                  handleChange("premios", "valor", parseCurrency(e.target.value))
+                }
               />
             </Field>
           </FormRow>
@@ -223,7 +224,7 @@ const CadastroPatrimonial = () => {
                 type="number"
                 min={1}
                 value={form.premios.parcelas}
-                onChange={(e) => handleChange("premios", "parcelas", e.target.value)}
+                onChange={(e) => handleSetParcelas(parseInt(e.target.value, 10))}
               />
             </Field>
           </FormRow>
@@ -236,26 +237,30 @@ const CadastroPatrimonial = () => {
                 <Label>Vencimento da Parcela {index + 1}:</Label>
                 <Input
                   type="date"
-                  value={carne.vencimento || ""}
-                  onChange={(e) => handleCarneChange(index, "vencimento", e.target.value)}
+                  value={carne.vencimento}
+                  onChange={(e) =>
+                    handleCarneChange(index, "vencimento", e.target.value)
+                  }
                 />
               </Field>
               <Field>
                 <Label>Valor da Parcela {index + 1}:</Label>
                 <Input
-                  value={carne.valor}
-                  onChange={(e) => handleCarneChange(index, "valor", e.target.value)}
+                  value={formatCurrency(carne.valor)}
+                  onChange={(e) =>
+                    handleCarneChange(index, "valor", parseCurrency(e.target.value))
+                  }
                 />
               </Field>
             </FormRow>
           ))}
 
-          {/* BOTÃO SUBMIT */}
-          <ButtonRow>
-            <Button onClick={handleSubmit}>Salvar</Button>
-          </ButtonRow>
-        </Panel>
-      </Container>
+        {/* BOTÃO SUBMIT */}
+        <ButtonRow>
+          <Button onClick={handleSubmit}>Salvar</Button>
+        </ButtonRow>
+      </Panel>
+    </Container >
     </>
   );
 };

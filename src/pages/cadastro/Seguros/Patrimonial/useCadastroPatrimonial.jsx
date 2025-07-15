@@ -110,6 +110,21 @@ export const useCadastroPatrimonial = (onSave) => {
         return `${ano}-${mes}-${dia}`;
     }
 
+    const handleSetParcelas = (quantidade) => {
+        const novasParcelas = Array.from({ length: quantidade }, () => ({
+            vencimento: '',
+            valor: 0,
+        }));
+        setForm(prev => ({
+            ...prev,
+            premios: {
+                ...prev.premios,
+                parcelas: quantidade,
+            },
+            carnes: novasParcelas,
+        }));
+    };
+
     useEffect(() => {
         if (isEditingPrimeiraData) {
             const timeout = setTimeout(() => {
@@ -279,5 +294,6 @@ export const useCadastroPatrimonial = (onSave) => {
         handleChange,
         handleSubmit,
         handleCarneChange,
+        handleSetParcelas,
     };
 };

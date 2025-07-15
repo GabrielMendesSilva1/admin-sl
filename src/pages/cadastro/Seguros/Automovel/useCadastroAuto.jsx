@@ -149,12 +149,28 @@ export const useCadastroAuto = (onSave) => {
         }
     };
 
+    const handleSetParcelas = (quantidade) => {
+        const novasParcelas = Array.from({ length: quantidade }, () => ({
+            vencimento: '',
+            valor: 0,
+        }));
+        setForm(prev => ({
+            ...prev,
+            premios: {
+                ...prev.premios,
+                parcelas: quantidade,
+            },
+            carnes: novasParcelas,
+        }));
+    };
+
     return {
         form,
         handleChange,
         handleCarneChange,
         handleAddCarne,
         handleSubmit,
+        handleSetParcelas,
     };
 };
 

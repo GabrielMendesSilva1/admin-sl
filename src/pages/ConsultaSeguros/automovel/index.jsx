@@ -188,7 +188,9 @@ const Automovel = () => {
                                 ))}
                             </Subsection>
                         </Section>
+                        <Button onClick={() => window.print()}>Imprimir</Button>
                     </Container>
+                    
                 )}
 
                 {selectedVeiculo && modoEdicao && (
