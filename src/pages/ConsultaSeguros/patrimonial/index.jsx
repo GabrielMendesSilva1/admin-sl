@@ -8,7 +8,7 @@ import { getPatrimonialBycpfcnpj } from "../../../services/PatrimonialService";
 import Header from '../../../components/Header';
 import Loading from "../../../components/Loading/loading";
 import AlertMessage from "../../../components/ModalAlert";
-import EditPatrimonial from './editPatrimonial';
+import EditPatrimonial from "../patrimonial/editPatrimonial"
 
 const Patrimonial = () => {
   const { cpfcnpj } = useParams();
