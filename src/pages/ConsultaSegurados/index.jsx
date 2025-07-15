@@ -35,6 +35,11 @@ const ConsultaSegurado = () => {
     setLoading(false);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleBuscar();
+  };
+
   const handleNavigateAutomovel = () => {
     if (resultado) navigate(`/automovel/${resultado.cpfcnpj}`);
   };
@@ -52,25 +57,29 @@ const ConsultaSegurado = () => {
     <>
       <Header />
       <Container>
-        <FilterBox>
-          <Field>
-            <LabelFilter>PLACA:</LabelFilter>
-            <Input value={placa} onChange={e => setPlaca(e.target.value)} />
-          </Field>
-          <Field>
-            <LabelFilter>NOME:</LabelFilter>
-            <Input value={nome} onChange={e => setNome(e.target.value)} />
-          </Field>
-          <Field>
-            <LabelFilter>APÓLICE:</LabelFilter>
-            <Input value={apolice} onChange={e => setApolice(e.target.value)} />
-          </Field>
-          <Field>
-            <LabelFilter>CPF/CNPJ:</LabelFilter>
-            <Input value={cpfcnpj} onChange={e => setcpfcnpj(formatCPF(e.target.value))} />
-          </Field>
-          <Button onClick={handleBuscar}>Buscar</Button>
-        </FilterBox>
+        {/* Aqui o form para captar o ENTER */}
+        <form onSubmit={handleSubmit}>
+          <FilterBox>
+            <Field>
+              <LabelFilter>PLACA:</LabelFilter>
+              <Input value={placa} onChange={e => setPlaca(e.target.value)} />
+            </Field>
+            <Field>
+              <LabelFilter>NOME:</LabelFilter>
+              <Input value={nome} onChange={e => setNome(e.target.value)} />
+            </Field>
+            <Field>
+              <LabelFilter>APÓLICE:</LabelFilter>
+              <Input value={apolice} onChange={e => setApolice(e.target.value)} />
+            </Field>
+            <Field>
+              <LabelFilter>CPF/CNPJ:</LabelFilter>
+              <Input value={cpfcnpj} onChange={e => setcpfcnpj(formatCPF(e.target.value))} />
+            </Field>
+            {/* botão de submit do form */}
+            <Button type="submit">Buscar</Button>
+          </FilterBox>
+        </form>
 
         {loading && <Value style={{ color: '#fff' }}>Carregando...</Value>}
         {!loading && resultado === null && (
