@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, {createGlobalStyle} from "styled-components";
 import background from '../../../assets/insurance-bg.jpeg';
 
 export const PageWrapper = styled.div`
@@ -18,6 +18,23 @@ export const Input = styled.input`
   &:focus {
     outline: none;
     border-color: #0077cc;
+  }
+`;
+
+export const PrintStyles = createGlobalStyle`
+  @media print {
+    body * {
+      visibility: hidden;
+    }
+    #printable-panel, #printable-panel * {
+      visibility: visible;
+    }
+    #printable-panel {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+    }
   }
 `;
 
@@ -63,7 +80,7 @@ export const ButtonNavContainer = styled.div`
  display: flex;
  gap: 1rem; 
  margin-bottom: -30px;
- margin-left: 555px;
+ margin-left: 400px;
 `;
 
 export const Section = styled.section`

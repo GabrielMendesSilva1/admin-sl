@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, {createGlobalStyle} from "styled-components";
 import background from '../../../assets/insurance-bg.jpeg';
 
 export const PageWrapper = styled.div`
@@ -19,6 +19,22 @@ export const Container = styled.div`
   margin-top: 60px;
   margin-bottom: 60px;
   overflow-x: hidden;  /* Impede rolagem lateral */
+`;
+export const PrintStyles = createGlobalStyle`
+  @media print {
+    body * {
+      visibility: hidden;
+    }
+    #printable-panel, #printable-panel * {
+      visibility: visible;
+    }
+    #printable-panel {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+    }
+  }
 `;
 
 export const Input = styled.input`
@@ -54,7 +70,7 @@ export const ButtonNavContainer = styled.div`
  display: flex;
  gap: 1rem; 
  margin-bottom: -30px;
- margin-left: 555px;
+ margin-left: 400px;
 `;
 
 export const Title = styled.h1`

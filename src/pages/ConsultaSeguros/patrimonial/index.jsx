@@ -16,6 +16,7 @@ import {
   ButtonNavContainer,
   Button,
   PageWrapper,
+  PrintStyles
 } from "./styles";
 import { getPatrimonialBycpfcnpj } from "../../../services/PatrimonialService";
 import { formatCurrency, formatDateBR } from "../../cadastro/utils";
@@ -110,6 +111,7 @@ const Patrimonial = () => {
 
   return (
     <>
+      <PrintStyles />
       <Header />
       <PageWrapper>
         <ButtonNavContainer>
@@ -118,6 +120,7 @@ const Patrimonial = () => {
           {!modoEdicao && (
             <Button onClick={() => setModoEdicao(true)}>Editar Seguro</Button>
           )}
+          <Button onClick={() => window.print()}>Imprimir</Button>
         </ButtonNavContainer>
 
         <Container>
@@ -133,97 +136,101 @@ const Patrimonial = () => {
               ))}
             </select>
           </Container>
+          <div id="printable-panel">  {/* <-- Aqui */}
 
-          <Section>
-            <Label>Segurado:</Label> <Value>{dados.segurado?.nome || "Nome não disponível"}</Value>
-          </Section>
+            <Section>
+              <Label>Segurado:</Label> <Value>{dados.segurado?.nome || "Nome não disponível"}</Value>
+            </Section>
 
-          <Section>
-            <Subsection>
-              <ValueRow>
-                <Label>Seguradora:</Label> <Value>{dados.nomeseguradora}</Value>
-              </ValueRow>
-              <ValueRow>
-                <Label>Apólice:</Label> <Value>{dados.apolice}</Value>
-              </ValueRow>
-              <ValueRow>
-                <Label>Endoso:</Label> <Value>{dados.endoso}</Value>
-              </ValueRow>
-              <ValueRow>
-                <Label>Vigência:</Label>{" "}
-                <Value>
-                  {formatDateBR(dados.vigenciainicio)} até {formatDateBR(dados.vigenciafim)}
-                </Value>
-              </ValueRow>
-              <ValueRow>
-                <Label>Local Segurado:</Label>{" "}
-                <Value>
-                  Bairro: {dados.bairro} - Cidade: {dados.cidade}
-                </Value>
-              </ValueRow>
-              <ValueRow>
-                <Label>Item:</Label> <Value>{dados.item}</Value>
-              </ValueRow>
-              <ValueRow>
-                <Label>Atividade:</Label> <Value>{dados.atividade}</Value>
-              </ValueRow>
-            </Subsection>
-          </Section>
+            <Section>
+              <Subsection>
+                <ValueRow>
+                  <Label>Seguradora:</Label> <Value>{dados.nomeseguradora}</Value>
+                </ValueRow>
+                <ValueRow>
+                  <Label>Apólice:</Label> <Value>{dados.apolice}</Value>
+                </ValueRow>
+                <ValueRow>
+                  <Label>Endoso:</Label> <Value>{dados.endoso}</Value>
+                </ValueRow>
+                <ValueRow>
+                  <Label>Vigência:</Label>{" "}
+                  <Value>
+                    {formatDateBR(dados.vigenciainicio)} até {formatDateBR(dados.vigenciafim)}
+                  </Value>
+                </ValueRow>
+                <ValueRow>
+                  <Label>Local Segurado:</Label>{" "}
+                  <Value>
+                    Bairro: {dados.bairro} - Cidade: {dados.cidade}
+                  </Value>
+                </ValueRow>
+                <ValueRow>
+                  <Label>Item:</Label> <Value>{dados.item}</Value>
+                </ValueRow>
+                <ValueRow>
+                  <Label>Atividade:</Label> <Value>{dados.atividade}</Value>
+                </ValueRow>
+              </Subsection>
+            </Section>
 
-          <Section>
-            <Subsection>
-              <SubsectionTitle>Importâncias Seguradas</SubsectionTitle>
-              <ValueRow>
-                <Label>Avaliação:</Label>{" "}
-                <Value>{formatCurrency(dados.importancias?.avaliacao)}</Value>
-              </ValueRow>
-              <ValueRow>
-                <Label>Cobertura:</Label>{" "}
-                <Value>{formatCurrency(dados.importancias?.cobertura)}</Value>
-              </ValueRow>
-            </Subsection>
-          </Section>
+            <Section>
+              <Subsection>
+                <SubsectionTitle>Importâncias Seguradas</SubsectionTitle>
+                <ValueRow>
+                  <Label>Avaliação:</Label>{" "}
+                  <Value>{formatCurrency(dados.importancias?.avaliacao)}</Value>
+                </ValueRow>
+                <ValueRow>
+                  <Label>Cobertura:</Label>{" "}
+                  <Value>{formatCurrency(dados.importancias?.cobertura)}</Value>
+                </ValueRow>
+              </Subsection>
+            </Section>
 
-          <Section>
-            <Subsection>
-              <SubsectionTitle>Prêmios</SubsectionTitle>
-              <ValueRow>
-                <Label>Data Cotação:</Label>{" "}
-                <Value>{formatDateBR(dados.premios?.dataCotacao)}</Value>
-              </ValueRow>
-              <ValueRow>
-                <Label>Valor:</Label> <Value>{formatCurrency(dados.premios?.valor)}</Value>
-              </ValueRow>
-              <ValueRow>
-                <Label>Forma de Pagamento:</Label> <Value>{dados.premios?.pagamento}</Value>
-              </ValueRow>
-              <ValueRow>
-                <Label>Parcelas:</Label> <Value>{dados.premios?.parcelas}</Value>
-              </ValueRow>
-              <ValueRow>
-                <Label>Prêmio Líquido:</Label> <Value>{formatCurrency(dados.premios?.liquido)}</Value>
-              </ValueRow>
-              <ValueRow>
-                <Label>Prêmio Total:</Label> <Value>{formatCurrency(dados.premios?.total)}</Value>
-              </ValueRow>
-              {/* <ValueRow>
+            <Section>
+              <Subsection>
+                <SubsectionTitle>Prêmios</SubsectionTitle>
+                <ValueRow>
+                  <Label>Data Cotação:</Label>{" "}
+                  <Value>{formatDateBR(dados.premios?.dataCotacao)}</Value>
+                </ValueRow>
+                <ValueRow>
+                  <Label>Valor:</Label> <Value>{formatCurrency(dados.premios?.valor)}</Value>
+                </ValueRow>
+                <ValueRow>
+                  <Label>Forma de Pagamento:</Label> <Value>{dados.premios?.pagamento}</Value>
+                </ValueRow>
+                <ValueRow>
+                  <Label>Parcelas:</Label> <Value>{dados.premios?.parcelas}</Value>
+                </ValueRow>
+                <ValueRow>
+                  <Label>Prêmio Líquido:</Label> <Value>{formatCurrency(dados.premios?.liquido)}</Value>
+                </ValueRow>
+                <ValueRow>
+                  <Label>Prêmio Total:</Label> <Value>{formatCurrency(dados.premios?.total)}</Value>
+                </ValueRow>
+                {/* <ValueRow>
                 <Label>Observações:</Label> <Value>{dados.premios?.observacoes}</Value>
               </ValueRow> */}
-            </Subsection>
-          </Section>
 
-          <Section>
-            <Subsection>
-              <SubsectionTitle>Carnês</SubsectionTitle>
-              {dados.carnes?.map((item, index) => (
-                <ValueRow key={index}>
-                  <Label>Vencimento {index + 1}:</Label>{" "}
-                  <Value>{formatDateBR(item.vencimento)}</Value>
-                  <Label>Valor:</Label> <Value>{formatCurrency(item.valor)}</Value>
-                </ValueRow>
-              ))}
-            </Subsection>
-          </Section>
+              </Subsection>
+
+            </Section>
+
+            <Section>
+              <Subsection>
+                <SubsectionTitle>Carnês</SubsectionTitle>
+                {dados.carnes?.map((item, index) => (
+                  <ValueRow key={index}>
+                    <Label>Vencimento {index + 1}:</Label>{" "}
+                    <Value>{formatDateBR(item.vencimento)}</Value>
+                    <Label>Valor:</Label> <Value>{formatCurrency(item.valor)}</Value>
+                  </ValueRow>
+                ))}
+              </Subsection>
+            </Section>
+          </div>
         </Container>
 
         {modoEdicao && (

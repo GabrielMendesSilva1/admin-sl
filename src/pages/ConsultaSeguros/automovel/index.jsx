@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
     Container, Section, Title, Label, ValueRow, Value,
-    Subsection, Grid, PageWrapper, SubsectionTitle, ButtonNavContainer, Button, Input
+    Subsection, Grid, PageWrapper, SubsectionTitle, ButtonNavContainer, Button, Input, PrintStyles
 } from "./styles";
 import { getAutomovelBycpfcnpj } from "../../../services/AutomovelService";
 import Header from '../../../components/Header';
@@ -81,15 +81,16 @@ const Automovel = () => {
 
     return (
         <>
+        <PrintStyles/>
             <Header />
             <PageWrapper>
                 <ButtonNavContainer>
                     <Button onClick={() => navigate(`/automovel/${cpfcnpj}`)}>AUTOMÓVEL</Button>
                     <Button onClick={handleNavigatePatrimonial}>PATRIMONIAL</Button>
-
                     {selectedVeiculo && (
                         <Button onClick={() => setModoEdicao(true)}>Editar Dados</Button>
                     )}
+                    <Button onClick={() => window.print()}>Imprimir</Button>
                     {console.log("modoEdicao setado para true")}
                 </ButtonNavContainer>
 
@@ -110,7 +111,7 @@ const Automovel = () => {
                 {selectedVeiculo && (
                     <Container>
                         <Title>Detalhes do Seguro</Title>
-
+                        <div id="printable-panel">  {/* <-- Aqui */}
                         <Section>
                             <Label>Segurado:</Label> <Value>{selectedVeiculo.segurado?.nome || 'Nome não disponível'}</Value>
                         </Section>
@@ -188,9 +189,10 @@ const Automovel = () => {
                                 ))}
                             </Subsection>
                         </Section>
+                        </div>
                         <Button onClick={() => window.print()}>Imprimir</Button>
                     </Container>
-                    
+
                 )}
 
                 {selectedVeiculo && modoEdicao && (
