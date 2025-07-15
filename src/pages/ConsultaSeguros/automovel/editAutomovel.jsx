@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {
   Container, Section, Title, Label, Input, Button, ValueRow, Value,
   Subsection, Grid, PageWrapper, SubsectionTitle, ButtonNavContainer
-} from "./styles"; 
+} from "./styles";
 import { updateAutomovel } from "../../../services/AutomovelService";
 
 const EditAutomovel = ({ veiculo, onCancel, onUpdate }) => {
@@ -138,12 +138,23 @@ const EditAutomovel = ({ veiculo, onCancel, onUpdate }) => {
           <Subsection>
             <SubsectionTitle>Importâncias Seguradas</SubsectionTitle>
             <Grid>
-              {["casco", "franquia", "dmateriais", "dpessoais", "appMorte", "outras"].map(key => (
+              {[
+                "casco",
+                "franquia",
+                "dmateriais",
+                "dpessoais",
+                "appMorte",
+                "outras",
+                "martelinho",
+                "pequenosReparos",
+                "pneu",
+                "rodas",
+              ].map((key) => (
                 <ValueRow key={key}>
                   <Label>{key.charAt(0).toUpperCase() + key.slice(1)}:</Label>
                   <Input
                     value={(form.importancias && form.importancias[key]) || ""}
-                    onChange={e => handleChangeImportancia(key, e.target.value)}
+                    onChange={(e) => handleChangeImportancia(key, e.target.value)}
                   />
                 </ValueRow>
               ))}

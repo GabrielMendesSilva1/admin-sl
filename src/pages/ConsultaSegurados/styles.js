@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import background from '../../assets/insurance-bg.jpeg';
 
 export const Container = styled.div`
@@ -82,6 +82,7 @@ export const ButtonNavContainer = styled.div`
  margin-bottom: 1.5rem;;
 `;
 
+// Coloque este id no seu JSX: <Panel id="painel-segurado">
 export const Panel = styled.div`
   width: 100%;
   max-width: 1000px;
@@ -121,4 +122,31 @@ export const ValueUF = styled.span`
   font-weight: 400;
   color: #444;
   margin-left: -99px;
+`;
+
+// ESTILOS GLOBAIS PARA IMPRESSÃO
+export const PrintStyles = createGlobalStyle`
+  @media print {
+    body * {
+      visibility: hidden !important;
+    }
+
+    #painel-segurado, 
+    #painel-segurado * {
+      visibility: visible !important;
+    }
+
+    #painel-segurado {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      max-width: none;
+      box-shadow: none !important;
+      background: white !important;
+      margin: 0;
+      padding: 0;
+      overflow: visible;
+    }
+  }
 `;
