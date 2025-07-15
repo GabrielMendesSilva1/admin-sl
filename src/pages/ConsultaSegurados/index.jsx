@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   Container, FilterBox, Field, LabelFilter, Input, Button,
   Panel, Row, Value, LabelUF, ValueUF, PageTitle,
-  ButtonNavContainer, Label
+  ButtonNavContainer, Label, PrintStyles
 } from './styles';
 import Header from '../../components/Header';
 import { formatCPF } from '../cadastro/utils';
@@ -35,6 +35,11 @@ const ConsultaSegurado = () => {
     setLoading(false);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleBuscar();
+  };
+
   const handleNavigateAutomovel = () => {
     if (resultado) navigate(`/automovel/${resultado.cpfcnpj}`);
   };
@@ -50,27 +55,32 @@ const ConsultaSegurado = () => {
 
   return (
     <>
+      <PrintStyles />
       <Header />
       <Container>
-        <FilterBox>
-          <Field>
-            <LabelFilter>PLACA:</LabelFilter>
-            <Input value={placa} onChange={e => setPlaca(e.target.value)} />
-          </Field>
-          <Field>
-            <LabelFilter>NOME:</LabelFilter>
-            <Input value={nome} onChange={e => setNome(e.target.value)} />
-          </Field>
-          <Field>
-            <LabelFilter>APÓLICE:</LabelFilter>
-            <Input value={apolice} onChange={e => setApolice(e.target.value)} />
-          </Field>
-          <Field>
-            <LabelFilter>CPF/CNPJ:</LabelFilter>
-            <Input value={cpfcnpj} onChange={e => setcpfcnpj(formatCPF(e.target.value))} />
-          </Field>
-          <Button onClick={handleBuscar}>Buscar</Button>
-        </FilterBox>
+        {/* Aqui o form para captar o ENTER */}
+        <form onSubmit={handleSubmit}>
+          <FilterBox>
+            <Field>
+              <LabelFilter>PLACA:</LabelFilter>
+              <Input value={placa} onChange={e => setPlaca(e.target.value)} />
+            </Field>
+            <Field>
+              <LabelFilter>NOME:</LabelFilter>
+              <Input value={nome} onChange={e => setNome(e.target.value)} />
+            </Field>
+            <Field>
+              <LabelFilter>APÓLICE:</LabelFilter>
+              <Input value={apolice} onChange={e => setApolice(e.target.value)} />
+            </Field>
+            <Field>
+              <LabelFilter>CPF/CNPJ:</LabelFilter>
+              <Input value={cpfcnpj} onChange={e => setcpfcnpj(formatCPF(e.target.value))} />
+            </Field>
+            {/* botão de submit do form */}
+            <Button type="submit">Buscar</Button>
+          </FilterBox>
+        </form>
 
         {loading && <Value style={{ color: '#fff' }}>Carregando...</Value>}
         {!loading && resultado === null && (
@@ -83,40 +93,45 @@ const ConsultaSegurado = () => {
               <Button onClick={handleNavigateAutomovel}>AUTOMÓVEL</Button>
               <Button onClick={handleNavigatePatrimonial}>PATRIMONIAL</Button>
               <Button onClick={() => setModoEdicao(true)}>Editar Dados</Button>
-            </ButtonNavContainer>
+              <Button onClick={() => window.print()}>Imprimir</Button>
+              </ButtonNavContainer>
 
-            <Panel>
+            <Panel id="painel-segurado">
               <PageTitle>Dados do Segurado</PageTitle>
               <Row>
                 <Label>Segurado:</Label> <Value>{resultado.nome}</Value>
                 <Label>Data de Cadastro:</Label> <Value>{resultado.datacadastro}</Value>
               </Row>
+              <Row></Row>
+
               <Row>
                 <Label>Endereço:</Label> <Value>{resultado.endereco}</Value>
                 <Label>Bairro:</Label> <Value>{resultado.bairro}</Value>
+              </Row>
+              <Row>
+                <Label>Numero:</Label> <Value>{resultado.numero}</Value>
+                <Label>Complemento:</Label> <Value>{resultado.complemento}</Value>
               </Row>
               <Row>
                 <Label>Cidade:</Label> <Value>{resultado.cidade}</Value>
                 <LabelUF>UF:</LabelUF> <ValueUF>{resultado.uf}</ValueUF>
                 <Label>CEP:</Label> <ValueUF>{resultado.cep}</ValueUF>
               </Row>
+              <Row></Row>
               <Row>
                 <Label>Telefone 1:</Label> <Value>{resultado.tel1}</Value>
                 <Label>Telefone 2:</Label> <Value>{resultado.tel2}</Value>
               </Row>
               <Row>
                 <Label>E-mail:</Label> <Value>{resultado.email}</Value>
-                <Label>Contato:</Label> <Value>{resultado.contato}</Value>
               </Row>
               <Row>
                 <Label>Tipo Pessoa:</Label> <Value>{resultado.tipopessoa}</Value>
                 <Label>CPF/CNPJ:</Label> <Value>{resultado.cpfcnpj}</Value>
-                <Label>RG:</Label> <Value>{resultado.rg}</Value>
               </Row>
               <Row>
                 <Label>Data Nascimento:</Label> <Value>{resultado.datanascimento}</Value>
                 <Label>Estado Civil:</Label> <Value>{resultado.estadocivil}</Value>
-                <Label>1ª Habilitação:</Label> <Value>{resultado.habilitacao}</Value>
               </Row>
               <Row>
                 <Label>Observações:</Label> <Value>{resultado.observacao}</Value>

@@ -28,6 +28,8 @@ export const useSegurado = (onSuccess) => {
         estadocivil: '',
         habilitacao: '',
         observacao: '',
+        numero: '',
+        complemento: '',
     });
 
     const [emailError, setEmailError] = useState('');

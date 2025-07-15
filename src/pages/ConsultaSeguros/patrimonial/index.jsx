@@ -1,14 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import {
-  Container, Section, Title, Label, ValueRow, Value,
-  Subsection, Grid, PageWrapper, SubsectionTitle, ButtonNavContainer, Button
-} from "./styles";
-import { getPatrimonialBycpfcnpj } from "../../../services/PatrimonialService";
-import Header from '../../../components/Header';
+import Header from "../../../components/Header";
 import Loading from "../../../components/Loading/loading";
 import AlertMessage from "../../../components/ModalAlert";
 import EditPatrimonial from "../patrimonial/editPatrimonial"
+
+import {
+  Container,
+  Section,
+  Title,
+  Label,
+  ValueRow,
+  Value,
+  Subsection,
+  SubsectionTitle,
+  ButtonNavContainer,
+  Button,
+  PageWrapper,
+  PrintStyles
+} from "./styles";
+import { getPatrimonialBycpfcnpj } from "../../../services/PatrimonialService";
+import { formatCurrency, formatDateBR } from "../../cadastro/utils";
 
 const Patrimonial = () => {
   const { cpfcnpj } = useParams();
@@ -24,7 +36,6 @@ const Patrimonial = () => {
       try {
         setIsLoading(true);
         const resultado = await getPatrimonialBycpfcnpj(cpfcnpj);
-
         if (!resultado || resultado.length === 0) {
           setShowAlert(true);
         } else {
@@ -44,10 +55,7 @@ const Patrimonial = () => {
 
   if (showAlert) {
     return (
-      <AlertMessage
-        message="Nenhum Patrimonial Encontrado."
-        onClose={() => window.history.back()}
-      />
+      <AlertMessage message="Nenhum Patrimonial Encontrado." onClose={() => window.history.back()} />
     );
   }
 
@@ -65,16 +73,34 @@ const Patrimonial = () => {
   };
 
   const Modal = ({ children, onClose }) => (
-    <div style={{
-      position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
-      backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex',
-      justifyContent: 'center', alignItems: 'center', zIndex: 1000
-    }}>
-      <div style={{
-        backgroundColor: 'white', padding: 20, borderRadius: 8, maxHeight: '90vh', overflowY: 'auto',
-        width: '90%', maxWidth: 600
-      }}>
-        <button onClick={onClose} style={{ float: 'right' }}>X</button>
+    <div
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: "rgba(0,0,0,0.5)",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        zIndex: 1000,
+      }}
+    >
+      <div
+        style={{
+          backgroundColor: "white",
+          padding: 20,
+          borderRadius: 8,
+          maxHeight: "90vh",
+          overflowY: "auto",
+          width: "90%",
+          maxWidth: 600,
+        }}
+      >
+        <button onClick={onClose} style={{ float: "right" }}>
+          X
+        </button>
         {children}
       </div>
     </div>
@@ -86,6 +112,7 @@ const Patrimonial = () => {
 
   return (
     <>
+      <PrintStyles />
       <Header />
       <PageWrapper>
         <ButtonNavContainer>
@@ -94,6 +121,7 @@ const Patrimonial = () => {
           {!modoEdicao && (
             <Button onClick={() => setModoEdicao(true)}>Editar Seguro</Button>
           )}
+          <Button onClick={() => window.print()}>Imprimir</Button>
         </ButtonNavContainer>
 
         <Container>
@@ -101,68 +129,109 @@ const Patrimonial = () => {
 
           <Container>
             <Title>Selecione o Seguro Patrimonial</Title>
-            <select
-              value={seguroSelecionadoIndex}
-              onChange={(e) => setSeguroSelecionadoIndex(Number(e.target.value))}
-            >
+            <select value={seguroSelecionadoIndex} onChange={handleChangeSeguro}>
               {seguros.map((s, i) => (
                 <option key={s.id} value={i}>
                   {s.nomeseguradora} - Apólice {s.apolice}
                 </option>
               ))}
             </select>
-
           </Container>
-          <Section>
-            <Label>Segurado:</Label> <Value>{dados.segurado?.nome || 'Nome não disponível'}</Value>
-          </Section>
+          <div id="printable-panel">  {/* <-- Aqui */}
 
-          <Section>
-            <Subsection>
-              <ValueRow><Label>Seguradora:</Label> <Value>{dados.nomeseguradora}</Value></ValueRow>
-              <ValueRow><Label>Apólice:</Label> <Value>{dados.apolice}</Value></ValueRow>
-              <ValueRow><Label>Endoso:</Label> <Value>{dados.endoso}</Value></ValueRow>
-              <ValueRow><Label>Vigência:</Label> <Value>{dados.vigenciainicio} até {dados.vigenciafim}</Value></ValueRow>
-              <ValueRow><Label>Local Segurado:</Label> <Value>Bairro: {dados.bairro} - Cidade: {dados.cidade}</Value></ValueRow>
-              <ValueRow><Label>Item:</Label> <Value>{dados.item}</Value></ValueRow>
-              <ValueRow><Label>Atividade:</Label> <Value>{dados.atividade}</Value></ValueRow>
-            </Subsection>
-          </Section>
+            <Section>
+              <Label>Segurado:</Label> <Value>{dados.segurado?.nome || "Nome não disponível"}</Value>
+            </Section>
 
-          <Section>
-            <Subsection>
-              <SubsectionTitle>Importâncias Seguradas</SubsectionTitle>
-              <ValueRow>
-                <Label>Avaliação:</Label> <Value>{dados.importancias?.avaliacao}</Value>
-                <Label>Cobertura:</Label> <Value>{dados.importancias?.cobertura}</Value>
-              </ValueRow>
-            </Subsection>
-          </Section>
-
-          <Section>
-            <Subsection>
-              <SubsectionTitle>Prêmios</SubsectionTitle>
-              <ValueRow><Label>Data Cotação:</Label> <Value>{dados.premios?.dataCotacao}</Value></ValueRow>
-              <ValueRow><Label>Valor:</Label> <Value>R$ {dados.premios?.valor}</Value></ValueRow>
-              <ValueRow><Label>Forma de Pagamento:</Label> <Value>{dados.premios?.pagamento}</Value></ValueRow>
-              <ValueRow><Label>Parcelas:</Label> <Value>{dados.premios?.parcelas}</Value></ValueRow>
-              <ValueRow><Label>P. Líquido:</Label> <Value>R$ {dados.premios?.liquido}</Value></ValueRow>
-              <ValueRow><Label>P. Total:</Label> <Value>R$ {dados.premios?.total}</Value></ValueRow>
-              <ValueRow><Label>Observações:</Label> <Value>{dados.premios?.observacoes}</Value></ValueRow>
-            </Subsection>
-          </Section>
-
-          <Section>
-            <Subsection>
-              <SubsectionTitle>Carnês</SubsectionTitle>
-              {dados.carnes?.map((item, index) => (
-                <ValueRow key={index}>
-                  <Label>Vencimento {index + 1}:</Label> <Value>{item.vencimento}</Value>
-                  <Label>Valor:</Label> <Value>R$ {item.valor}</Value>
+            <Section>
+              <Subsection>
+                <ValueRow>
+                  <Label>Seguradora:</Label> <Value>{dados.nomeseguradora}</Value>
                 </ValueRow>
-              ))}
-            </Subsection>
-          </Section>
+                <ValueRow>
+                  <Label>Apólice:</Label> <Value>{dados.apolice}</Value>
+                </ValueRow>
+                <ValueRow>
+                  <Label>Endoso:</Label> <Value>{dados.endoso}</Value>
+                </ValueRow>
+                <ValueRow>
+                  <Label>Vigência:</Label>{" "}
+                  <Value>
+                    {formatDateBR(dados.vigenciainicio)} até {formatDateBR(dados.vigenciafim)}
+                  </Value>
+                </ValueRow>
+                <ValueRow>
+                  <Label>Local Segurado:</Label>{" "}
+                  <Value>
+                    Bairro: {dados.bairro} - Cidade: {dados.cidade}
+                  </Value>
+                </ValueRow>
+                <ValueRow>
+                  <Label>Item:</Label> <Value>{dados.item}</Value>
+                </ValueRow>
+                <ValueRow>
+                  <Label>Atividade:</Label> <Value>{dados.atividade}</Value>
+                </ValueRow>
+              </Subsection>
+            </Section>
+
+            <Section>
+              <Subsection>
+                <SubsectionTitle>Importâncias Seguradas</SubsectionTitle>
+                <ValueRow>
+                  <Label>Avaliação:</Label>{" "}
+                  <Value>{formatCurrency(dados.importancias?.avaliacao)}</Value>
+                </ValueRow>
+                <ValueRow>
+                  <Label>Cobertura:</Label>{" "}
+                  <Value>{formatCurrency(dados.importancias?.cobertura)}</Value>
+                </ValueRow>
+              </Subsection>
+            </Section>
+
+            <Section>
+              <Subsection>
+                <SubsectionTitle>Prêmios</SubsectionTitle>
+                <ValueRow>
+                  <Label>Data Cotação:</Label>{" "}
+                  <Value>{formatDateBR(dados.premios?.dataCotacao)}</Value>
+                </ValueRow>
+                <ValueRow>
+                  <Label>Valor:</Label> <Value>{formatCurrency(dados.premios?.valor)}</Value>
+                </ValueRow>
+                <ValueRow>
+                  <Label>Forma de Pagamento:</Label> <Value>{dados.premios?.pagamento}</Value>
+                </ValueRow>
+                <ValueRow>
+                  <Label>Parcelas:</Label> <Value>{dados.premios?.parcelas}</Value>
+                </ValueRow>
+                <ValueRow>
+                  <Label>Prêmio Líquido:</Label> <Value>{formatCurrency(dados.premios?.liquido)}</Value>
+                </ValueRow>
+                <ValueRow>
+                  <Label>Prêmio Total:</Label> <Value>{formatCurrency(dados.premios?.total)}</Value>
+                </ValueRow>
+                {/* <ValueRow>
+                <Label>Observações:</Label> <Value>{dados.premios?.observacoes}</Value>
+              </ValueRow> */}
+
+              </Subsection>
+
+            </Section>
+
+            <Section>
+              <Subsection>
+                <SubsectionTitle>Carnês</SubsectionTitle>
+                {dados.carnes?.map((item, index) => (
+                  <ValueRow key={index}>
+                    <Label>Vencimento {index + 1}:</Label>{" "}
+                    <Value>{formatDateBR(item.vencimento)}</Value>
+                    <Label>Valor:</Label> <Value>{formatCurrency(item.valor)}</Value>
+                  </ValueRow>
+                ))}
+              </Subsection>
+            </Section>
+          </div>
         </Container>
 
         {modoEdicao && (
@@ -174,8 +243,6 @@ const Patrimonial = () => {
             />
           </Modal>
         )}
-
-
       </PageWrapper>
     </>
   );

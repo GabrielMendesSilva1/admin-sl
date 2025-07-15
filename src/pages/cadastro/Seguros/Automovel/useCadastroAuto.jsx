@@ -18,6 +18,7 @@ export const useCadastroAuto = (onSave) => {
             apolice: '',
             endoso: '',
             dataEndosso: '',
+            corretora: '',
         },
         vigencia: {
             inicio: '',
@@ -30,6 +31,11 @@ export const useCadastroAuto = (onSave) => {
             franquia: '',
             bonus: '',
             carroceria: '',
+            martelinho: '',
+            pneu: '',
+            rodas: '',
+            pequenosReparos: '',
+            franquia2: '',
         },
         premios: {
             dataCotacao: '',
@@ -96,6 +102,7 @@ export const useCadastroAuto = (onSave) => {
             placa: form.veiculo.placa,
             chassi: form.veiculo.chassi,
             nomeseguradora: form.seguradora.nome,
+            corretora: form.seguradora.corretora,
             apolice: form.seguradora.apolice,
             endoso: form.seguradora.endoso,
             dataendosso: form.seguradora.dataEndosso,
@@ -103,7 +110,7 @@ export const useCadastroAuto = (onSave) => {
             vigenciafim: form.vigencia.fim,
             cobertura: form.vigencia.cobertura,
             item: form.vigencia.item,
-            importancias: form.importancias,
+            importancias: form.importancias, // deve conter todos os campos esperados
             premios: form.premios,
             carnes: form.carnes,
         };
@@ -112,12 +119,12 @@ export const useCadastroAuto = (onSave) => {
             await postAutomovel(dadosParaSalvar);
             alert('Cadastro realizado com sucesso!');
 
-            // Reset do form (você pode extrair para uma constante, se preferir)
+            // Reset do form aqui (opcional: extraia para uma função externa)
             setForm({
                 pessoal: { nome: '', cpfcnpj: '' },
                 veiculo: { descricao: '', anoModelo: '', placa: '', chassi: '' },
                 seguradora: {
-                    nome: '', apolice: '', endoso: '', dataEndosso: '',
+                    nome: '', apolice: '', endoso: '', dataEndosso: '', corretora: '',
                 },
                 vigencia: {
                     inicio: '', fim: '', cobertura: '', item: '',
@@ -142,12 +149,28 @@ export const useCadastroAuto = (onSave) => {
         }
     };
 
+    const handleSetParcelas = (quantidade) => {
+        const novasParcelas = Array.from({ length: quantidade }, () => ({
+            vencimento: '',
+            valor: 0,
+        }));
+        setForm(prev => ({
+            ...prev,
+            premios: {
+                ...prev.premios,
+                parcelas: quantidade,
+            },
+            carnes: novasParcelas,
+        }));
+    };
+
     return {
         form,
         handleChange,
         handleCarneChange,
         handleAddCarne,
         handleSubmit,
+        handleSetParcelas,
     };
 };
 
