@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   Container, FilterBox, Field, LabelFilter, Input, Button,
   Panel, Row, Value, LabelUF, ValueUF, PageTitle,
-  ButtonNavContainer, Label
+  ButtonNavContainer, Label, PrintStyles
 } from './styles';
 import Header from '../../components/Header';
 import { formatCPF } from '../cadastro/utils';
@@ -55,6 +55,7 @@ const ConsultaSegurado = () => {
 
   return (
     <>
+      <PrintStyles />
       <Header />
       <Container>
         {/* Aqui o form para captar o ENTER */}
@@ -92,9 +93,10 @@ const ConsultaSegurado = () => {
               <Button onClick={handleNavigateAutomovel}>AUTOMÓVEL</Button>
               <Button onClick={handleNavigatePatrimonial}>PATRIMONIAL</Button>
               <Button onClick={() => setModoEdicao(true)}>Editar Dados</Button>
-            </ButtonNavContainer>
+              <Button onClick={() => window.print()}>Imprimir</Button>
+              </ButtonNavContainer>
 
-            <Panel>
+            <Panel id="painel-segurado">
               <PageTitle>Dados do Segurado</PageTitle>
               <Row>
                 <Label>Segurado:</Label> <Value>{resultado.nome}</Value>
