@@ -13,6 +13,12 @@ export const formatTelefone = (tel) => {
     return tel.replace(/\D/g, '')
               .replace(/^(\d{2})(\d{5})(\d{4})$/, '($1) $2-$3');
 };
+// Exemplo simples de formatDateBR:
+export function formatDateBR(dateStr) {
+  if (!dateStr) return "";
+  const [yyyy, mm, dd] = dateStr.split("-");
+  return `${dd}/${mm}/${yyyy}`;
+}
 
 // Função de formatação de CEP
 export const formatCEP = (cep) => {
@@ -57,4 +63,5 @@ export const formatCurrency = (value) => {
   export const parseCurrency = (formattedValue) => {
     return formattedValue.replace(/\D/g, '');
   };
+  
   

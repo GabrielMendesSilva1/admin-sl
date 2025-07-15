@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { formatCPF, formatCNPJ, formatCEP } from "../../utils";
 import { postPatrimonial } from "../../../../services/PatrimonialService";
 
@@ -45,75 +45,17 @@ export const useCadastroPatrimonial = (onSave) => {
             observacoes: "",
         },
         carnes: [
-            { vencimento: "", valor: "" } // vazio no início, usuário escolhe
+            { vencimento: "", valor: "" }
         ],
     });
 
-    useEffect(() => {
-        if (isEditingPrimeiraData) return;
-
-        const parcelasNum = parseInt(form.premios.parcelas, 10) || 1;
-        const valorTotal = parseFloat(form.premios.valor) || 0;
-        const valorParcela = (valorTotal / parcelasNum).toFixed(2); // Ex: 2000 / 10 = 200.00
-        const primeiraDataStr = form.carnes[0]?.vencimento;
-
-        const isValidDateString = (str) => /^\d{4}-\d{2}-\d{2}$/.test(str);
-        if (!primeiraDataStr || !isValidDateString(primeiraDataStr)) return;
-
-        if (parcelasNum <= 1) {
-            if (form.carnes.length !== 1 || form.carnes[0].valor !== valorParcela) {
-                setForm(prev => ({
-                    ...prev,
-                    carnes: [{ vencimento: primeiraDataStr, valor: valorParcela }],
-                }));
-            }
-            return;
-        }
-
-        const [year, month, day] = primeiraDataStr.split('-').map(Number);
-        let dataBase = new Date(year, month - 1, day);
-
-        const novasCarnes = [];
-
-        for (let i = 0; i < parcelasNum; i++) {
-            const vencimentoFormatado = formatDateToInput(dataBase);
-            novasCarnes.push({
-                vencimento: vencimentoFormatado,
-                valor: valorParcela,
-            });
-            dataBase.setMonth(dataBase.getMonth() + 1);
-        }
-
-        const isEqual =
-            novasCarnes.length === form.carnes.length &&
-            novasCarnes.every(
-                (carne, i) =>
-                    carne.vencimento === form.carnes[i]?.vencimento &&
-                    carne.valor === form.carnes[i]?.valor
-            );
-
-        if (!isEqual) {
-            setForm((prev) => ({ ...prev, carnes: novasCarnes }));
-        }
-    }, [
-        form.premios.parcelas,
-        form.premios.valor,
-        form.carnes[0]?.vencimento,
-        isEditingPrimeiraData,
-    ]);
-
-    // Função para formatar a data local para o input
-    function formatDateToInput(date) {
-        const ano = date.getFullYear();
-        const mes = String(date.getMonth() + 1).padStart(2, "0");
-        const dia = String(date.getDate()).padStart(2, "0");
-        return `${ano}-${mes}-${dia}`;
-    }
+    // Remove completamente o efeito que recalculava parcelas automaticamente
+    // (Aqui não precisa mais desse useEffect)
 
     const handleSetParcelas = (quantidade) => {
         const novasParcelas = Array.from({ length: quantidade }, () => ({
             vencimento: '',
-            valor: 0,
+            valor: '',
         }));
         setForm(prev => ({
             ...prev,
@@ -125,21 +67,7 @@ export const useCadastroPatrimonial = (onSave) => {
         }));
     };
 
-    useEffect(() => {
-        if (isEditingPrimeiraData) {
-            const timeout = setTimeout(() => {
-                setIsEditingPrimeiraData(false);
-            }, 500); // meio segundo sem digitar = terminou de editar
-
-            return () => clearTimeout(timeout);
-        }
-    }, [form.carnes[0]?.vencimento]);
-
     const handleCarneChange = (index, field, value) => {
-        if (index === 0 && field === "vencimento") {
-            setIsEditingPrimeiraData(true);
-        }
-
         setForm((prev) => {
             const novasCarnes = [...prev.carnes];
             novasCarnes[index][field] = value;
@@ -192,7 +120,6 @@ export const useCadastroPatrimonial = (onSave) => {
             return;
         }
 
-        // Atualiza o campo normalmente
         if (typeof form[section] === "object") {
             setForm((prev) => ({
                 ...prev,
@@ -218,25 +145,29 @@ export const useCadastroPatrimonial = (onSave) => {
                 item: form.imovel.tipo,
                 atividade: form.imovel.descricao,
                 importancias: {
-                    avaliacao: form.valores.avaliacao,
-                    cobertura: form.valores.cobertura,
+                    avaliacao: Number(form.valores.avaliacao) || 0,
+                    cobertura: Number(form.valores.cobertura) || 0,
                 },
                 premios: {
                     dataCotacao: form.premios.dataCotacao,
-                    valor: form.premios.valor,
+                    valor: Number(form.premios.valor) || 0,
                     pagamento: form.premios.pagamento,
-                    parcelas: form.premios.parcelas,
-                    liquido: form.premios.liquido,
-                    total: form.premios.total,
+                    parcelas: Number(form.premios.parcelas) || 1,
+                    liquido: Number(form.premios.liquido) || 0,
+                    total: Number(form.premios.total) || 0,
                     observacoes: form.premios.observacoes,
                 },
-                carnes: form.carnes,
+                carnes: form.carnes.map((carne) => ({
+                    vencimento: carne.vencimento,
+                    valor: Number(carne.valor) || 0,
+                })),
             };
 
             const response = await postPatrimonial(payload);
 
             if (response.status === 200) {
                 alert("Cadastro realizado com sucesso!");
+                // reset do form...
                 setForm({
                     pessoal: {
                         nome: "",
@@ -276,9 +207,7 @@ export const useCadastroPatrimonial = (onSave) => {
                         total: "",
                         observacoes: "",
                     },
-                    carnes: [
-                        { vencimento: "", valor: "" }
-                    ],
+                    carnes: [{ vencimento: "", valor: "" }],
                 });
             } else {
                 alert("Erro ao salvar. Verifique os dados e tente novamente.");
