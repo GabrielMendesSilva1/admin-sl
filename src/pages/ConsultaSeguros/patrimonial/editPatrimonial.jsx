@@ -228,6 +228,19 @@ const EditPatrimonial = ({ seguro, onClose, onAtualizado }) => {
                   }
                 />
               </ValueRow>
+
+              <ValueRow>
+                <Label>Houve Sinistro?</Label>
+                <select
+                  value={form.houvesinistro || ''}
+                  onChange={e => handleChange('houvesinistro', e.target.value)}
+                >
+                  <option value="" disabled>Selecione</option>
+                  <option value="Sim">Sim</option>
+                  <option value="Não">Não</option>
+                </select>
+              </ValueRow>
+              
               <ValueRow>
                 <Label>Observações:</Label>
                 <Input

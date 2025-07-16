@@ -8,6 +8,7 @@ interface SeguroItem {
   nome: string;
   seguradora: string;
   tipo: string;
+  houvesinistro: string;
 }
 
 interface Props {
@@ -15,6 +16,7 @@ interface Props {
 }
 
 const TabelaSeguros: React.FC<Props> = ({ dados }) => {
+
   const columns: ColumnsType<SeguroItem> = [
     {
       title: "Data de Vencimento",
@@ -43,14 +45,20 @@ const TabelaSeguros: React.FC<Props> = ({ dados }) => {
         { text: "Automóvel", value: "Automóvel" },
         { text: "Patrimônio", value: "Patrimônio" },
       ],
-      onFilter: (value: boolean | Key, record) => {
-        if (typeof value === "string") {
-          return record.tipo === value;
-        }
-        return true;
-      },
+      onFilter: (value, record) => record.tipo === value,
+    },
+    {
+      title: "Houve Sinistro?",
+      dataIndex: "houvesinistro",
+      key: "houvesinistro",
+      filters: [
+        { text: "Sim", value: "Sim" },
+        { text: "Não", value: "Não" },
+      ],
+      onFilter: (value, record) => record.houvesinistro === value,
     },
   ];
+
 
   return (
     <Table

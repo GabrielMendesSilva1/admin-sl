@@ -106,6 +106,8 @@ export const useSegurado = (onSuccess) => {
                 estadocivil: '',
                 habilitacao: '',
                 observacao: '',
+                numero: '',
+                complemento: '',
             });
 
         } catch (error) {

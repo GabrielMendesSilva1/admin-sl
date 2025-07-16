@@ -135,6 +135,18 @@ const EditAutomovel = ({ veiculo, onCancel, onUpdate }) => {
         </Section>
 
         <Section>
+          <Label>Houve Sinistro?</Label>
+          <select
+            value={form.houvesinistro || ''}
+            onChange={e => handleChange('houvesinistro', e.target.value)}
+          >
+            <option value="" disabled>Selecione</option>
+            <option value="Sim">Sim</option>
+            <option value="Não">Não</option>
+          </select>
+        </Section>
+
+        <Section>
           <Subsection>
             <SubsectionTitle>Importâncias Seguradas</SubsectionTitle>
             <Grid>

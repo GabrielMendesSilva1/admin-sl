@@ -37,9 +37,21 @@ const SegurosAVencerPage: React.FC = () => {
 
           <TabelaSeguros dados={seguros} />
 
-          <button onClick={handlePrint} style={{ marginTop: '1rem' }}>
+          <button
+            onClick={handlePrint}
+            style={{
+              marginTop: '1rem',
+              backgroundColor: '#333',       // tom escuro
+              color: '#fff',                 // texto branco
+              padding: '0.5rem 1rem',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
+            }}
+          >
             Imprimir Relatório
           </button>
+            
         </Wrapper>
       </Container>
     </>

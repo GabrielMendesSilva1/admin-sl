@@ -3,12 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import {
   Container, FilterBox, Field, LabelFilter, Input, Button,
   Panel, Row, Value, LabelUF, ValueUF, PageTitle,
-  ButtonNavContainer, Label, PrintStyles
+  ButtonNavContainer, PrintStyles, Label
 } from './styles';
 import Header from '../../components/Header';
 import { formatCPF } from '../cadastro/utils';
 import { getSegurados } from '../../services/SeguradoService';
 import EditSegurado from './editSegurado';
+import { AutoCompleteStyled } from './styles';
 
 const ConsultaSegurado = () => {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ const ConsultaSegurado = () => {
   const [resultado, setResultado] = useState(null);
   const [loading, setLoading] = useState(false);
   const [modoEdicao, setModoEdicao] = useState(false);
+  const [sugestoesNome, setSugestoesNome] = useState([]);
 
   const handleBuscar = async () => {
     setLoading(true);
@@ -58,26 +60,43 @@ const ConsultaSegurado = () => {
       <PrintStyles />
       <Header />
       <Container>
-        {/* Aqui o form para captar o ENTER */}
         <form onSubmit={handleSubmit}>
           <FilterBox>
             <Field>
               <LabelFilter>PLACA:</LabelFilter>
               <Input value={placa} onChange={e => setPlaca(e.target.value)} />
             </Field>
+
             <Field>
               <LabelFilter>NOME:</LabelFilter>
-              <Input value={nome} onChange={e => setNome(e.target.value)} />
+              <AutoCompleteStyled
+                value={nome}
+                onChange={setNome}
+                onSearch={async (valor) => {
+                  setNome(valor);
+                  if (valor.length >= 2) {
+                    const resultados = await getSegurados({ nome: valor });
+                    const nomesUnicos = [...new Set(resultados.map(s => s.nome.trim()))];
+                    setSugestoesNome(nomesUnicos.map(nome => ({ value: nome })));
+                  } else {
+                    setSugestoesNome([]);
+                  }
+                }}
+                options={sugestoesNome}
+                placeholder="Digite o nome"
+              />
             </Field>
+
             <Field>
               <LabelFilter>APÓLICE:</LabelFilter>
               <Input value={apolice} onChange={e => setApolice(e.target.value)} />
             </Field>
+
             <Field>
               <LabelFilter>CPF/CNPJ:</LabelFilter>
               <Input value={cpfcnpj} onChange={e => setcpfcnpj(formatCPF(e.target.value))} />
             </Field>
-            {/* botão de submit do form */}
+
             <Button type="submit">Buscar</Button>
           </FilterBox>
         </form>
@@ -94,7 +113,7 @@ const ConsultaSegurado = () => {
               <Button onClick={handleNavigatePatrimonial}>PATRIMONIAL</Button>
               <Button onClick={() => setModoEdicao(true)}>Editar Dados</Button>
               <Button onClick={() => window.print()}>Imprimir</Button>
-              </ButtonNavContainer>
+            </ButtonNavContainer>
 
             <Panel id="painel-segurado">
               <PageTitle>Dados do Segurado</PageTitle>
@@ -103,7 +122,6 @@ const ConsultaSegurado = () => {
                 <Label>Data de Cadastro:</Label> <Value>{resultado.datacadastro}</Value>
               </Row>
               <Row></Row>
-
               <Row>
                 <Label>Endereço:</Label> <Value>{resultado.endereco}</Value>
                 <Label>Bairro:</Label> <Value>{resultado.bairro}</Value>

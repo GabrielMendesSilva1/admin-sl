@@ -18,20 +18,35 @@ import {
 
 const CadastroSegurado = () => {
     const [modalVisible, setModalVisible] = useState(false);
-    const { form, handleChange, handleSubmitCustom } = useSegurado(() => {
+    const [loading, setLoading] = useState(false);
+
+    const {
+        form,
+        handleChange,
+        handleSubmitCustom,
+    } = useSegurado(async () => {
         setModalVisible(true);
     });
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (loading) return;
+
+        setLoading(true);
+        try {
+            await handleSubmitCustom();
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
-        <><Header />
+        <>
+            <Header />
             <Container>
                 <Panel>
                     <PageTitle>Cadastro de Segurado</PageTitle>
-                    <form onSubmit={e => {
-                        e.preventDefault();
-                        handleSubmitCustom();
-                    }}>
+                    <form onSubmit={handleSubmit}>
                         {/* DADOS BÁSICOS */}
                         <FormRow>
                             <Field>
@@ -58,7 +73,7 @@ const CadastroSegurado = () => {
                                 <Input value={form.endereco} onChange={e => handleChange('endereco', e.target.value)} />
                             </Field>
                             <Field>
-                                <Label>Numero:</Label>
+                                <Label>Número:</Label>
                                 <Input value={form.numero} onChange={e => handleChange('numero', e.target.value)} />
                             </Field>
                             <Field>
@@ -151,12 +166,16 @@ const CadastroSegurado = () => {
                             </Field>
                         </FormRow>
 
+                        {/* BOTÃO */}
                         <ButtonRow>
-                            <Button onClick={handleSubmitCustom}>Salvar</Button>
+                            <Button type="submit" disabled={loading}>
+                                {loading ? 'Salvando...' : 'Salvar'}
+                            </Button>
                         </ButtonRow>
                     </form>
                 </Panel>
             </Container>
+
             {modalVisible && (
                 <ModalCadastroSugestao onClose={() => setModalVisible(false)} />
             )}

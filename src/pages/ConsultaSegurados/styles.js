@@ -1,4 +1,5 @@
 import styled, { createGlobalStyle } from 'styled-components';
+import { AutoComplete } from 'antd';
 import background from '../../assets/insurance-bg.jpeg';
 
 export const Container = styled.div`
@@ -38,7 +39,7 @@ export const LabelUF = styled.span`
   min-width: 140px;
   color: #222;
   margin-left: 158px;
-`
+`;
 
 export const LabelFilter = styled.span`
   font-weight: 600;
@@ -54,9 +55,30 @@ export const Input = styled.input`
   font-size: 1rem;
   outline: none;
   transition: border-color 0.2s;
+  background-color: #fffff
 
   &:focus {
     border-color: #0077cc;
+  }
+`;
+
+// AutoCompleteStyled deve copiar TODAS as regras acima:
+export const AutoCompleteStyled = styled(AutoComplete)`
+  width: 115%;
+    height: 40px;
+
+  .ant-select-selector {
+    /* mesmas propriedades do Input */
+    padding: 0.5rem 0.75rem !important;
+    border: 2px solid #ccc !important;
+    border-radius: 8px !important;
+    font-size: 1rem !important;
+    transition: border-color 0.2s;
+
+    &:hover,
+    &.ant-select-focused {
+      border-color: #0077cc !important;
+    }
   }
 `;
 
@@ -71,15 +93,16 @@ export const Button = styled.button`
   transition: background 0.2s;
   margin-top: 26px;
   margin-left: 12px;
+
   &:hover {
     background: #005fa3;
   }
 `;
 
 export const ButtonNavContainer = styled.div`
- display: flex;
- gap: 1rem; 
- margin-bottom: 1.5rem;;
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 `;
 
 // Coloque este id no seu JSX: <Panel id="painel-segurado">
