@@ -64,7 +64,11 @@ const ConsultaSegurado = () => {
           <FilterBox>
             <Field>
               <LabelFilter>PLACA:</LabelFilter>
-              <Input value={placa} onChange={e => setPlaca(e.target.value)} />
+              <Input
+                value={placa}
+                onChange={e => setPlaca(e.target.value)}
+                placeholder="Digite a placa..."
+              />
             </Field>
 
             <Field>
@@ -83,18 +87,26 @@ const ConsultaSegurado = () => {
                   }
                 }}
                 options={sugestoesNome}
-                placeholder="Digite o nome"
+                placeholder="Digite o nome..."
               />
             </Field>
 
             <Field>
               <LabelFilter>APÓLICE:</LabelFilter>
-              <Input value={apolice} onChange={e => setApolice(e.target.value)} />
+              <Input
+                value={apolice}
+                onChange={e => setApolice(e.target.value)}
+                placeholder="Digite a apolice..."
+              />
             </Field>
 
             <Field>
               <LabelFilter>CPF/CNPJ:</LabelFilter>
-              <Input value={cpfcnpj} onChange={e => setcpfcnpj(formatCPF(e.target.value))} />
+              <Input
+                value={cpfcnpj}
+                onChange={e => setcpfcnpj(formatCPF(e.target.value))}
+                placeholder="Digite o CPF/CNPJ..."
+              />
             </Field>
 
             <Button type="submit">Buscar</Button>
