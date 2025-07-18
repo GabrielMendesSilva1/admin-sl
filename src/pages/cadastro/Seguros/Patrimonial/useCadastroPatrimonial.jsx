@@ -1,9 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { formatCPF, formatCNPJ, formatCEP } from "../../utils";
 import { postPatrimonial } from "../../../../services/PatrimonialService";
+import { getSeguradoras } from '../../../../services/SeguradoraService';
 
 export const useCadastroPatrimonial = (onSave) => {
     const [isEditingPrimeiraData, setIsEditingPrimeiraData] = useState(false);
+
+    const [seguradoras, setSeguradoras] = useState([]);
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const data = await getSeguradoras();
+                setSeguradoras(data);
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        fetchData();
+    }, []);
 
     const [form, setForm] = useState({
         pessoal: {
@@ -224,5 +240,6 @@ export const useCadastroPatrimonial = (onSave) => {
         handleSubmit,
         handleCarneChange,
         handleSetParcelas,
+        seguradoras,
     };
 };

@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { formatCPF, formatCNPJ } from "../../utils"; // As funções de formatação
 import { postAutomovel } from "../../../../services/AutomovelService";
+import { getSeguradoras } from '../../../../services/SeguradoraService';
+
 
 export const useCadastroAuto = (onSave) => {
     const [form, setForm] = useState({
@@ -164,6 +166,22 @@ export const useCadastroAuto = (onSave) => {
         }));
     };
 
+    const [seguradoras, setSeguradoras] = useState([]);
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const data = await getSeguradoras();
+                setSeguradoras(data);
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        fetchData();
+    }, []);
+
+
     return {
         form,
         handleChange,
@@ -171,6 +189,7 @@ export const useCadastroAuto = (onSave) => {
         handleAddCarne,
         handleSubmit,
         handleSetParcelas,
+        seguradoras, // <-- Faltava isso!
     };
 };
 

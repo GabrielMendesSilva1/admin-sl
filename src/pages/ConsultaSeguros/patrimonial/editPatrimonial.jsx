@@ -11,6 +11,7 @@ import {
   SubsectionTitle,
   Grid,
 } from "./styles";
+import { formatDateBR } from "../../cadastro/utils";
 
 const EditPatrimonial = ({ seguro, onClose, onAtualizado }) => {
   const [form, setForm] = useState({ ...seguro });
@@ -69,7 +70,7 @@ const EditPatrimonial = ({ seguro, onClose, onAtualizado }) => {
           <ValueRow>
             <Label>Seguradora:</Label>
             <Input
-              value={form.nomeseguradora || ""}
+              value={form.nomeseguradora.toUpperCase() || ""}
               onChange={(e) => handleChange("nomeseguradora", e.target.value)}
             />
           </ValueRow>
@@ -77,7 +78,7 @@ const EditPatrimonial = ({ seguro, onClose, onAtualizado }) => {
           <ValueRow>
             <Label>Apólice:</Label>
             <Input
-              value={form.apolice || ""}
+              value={form.apolice.toUpperCase() || ""}
               onChange={(e) => handleChange("apolice", e.target.value)}
             />
           </ValueRow>
@@ -85,7 +86,7 @@ const EditPatrimonial = ({ seguro, onClose, onAtualizado }) => {
           <ValueRow>
             <Label>Endoso:</Label>
             <Input
-              value={form.endoso || ""}
+              value={form.endoso.toUpperCase() || ""}
               onChange={(e) => handleChange("endoso", e.target.value)}
             />
           </ValueRow>
@@ -94,7 +95,7 @@ const EditPatrimonial = ({ seguro, onClose, onAtualizado }) => {
             <Label>Vigência Início:</Label>
             <Input
               type="date"
-              value={form.vigenciainicio || ""}
+              value={formatDateBR(form.vigenciainicio || "")}
               onChange={(e) => handleChange("vigenciainicio", e.target.value)}
             />
           </ValueRow>
@@ -103,7 +104,7 @@ const EditPatrimonial = ({ seguro, onClose, onAtualizado }) => {
             <Label>Vigência Fim:</Label>
             <Input
               type="date"
-              value={form.vigenciafim || ""}
+              value={formatDateBR(form.vigenciafim || "")}
               onChange={(e) => handleChange("vigenciafim", e.target.value)}
             />
           </ValueRow>
@@ -111,7 +112,7 @@ const EditPatrimonial = ({ seguro, onClose, onAtualizado }) => {
           <ValueRow>
             <Label>Bairro:</Label>
             <Input
-              value={form.bairro || ""}
+              value={form.bairro.toUpperCase() || ""}
               onChange={(e) => handleChange("bairro", e.target.value)}
             />
           </ValueRow>
@@ -119,7 +120,7 @@ const EditPatrimonial = ({ seguro, onClose, onAtualizado }) => {
           <ValueRow>
             <Label>Cidade:</Label>
             <Input
-              value={form.cidade || ""}
+              value={form.cidade.toUpperCase() || ""}
               onChange={(e) => handleChange("cidade", e.target.value)}
             />
           </ValueRow>
@@ -127,7 +128,7 @@ const EditPatrimonial = ({ seguro, onClose, onAtualizado }) => {
           <ValueRow>
             <Label>Item:</Label>
             <Input
-              value={form.item || ""}
+              value={form.item.toUpperCase() || ""}
               onChange={(e) => handleChange("item", e.target.value)}
             />
           </ValueRow>
@@ -135,7 +136,7 @@ const EditPatrimonial = ({ seguro, onClose, onAtualizado }) => {
           <ValueRow>
             <Label>Atividade:</Label>
             <Input
-              value={form.atividade || ""}
+              value={form.atividade.toUpperCase() || ""}
               onChange={(e) => handleChange("atividade", e.target.value)}
             />
           </ValueRow>
@@ -175,7 +176,7 @@ const EditPatrimonial = ({ seguro, onClose, onAtualizado }) => {
                 <Label>Data Cotação:</Label>
                 <Input
                   type="date"
-                  value={form.premios?.dataCotacao || ""}
+                  value={formatDateBR(form.premios?.dataCotacao || "")}
                   onChange={(e) =>
                     handleChangePremios("dataCotacao", e.target.value)
                   }
@@ -193,7 +194,7 @@ const EditPatrimonial = ({ seguro, onClose, onAtualizado }) => {
               <ValueRow>
                 <Label>Forma de Pagamento:</Label>
                 <Input
-                  value={form.premios?.pagamento || ""}
+                  value={form.premios?.pagamento.toUpperCase() || ""}
                   onChange={(e) =>
                     handleChangePremios("pagamento", e.target.value)
                   }
@@ -244,7 +245,7 @@ const EditPatrimonial = ({ seguro, onClose, onAtualizado }) => {
               <ValueRow>
                 <Label>Observações:</Label>
                 <Input
-                  value={form.premios?.observacoes || ""}
+                  value={form.premios?.observacoes.toUpperCase() || ""}
                   onChange={(e) =>
                     handleChangePremios("observacoes", e.target.value)
                   }

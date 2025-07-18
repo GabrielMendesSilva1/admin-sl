@@ -140,19 +140,19 @@ const Patrimonial = () => {
           <div id="printable-panel">  {/* <-- Aqui */}
 
             <Section>
-              <Label>Segurado:</Label> <Value>{dados.segurado?.nome || "Nome não disponível"}</Value>
+              <Label>Segurado:</Label> <Value>{dados.segurado?.nome.toUpperCase() || "Nome não disponível"}</Value>
             </Section>
 
             <Section>
               <Subsection>
                 <ValueRow>
-                  <Label>Seguradora:</Label> <Value>{dados.nomeseguradora}</Value>
+                  <Label>Seguradora:</Label> <Value>{dados.nomeseguradora.toUpperCase()}</Value>
                 </ValueRow>
                 <ValueRow>
-                  <Label>Apólice:</Label> <Value>{dados.apolice}</Value>
+                  <Label>Apólice:</Label> <Value>{dados.apolice.toUpperCase()}</Value>
                 </ValueRow>
                 <ValueRow>
-                  <Label>Endoso:</Label> <Value>{dados.endoso}</Value>
+                  <Label>Endoso:</Label> <Value>{dados.endoso.toUpperCase()}</Value>
                 </ValueRow>
                 <ValueRow>
                   <Label>Vigência:</Label>{" "}
@@ -163,14 +163,14 @@ const Patrimonial = () => {
                 <ValueRow>
                   <Label>Local Segurado:</Label>{" "}
                   <Value>
-                    Bairro: {dados.bairro} - Cidade: {dados.cidade}
+                    Bairro: {dados.bairro.toUpperCase()} - Cidade: {dados.cidade.toUpperCase()}
                   </Value>
                 </ValueRow>
                 <ValueRow>
-                  <Label>Item:</Label> <Value>{dados.item}</Value>
+                  <Label>Item:</Label> <Value>{dados.item.toUpperCase()}</Value>
                 </ValueRow>
                 <ValueRow>
-                  <Label>Atividade:</Label> <Value>{dados.atividade}</Value>
+                  <Label>Atividade:</Label> <Value>{dados.atividade.toUpperCase()}</Value>
                 </ValueRow>
               </Subsection>
             </Section>
@@ -200,7 +200,7 @@ const Patrimonial = () => {
                   <Label>Valor:</Label> <Value>{formatCurrency(dados.premios?.valor)}</Value>
                 </ValueRow>
                 <ValueRow>
-                  <Label>Forma de Pagamento:</Label> <Value>{dados.premios?.pagamento}</Value>
+                  <Label>Forma de Pagamento:</Label> <Value>{dados.premios?.pagamento.toUpperCase()}</Value>
                 </ValueRow>
                 <ValueRow>
                   <Label>Parcelas:</Label> <Value>{dados.premios?.parcelas}</Value>

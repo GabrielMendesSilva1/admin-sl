@@ -71,11 +71,11 @@ const Seguradoras = () => {
                             <Grid columns={1}>
                                 <div>
                                     <Label>Nome:</Label>
-                                    <Value>{selected.nome}</Value>
+                                    <Value>{selected.nome.toUpperCase()}</Value>
                                 </div>
                                 <div>
                                     <Label>Endereço:</Label>
-                                    <Value>{selected.endereco}</Value>
+                                    <Value>{selected.endereco.toUpperCase()}</Value>
                                 </div>
                             </Grid>
 
@@ -83,15 +83,15 @@ const Seguradoras = () => {
                             <Grid columns={4}>
                                 <div>
                                     <Label>Bairro:</Label>
-                                    <Value>{selected.bairro}</Value>
+                                    <Value>{selected.bairro.toUpperCase()}</Value>
                                 </div>
                                 <div>
                                     <Label>Cidade:</Label>
-                                    <Value>{selected.cidade}</Value>
+                                    <Value>{selected.cidade.toUpperCase()}</Value>
                                 </div>
                                 <div>
                                     <Label>UF:</Label>
-                                    <Value>{selected.uf}</Value>
+                                    <Value>{selected.uf.toUpperCase()}</Value>
                                 </div>
                                 <div>
                                     <Label>CEP:</Label>
@@ -119,11 +119,11 @@ const Seguradoras = () => {
                             <Grid columns={2}>
                                 <div>
                                     <Label>CGC:</Label>
-                                    <Value>{selected.cgc}</Value>
+                                    <Value>{selected.cgc.toUpperCase()}</Value>
                                 </div>
                                 <div>
                                     <Label>Email:</Label>
-                                    <Value>{selected.email}</Value>
+                                    <Value>{selected.email.toUpperCase()}</Value>
                                 </div>
                             </Grid>
                         </Section>

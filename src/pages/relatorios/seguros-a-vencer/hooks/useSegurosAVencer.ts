@@ -11,6 +11,7 @@ interface SeguroItemRaw {
   nomeseguradora: string;
   segurado?: Segurado;  // objeto único, não array
   houvesinistro?: string;
+  corretora?: string;
 }
 
 interface SeguroItem {
@@ -43,13 +44,13 @@ export function useSegurosAVencer(mes?: number, ano?: number) {
       const [auto, patri] = await Promise.all([
         supabase
           .from("seguros_automotivos")
-          .select("vigenciafim, nomeseguradora, segurado:segurados(nome, cpfcnpj), houvesinistro")
+          .select("vigenciafim, nomeseguradora, segurado:segurados(nome, cpfcnpj), houvesinistro, corretora")
           .gte("vigenciafim", start)
           .lte("vigenciafim", end),
 
         supabase
           .from("seguros_patrimoniais")
-          .select("vigenciafim, nomeseguradora, segurado:segurados(nome, cpfcnpj)")
+          .select("vigenciafim, nomeseguradora, segurado:segurados(nome, cpfcnpj), houvesinistro, corretora")
           .gte("vigenciafim", start)
           .lte("vigenciafim", end),
       ]);
@@ -61,6 +62,7 @@ export function useSegurosAVencer(mes?: number, ano?: number) {
           seguradora: item.nomeseguradora || "Desconhecida",
           tipo: "Automóvel",
           houvesinistro: item.houvesinistro || "-",
+          corretora: item.corretora || "-",
         })
       );
 
@@ -71,6 +73,7 @@ export function useSegurosAVencer(mes?: number, ano?: number) {
           seguradora: item.nomeseguradora || "Desconhecida",
           tipo: "Patrimônio",
           houvesinistro: item.houvesinistro || "-",
+          corretora: item.corretora || "-",
         })
       );
 

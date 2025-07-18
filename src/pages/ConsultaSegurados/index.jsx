@@ -6,7 +6,7 @@ import {
   ButtonNavContainer, PrintStyles, Label
 } from './styles';
 import Header from '../../components/Header';
-import { formatCPF } from '../cadastro/utils';
+import { formatCPF, formatDateBR } from '../cadastro/utils';
 import { getSegurados } from '../../services/SeguradoService';
 import EditSegurado from './editSegurado';
 import { AutoCompleteStyled } from './styles';
@@ -65,7 +65,7 @@ const ConsultaSegurado = () => {
             <Field>
               <LabelFilter>PLACA:</LabelFilter>
               <Input
-                value={placa}
+                value={placa.toUpperCase()}
                 onChange={e => setPlaca(e.target.value)}
                 placeholder="Digite a placa..."
               />
@@ -74,7 +74,7 @@ const ConsultaSegurado = () => {
             <Field>
               <LabelFilter>NOME:</LabelFilter>
               <AutoCompleteStyled
-                value={nome}
+                value={nome.toUpperCase()}
                 onChange={setNome}
                 onSearch={async (valor) => {
                   setNome(valor);
@@ -94,7 +94,7 @@ const ConsultaSegurado = () => {
             <Field>
               <LabelFilter>APÓLICE:</LabelFilter>
               <Input
-                value={apolice}
+                value={apolice.toUpperCase()}
                 onChange={e => setApolice(e.target.value)}
                 placeholder="Digite a apolice..."
               />
@@ -130,21 +130,21 @@ const ConsultaSegurado = () => {
             <Panel id="painel-segurado">
               <PageTitle>Dados do Segurado</PageTitle>
               <Row>
-                <Label>Segurado:</Label> <Value>{resultado.nome}</Value>
-                <Label>Data de Cadastro:</Label> <Value>{resultado.datacadastro}</Value>
+                <Label>Segurado:</Label> <Value>{resultado.nome.toUpperCase()}</Value>
+                <Label>Data de Cadastro:</Label> <Value>{formatDateBR(resultado.datacadastro)}</Value>
               </Row>
               <Row></Row>
               <Row>
-                <Label>Endereço:</Label> <Value>{resultado.endereco}</Value>
-                <Label>Bairro:</Label> <Value>{resultado.bairro}</Value>
+                <Label>Endereço:</Label> <Value>{resultado.endereco.toUpperCase()}</Value>
+                <Label>Bairro:</Label> <Value>{resultado.bairro.toUpperCase()}</Value>
               </Row>
               <Row>
                 <Label>Numero:</Label> <Value>{resultado.numero}</Value>
-                <Label>Complemento:</Label> <Value>{resultado.complemento}</Value>
+                <Label>Complemento:</Label> <Value>{resultado.complemento.toUpperCase()}</Value>
               </Row>
               <Row>
-                <Label>Cidade:</Label> <Value>{resultado.cidade}</Value>
-                <LabelUF>UF:</LabelUF> <ValueUF>{resultado.uf}</ValueUF>
+                <Label>Cidade:</Label> <Value>{resultado.cidade.toUpperCase()}</Value>
+                <LabelUF>UF:</LabelUF> <ValueUF>{resultado.uf.toUpperCase()}</ValueUF>
                 <Label>CEP:</Label> <ValueUF>{resultado.cep}</ValueUF>
               </Row>
               <Row></Row>
@@ -153,18 +153,18 @@ const ConsultaSegurado = () => {
                 <Label>Telefone 2:</Label> <Value>{resultado.tel2}</Value>
               </Row>
               <Row>
-                <Label>E-mail:</Label> <Value>{resultado.email}</Value>
+                <Label>E-mail:</Label> <Value>{resultado.email.toUpperCase()}</Value>
               </Row>
               <Row>
-                <Label>Tipo Pessoa:</Label> <Value>{resultado.tipopessoa}</Value>
+                <Label>Tipo Pessoa:</Label> <Value>{resultado.tipopessoa.toUpperCase()}</Value>
                 <Label>CPF/CNPJ:</Label> <Value>{resultado.cpfcnpj}</Value>
               </Row>
               <Row>
-                <Label>Data Nascimento:</Label> <Value>{resultado.datanascimento}</Value>
-                <Label>Estado Civil:</Label> <Value>{resultado.estadocivil}</Value>
+                <Label>Data Nascimento:</Label> <Value>{formatDateBR(resultado.datanascimento)}</Value>
+                <Label>Estado Civil:</Label> <Value>{resultado.estadocivil.toUpperCase()}</Value>
               </Row>
               <Row>
-                <Label>Observações:</Label> <Value>{resultado.observacao}</Value>
+                <Label>Observações:</Label> <Value>{resultado.observacao.toUpperCase()}</Value>
               </Row>
             </Panel>
           </>

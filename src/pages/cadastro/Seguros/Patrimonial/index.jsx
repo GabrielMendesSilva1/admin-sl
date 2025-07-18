@@ -12,7 +12,8 @@ import {
   ButtonRow,
   Button,
 } from './styles';
-import { formatCurrency, parseCurrency } from '../../utils'; // ✅ Importação adicionada
+import { formatCurrency, parseCurrency, formatDateBR } from '../../utils'; // ✅ Importação adicionada
+import { Select } from 'antd';
 
 const CadastroPatrimonial = () => {
   const {
@@ -22,8 +23,9 @@ const CadastroPatrimonial = () => {
     handleSubmit,
     addCarne,
     handleSetParcelas,
+    seguradoras
   } = useCadastroPatrimonial();
-
+  const { Option } = Select;
   return (
     <>
       <Header />
@@ -52,14 +54,14 @@ const CadastroPatrimonial = () => {
               <Field>
                 <Label>Descrição do Imóvel:</Label>
                 <Input
-                  value={form.imovel.descricao}
+                  value={form.imovel.descricao.toUpperCase()}
                   onChange={(e) => handleChange('imovel', 'descricao', e.target.value)}
                 />
               </Field>
               <Field>
                 <Label>Tipo de Imóvel:</Label>
                 <Input
-                  value={form.imovel.tipo}
+                  value={form.imovel.tipo.toUpperCase()}
                   onChange={(e) => handleChange('imovel', 'tipo', e.target.value)}
                 />
               </Field>
@@ -75,14 +77,14 @@ const CadastroPatrimonial = () => {
               <Field>
                 <Label>Endereço:</Label>
                 <Input
-                  value={form.imovel.endereco}
+                  value={form.imovel.endereco.toUpperCase()}
                   onChange={(e) => handleChange('imovel', 'endereco', e.target.value)}
                 />
               </Field>
               <Field>
                 <Label>Área do Imóvel:</Label>
                 <Input
-                  value={form.imovel.area}
+                  value={form.imovel.area.toUpperCase()}
                   onChange={(e) => handleChange('imovel', 'area', e.target.value)}
                 />
               </Field>
@@ -91,14 +93,14 @@ const CadastroPatrimonial = () => {
               <Field>
                 <Label>Bairro:</Label>
                 <Input
-                  value={form.imovel.bairro}
+                  value={form.imovel.bairro.toUpperCase()}
                   onChange={(e) => handleChange('imovel', 'bairro', e.target.value)}
                 />
               </Field>
               <Field>
                 <Label>Cidade:</Label>
                 <Input
-                  value={form.imovel.cidade}
+                  value={form.imovel.cidade.toUpperCase()}
                   onChange={(e) => handleChange('imovel', 'cidade', e.target.value)}
                 />
               </Field>
@@ -109,15 +111,28 @@ const CadastroPatrimonial = () => {
             <FormRow>
               <Field>
                 <Label>Nome da Seguradora:</Label>
-                <Input
+                <Select
+                  showSearch
+                  style={{ width: '100%' }}
+                  placeholder="Selecione a seguradora"
+                  optionFilterProp="children"
                   value={form.seguradora.nome}
-                  onChange={(e) => handleChange('seguradora', 'nome', e.target.value)}
-                />
+                  onChange={(value) => handleChange('seguradora', 'nome', value)}
+                  filterOption={(input, option) =>
+                    option?.children?.toLowerCase().includes(input.toLowerCase())
+                  }
+                >
+                  {seguradoras.map((seg) => (
+                    <Option key={seg.id} value={seg.nome}>
+                      {seg.nome}
+                    </Option>
+                  ))}
+                </Select>
               </Field>
               <Field>
                 <Label>Apolice:</Label>
                 <Input
-                  value={form.seguradora.apolice}
+                  value={form.seguradora.apolice.toUpperCase()}
                   onChange={(e) => handleChange('seguradora', 'apolice', e.target.value)}
                 />
               </Field>
@@ -126,7 +141,7 @@ const CadastroPatrimonial = () => {
               <Field>
                 <Label>Endoso:</Label>
                 <Input
-                  value={form.seguradora.endoso}
+                  value={form.seguradora.endoso.toUpperCase()}
                   onChange={(e) => handleChange('seguradora', 'endoso', e.target.value)}
                 />
               </Field>
@@ -134,7 +149,7 @@ const CadastroPatrimonial = () => {
                 <Label>Data do Endosso:</Label>
                 <Input
                   type="date"
-                  value={form.seguradora.dataEndosso}
+                  value={formatDateBR(form.seguradora.dataEndosso)}
                   onChange={(e) => handleChange('seguradora', 'dataEndosso', e.target.value)}
                 />
               </Field>
@@ -147,7 +162,7 @@ const CadastroPatrimonial = () => {
                 <Label>Início da Vigência:</Label>
                 <Input
                   type="date"
-                  value={form.vigencia.inicio}
+                  value={formatDateBR(form.vigencia.inicio)}
                   onChange={(e) => handleChange('vigencia', 'inicio', e.target.value)}
                 />
               </Field>

@@ -48,6 +48,14 @@ const TabelaSeguros: React.FC<Props> = ({ dados }) => {
       onFilter: (value, record) => record.tipo === value,
     },
     {
+      title: "Corretora",
+      dataIndex: "corretora",
+      key: "corretora",
+      filters: [
+      ],
+      onFilter: (value, record) => record.tipo === value,
+    },
+    {
       title: "Houve Sinistro?",
       dataIndex: "houvesinistro",
       key: "houvesinistro",

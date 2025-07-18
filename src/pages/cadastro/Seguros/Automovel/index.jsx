@@ -13,6 +13,7 @@ import {
     Button,
 } from './styles';
 import { formatCurrency, parseCurrency } from "../../utils";
+import { Select } from "antd"; // no topo do arquivo
 
 const CadastroAuto = () => {
     const {
@@ -21,8 +22,11 @@ const CadastroAuto = () => {
         handleCarneChange,
         handleAddCarne,
         handleSubmit,
-        handleSetParcelas
+        handleSetParcelas,
+        seguradoras, // <-- Faltava isso!
     } = useCadastroAuto();
+    const { Option } = Select;
+
 
     return (
         <>
@@ -85,10 +89,23 @@ const CadastroAuto = () => {
                         <FormRow>
                             <Field>
                                 <Label>Nome da Seguradora:</Label>
-                                <Input
+                                <Select
+                                    showSearch
+                                    style={{ width: '100%' }}
+                                    placeholder="Selecione a seguradora"
+                                    optionFilterProp="children"
                                     value={form.seguradora.nome}
-                                    onChange={(e) => handleChange('seguradora', 'nome', e.target.value)}
-                                />
+                                    onChange={(value) => handleChange('seguradora', 'nome', value)}
+                                    filterOption={(input, option) =>
+                                        option?.children?.toLowerCase().includes(input.toLowerCase())
+                                    }
+                                >
+                                    {seguradoras.map((seg) => (
+                                        <Option key={seg.id} value={seg.nome}>
+                                            {seg.nome}
+                                        </Option>
+                                    ))}
+                                </Select>
                             </Field>
                             <Field>
                                 <Label>Corretora:</Label>
@@ -229,9 +246,9 @@ const CadastroAuto = () => {
                             <Field>
                                 <Label>Bônus:</Label>
                                 <Input
-                                    value={formatCurrency(form.importancias.bonus)}
+                                    value={form.importancias.bonus}
                                     onChange={(e) =>
-                                        handleChange('importancias', 'bonus', parseCurrency(e.target.value))
+                                        handleChange('importancias', 'bonus', (e.target.value))
                                     }
                                 />
                             </Field>
@@ -262,18 +279,18 @@ const CadastroAuto = () => {
                             <Field>
                                 <Label>Martelinho:</Label>
                                 <Input
-                                    value={formatCurrency(form.importancias.martelinho)}
+                                    value={form.importancias.martelinho}
                                     onChange={(e) =>
-                                        handleChange('importancias', 'martelinho', parseCurrency(e.target.value))
+                                        handleChange('importancias', 'martelinho', e.target.value)
                                     }
                                 />
                             </Field>
                             <Field>
                                 <Label>Pequenos Reparos:</Label>
                                 <Input
-                                    value={formatCurrency(form.importancias.pequenosReparos)}
+                                    value={form.importancias.pequenosReparos    }
                                     onChange={(e) =>
-                                        handleChange('importancias', 'pequenosReparos', parseCurrency(e.target.value))
+                                        handleChange('importancias', 'pequenosReparos', e.target.value)
                                     }
                                 />
                             </Field>

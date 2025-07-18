@@ -3,6 +3,7 @@ import {
   Panel, Row, Label, Input, Value, Button, PageTitle
 } from './styles'; // ajuste import conforme seu projeto
 import { updateSegurado } from '../../services/SeguradoService';
+import { formatDateBR } from '../cadastro/utils';
 
 const EditSegurado = ({ segurado, onCancel, onUpdate }) => {
   const [form, setForm] = useState({ ...segurado });
@@ -35,7 +36,7 @@ const EditSegurado = ({ segurado, onCancel, onUpdate }) => {
         <Row>
           <Label>Nome:</Label>
           <Input
-            value={form.nome || ''}
+            value={form.nome.toUpperCase() || ''}
             onChange={e => handleChange('nome', e.target.value)}
           />
         </Row>
@@ -43,7 +44,7 @@ const EditSegurado = ({ segurado, onCancel, onUpdate }) => {
         <Row>
           <Label>Email:</Label>
           <Input
-            value={form.email || ''}
+            value={form.email.toUpperCase() || ''}
             onChange={e => handleChange('email', e.target.value)}
           />
         </Row>
@@ -59,7 +60,7 @@ const EditSegurado = ({ segurado, onCancel, onUpdate }) => {
         <Row>
           <Label>Endereço:</Label>
           <Input
-            value={form.endereco || ''}
+            value={form.endereco.toUpperCase() || ''}
             onChange={e => handleChange('endereco', e.target.value)}
           />
         </Row>
@@ -73,14 +74,14 @@ const EditSegurado = ({ segurado, onCancel, onUpdate }) => {
         <Row>
           <Label>Complemento:</Label>
           <Input
-            value={form.complemento || ''}
+            value={form.complemento.toUpperCase() || ''}
             onChange={e => handleChange('complemento', e.target.value)}
           />
         </Row>
         <Row>
           <Label>Bairro:</Label>
           <Input
-            value={form.bairro || ''}
+            value={form.bairro.toUpperCase() || ''}
             onChange={e => handleChange('bairro', e.target.value)}
           />
         </Row>
@@ -88,7 +89,7 @@ const EditSegurado = ({ segurado, onCancel, onUpdate }) => {
         <Row>
           <Label>Cidade:</Label>
           <Input
-            value={form.cidade || ''}
+            value={form.cidade.toUpperCase() || ''}
             onChange={e => handleChange('cidade', e.target.value)}
           />
         </Row>
@@ -96,7 +97,7 @@ const EditSegurado = ({ segurado, onCancel, onUpdate }) => {
         <Row>
           <Label>UF:</Label>
           <Input
-            value={form.uf || ''}
+            value={form.uf.toUpperCase() || ''}
             onChange={e => handleChange('uf', e.target.value)}
           />
         </Row>
@@ -120,7 +121,7 @@ const EditSegurado = ({ segurado, onCancel, onUpdate }) => {
         <Row>
           <Label>Tipo Pessoa:</Label>
           <Input
-            value={form.tipopessoa || ''}
+            value={form.tipopessoa.toUpperCase() || ''}
             onChange={e => handleChange('tipopessoa', e.target.value)}
           />
         </Row>
@@ -128,7 +129,7 @@ const EditSegurado = ({ segurado, onCancel, onUpdate }) => {
         <Row>
           <Label>Estado Civil:</Label>
           <Input
-            value={form.estadocivil || ''}
+            value={form.estadocivil.toUpperCase() || ''}
             onChange={e => handleChange('estadocivil', e.target.value)}
           />
         </Row>
@@ -136,7 +137,7 @@ const EditSegurado = ({ segurado, onCancel, onUpdate }) => {
         <Row>
           <Label>Observações:</Label>
           <Input
-            value={form.observacao || ''}
+            value={form.observacao.toUpperCase() || ''}
             onChange={e => handleChange('observacao', e.target.value)}
           />
         </Row>
@@ -144,7 +145,7 @@ const EditSegurado = ({ segurado, onCancel, onUpdate }) => {
         {/* Campos não editáveis */}
         <Row>
           <Label>Data de Cadastro:</Label>
-          <Value>{form.datacadastro}</Value>
+          <Value>{formatDateBR(form.datacadastro)}</Value>
         </Row>
 
         <Row>
@@ -154,7 +155,7 @@ const EditSegurado = ({ segurado, onCancel, onUpdate }) => {
 
         <Row>
           <Label>Data Nascimento:</Label>
-          <Value>{form.datanascimento}</Value>
+          <Value>{formatDateBR(form.datanascimento)}</Value>
         </Row>
 
         <Button type="submit" disabled={saving}>Salvar</Button>

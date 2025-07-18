@@ -15,6 +15,7 @@ import {
     ButtonRow,
     Button,
 } from './styles';
+import { formatDateBR } from '../utils';
 
 const CadastroSegurado = () => {
     const [modalVisible, setModalVisible] = useState(false);
@@ -137,7 +138,10 @@ const CadastroSegurado = () => {
                         <FormRow>
                             <Field>
                                 <Label>Data Nascimento:</Label>
-                                <Input type="date" value={form.datanascimento} onChange={e => handleChange('datanascimento', e.target.value)} />
+                                <Input
+                                    type="date"
+                                    value={formatDateBR(form.datanascimento)}
+                                    onChange={e => handleChange('datanascimento', e.target.value)} />
                             </Field>
                             <Field>
                                 <Label>Estado Civil:</Label>

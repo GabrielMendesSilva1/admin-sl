@@ -1,19 +1,19 @@
 import { supabase } from '../lib/supaBaseClient';
 
 export const getSegurados = async ({ placa, nome, apolice, cpfcnpj }) => {
-  let query = supabase.from('segurados').select('*');
+  const query = supabase.from('segurados').select('*');
 
   if (placa) {
-    query = query.ilike('placa', `%${placa}%`);
+    query.ilike('placa', `%${placa}%`);
   }
   if (nome) {
-    query = query.ilike('nome', `%${nome}%`);
+    query.ilike('nome', `%${nome}%`);
   }
   if (apolice) {
-    query = query.ilike('apolice', `%${apolice}%`);
+    query.ilike('apolice', `%${apolice}%`);
   }
   if (cpfcnpj) {
-    query = query.ilike('cpfcnpj', `%${cpfcnpj}%`);
+    query.ilike('cpfcnpj', `%${cpfcnpj}%`);
   }
 
   const { data, error } = await query;
@@ -25,6 +25,7 @@ export const getSegurados = async ({ placa, nome, apolice, cpfcnpj }) => {
 
   return data;
 };
+
 
 export const postSegurado = async (segurado) => {
   const { data, error } = await supabase

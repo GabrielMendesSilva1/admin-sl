@@ -4,6 +4,7 @@ import {
   Subsection, Grid, PageWrapper, SubsectionTitle, ButtonNavContainer
 } from "./styles";
 import { updateAutomovel } from "../../../services/AutomovelService";
+import { formatDateBR } from "../../cadastro/utils";
 
 const EditAutomovel = ({ veiculo, onCancel, onUpdate }) => {
   const [form, setForm] = useState({ ...veiculo });
@@ -85,7 +86,7 @@ const EditAutomovel = ({ veiculo, onCancel, onUpdate }) => {
               <Label>Início:</Label>
               <Input
                 type="date"
-                value={form.vigenciainicio || ""}
+                value={formatDateBR(form.vigenciainicio || "")}
                 onChange={e => handleChange("vigenciainicio", e.target.value)}
               />
             </ValueRow>
@@ -93,7 +94,7 @@ const EditAutomovel = ({ veiculo, onCancel, onUpdate }) => {
               <Label>Fim:</Label>
               <Input
                 type="date"
-                value={form.vigenciafim || ""}
+                value={formatDateBR(form.vigenciafim || "")}
                 onChange={e => handleChange("vigenciafim", e.target.value)}
               />
             </ValueRow>
@@ -163,9 +164,9 @@ const EditAutomovel = ({ veiculo, onCancel, onUpdate }) => {
                 "rodas",
               ].map((key) => (
                 <ValueRow key={key}>
-                  <Label>{key.charAt(0).toUpperCase() + key.slice(1)}:</Label>
+                  <Label>{key.charAt(0) + key.slice(1)}:</Label>
                   <Input
-                    value={(form.importancias && form.importancias[key]) || ""}
+                    value={(form.importancias&& form.importancias[key]) || ""}
                     onChange={(e) => handleChangeImportancia(key, e.target.value)}
                   />
                 </ValueRow>
@@ -207,7 +208,7 @@ const EditAutomovel = ({ veiculo, onCancel, onUpdate }) => {
             {/* Simplificando: não edita carnês */}
             {form.carnes && form.carnes.map((item, idx) => (
               <ValueRow key={idx}>
-                <Label>Vencimento:</Label> <Value>{item.vencimento}</Value>
+                <Label>Vencimento:</Label> <Value>{formatDateBR(item.vencimento)}</Value>
                 <Label>Valor:</Label> <Value>{item.valor}</Value>
               </ValueRow>
             ))}
