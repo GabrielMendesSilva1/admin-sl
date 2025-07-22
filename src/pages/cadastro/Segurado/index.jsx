@@ -140,7 +140,7 @@ const CadastroSegurado = () => {
                                 <Label>Data Nascimento:</Label>
                                 <Input
                                     type="date"
-                                    value={formatDateBR(form.datanascimento)}
+                                    value={form.datanascimento}
                                     onChange={e => handleChange('datanascimento', e.target.value)} />
                             </Field>
                             <Field>
