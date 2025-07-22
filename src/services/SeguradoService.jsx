@@ -53,3 +53,12 @@ export const updateSegurado = async (cpfcnpj, dadosAtualizados) => {
 
   return data;
 };
+
+export const deleteSegurado = async (cpfcnpj) => {
+  const { error } = await supabase
+    .from('segurados')
+    .delete()
+    .eq('cpfcnpj', cpfcnpj);
+
+  if (error) throw error;
+};
