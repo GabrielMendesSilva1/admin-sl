@@ -74,6 +74,13 @@ const EditPatrimonial = ({ seguro, onClose, onAtualizado }) => {
               onChange={(e) => handleChange("nomeseguradora", e.target.value)}
             />
           </ValueRow>
+          <ValueRow>
+            <Label>Corretora:</Label>
+            <Input
+              value={form.corretora || ""}
+              onChange={e => handleChange("corretora", e.target.value)}
+            />
+          </ValueRow>
 
           <ValueRow>
             <Label>Apólice:</Label>
@@ -241,7 +248,7 @@ const EditPatrimonial = ({ seguro, onClose, onAtualizado }) => {
                   <option value="Não">Não</option>
                 </select>
               </ValueRow>
-              
+
               <ValueRow>
                 <Label>Observações:</Label>
                 <Input

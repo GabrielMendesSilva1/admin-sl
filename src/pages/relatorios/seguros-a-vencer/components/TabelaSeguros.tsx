@@ -2,6 +2,7 @@ import React from "react";
 import { Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import type { Key } from "react";
+import dayjs from "dayjs";
 
 interface SeguroItem {
   data: string;
@@ -22,9 +23,9 @@ const TabelaSeguros: React.FC<Props> = ({ dados }) => {
       title: "Data de Vencimento",
       dataIndex: "data",
       key: "data",
-      render: (date: string) => new Date(date).toLocaleDateString("pt-BR"),
+      render: (date: string) => dayjs(date).format("DD/MM/YYYY"),
       sorter: (a, b) => new Date(a.data).getTime() - new Date(b.data).getTime(),
-    },
+    },    
     {
       title: "Nome do Cliente",
       dataIndex: "nome",

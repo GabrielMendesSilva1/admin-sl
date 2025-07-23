@@ -72,6 +72,13 @@ const EditAutomovel = ({ veiculo, onCancel, onUpdate }) => {
               />
             </ValueRow>
             <ValueRow>
+              <Label>Corretora:</Label>
+              <Input
+                value={form.corretora || ""}
+                onChange={e => handleChange("corretora", e.target.value)}
+              />
+            </ValueRow>
+            <ValueRow>
               <Label>Apólice:</Label>
               <Input
                 value={form.apolice || ""}
@@ -166,7 +173,7 @@ const EditAutomovel = ({ veiculo, onCancel, onUpdate }) => {
                 <ValueRow key={key}>
                   <Label>{key.charAt(0) + key.slice(1)}:</Label>
                   <Input
-                    value={(form.importancias&& form.importancias[key]) || ""}
+                    value={(form.importancias && form.importancias[key]) || ""}
                     onChange={(e) => handleChangeImportancia(key, e.target.value)}
                   />
                 </ValueRow>
