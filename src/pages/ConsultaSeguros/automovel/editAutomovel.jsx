@@ -56,7 +56,7 @@ const EditAutomovel = ({ veiculo, onCancel, onUpdate }) => {
         <Section>
           <Label>Segurado:</Label>
           <Input
-            value={form.segurado || ""}
+            value={form.segurado?.nome || ""}
             onChange={e => handleChange("segurado", e.target.value)}
           />
         </Section>

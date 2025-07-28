@@ -74,7 +74,7 @@ const TabelaSeguros: React.FC<Props> = ({ dados }) => {
       columns={columns}
       dataSource={dados}
       rowKey={(record) => `${record.tipo}-${record.nome}-${record.data}`}
-      pagination={{ pageSize: 10 }}
+      pagination={{ pageSize: 50 }}
       locale={{ emptyText: "Nenhum seguro a vencer nesse período" }}
     />
   );
