@@ -102,7 +102,7 @@ const EditPatrimonial = ({ seguro, onClose, onAtualizado }) => {
             <Label>Vigência Início:</Label>
             <Input
               type="date"
-              value={formatDateBR(form.vigenciainicio || "")}
+              value={form.vigenciainicio || ""}
               onChange={(e) => handleChange("vigenciainicio", e.target.value)}
             />
           </ValueRow>
@@ -111,7 +111,7 @@ const EditPatrimonial = ({ seguro, onClose, onAtualizado }) => {
             <Label>Vigência Fim:</Label>
             <Input
               type="date"
-              value={formatDateBR(form.vigenciafim || "")}
+              value={form.vigenciafim || ""}
               onChange={(e) => handleChange("vigenciafim", e.target.value)}
             />
           </ValueRow>
