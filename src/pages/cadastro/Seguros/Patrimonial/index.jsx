@@ -162,7 +162,7 @@ const CadastroPatrimonial = () => {
                 <Label>Início da Vigência:</Label>
                 <Input
                   type="date"
-                  value={formatDateBR(form.vigencia.inicio)}
+                  value={form.vigencia.inicio}
                   onChange={(e) => handleChange('vigencia', 'inicio', e.target.value)}
                 />
               </Field>
