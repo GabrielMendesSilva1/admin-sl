@@ -58,10 +58,8 @@ export const useCadastroAuto = (onSave) => {
             setForm(prev => ({ ...prev, carnes: value }));
         } else if (typeof form[section] === 'object') {
             if (field === 'cpfcnpj') {
-                if (value.replace(/\D/g, '').length <= 11) {
+                if (value.replace(/\D/g, '').length) {
                     value = formatCPF(value);
-                } else {
-                    value = formatCNPJ(value);
                 }
             }
 

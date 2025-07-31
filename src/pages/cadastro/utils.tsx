@@ -64,4 +64,24 @@ export const formatCurrency = (value) => {
     return formattedValue.replace(/\D/g, '');
   };
   
+  export function formatCpfCnpj(valor) {
+    if (!valor) return '';
+  
+    const digits = valor.replace(/\D/g, ''); // Remove tudo que não for número
+  
+    if (digits.length === 11) {
+      // Formata como CPF
+      return digits.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+    }
+  
+    if (digits.length === 14) {
+      // Formata como CNPJ
+      return digits.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+    }
+  
+    // Se não for nenhum dos dois, retorna como está
+    return valor;
+  }
+  
+  
   

@@ -98,10 +98,8 @@ export const useCadastroPatrimonial = (onSave) => {
 
         if (section === "pessoal" && field === "cpfcnpj") {
             const digits = value.replace(/\D/g, "");
-            if (digits.length <= 11) {
+            if (digits.length) {
                 value = formatCPF(digits);
-            } else if (digits.length <= 14) {
-                value = formatCNPJ(digits);
             }
         }
 

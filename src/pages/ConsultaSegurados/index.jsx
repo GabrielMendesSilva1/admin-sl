@@ -6,7 +6,7 @@ import {
   ButtonNavContainer, PrintStyles, Label
 } from './styles';
 import Header from '../../components/Header';
-import { formatCPF, formatDateBR } from '../cadastro/utils';
+import { formatCPF, formatDateBR, formatCpfCnpj } from '../cadastro/utils';
 import { getSegurados } from '../../services/SeguradoService';
 import EditSegurado from './editSegurado';
 import { AutoCompleteStyled } from './styles';
@@ -157,8 +157,8 @@ const ConsultaSegurado = () => {
               </Row>
               <Row>
                 <Label>Tipo Pessoa:</Label> <Value>{resultado.tipopessoa.toUpperCase()}</Value>
-                <Label>CPF/CNPJ:</Label> <Value>{resultado.cpfcnpj}</Value>
-              </Row>
+                <Label>CPF/CNPJ:</Label> <Value>{formatCpfCnpj(resultado.cpfcnpj)}</Value>
+                </Row>
               <Row>
                 <Label>Data Nascimento:</Label> <Value>{formatDateBR(resultado.datanascimento)}</Value>
                 <Label>Estado Civil:</Label> <Value>{resultado.estadocivil.toUpperCase()}</Value>

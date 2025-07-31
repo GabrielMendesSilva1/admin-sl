@@ -149,7 +149,7 @@ const CadastroPatrimonial = () => {
                 <Label>Data do Endosso:</Label>
                 <Input
                   type="date"
-                  value={formatDateBR(form.seguradora.dataEndosso)}
+                  value={form.seguradora.dataEndosso}
                   onChange={(e) => handleChange('seguradora', 'dataEndosso', e.target.value)}
                 />
               </Field>
