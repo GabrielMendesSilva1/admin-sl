@@ -24,6 +24,23 @@ const EditAutomovel = ({ veiculo, onCancel, onUpdate }) => {
     }));
   };
 
+  const handleCarneChange = (index, field, value) => {
+    const updatedCarnes = [...(form.carnes || [])];
+    updatedCarnes[index] = { ...updatedCarnes[index], [field]: value };
+    setForm(prev => ({ ...prev, carnes: updatedCarnes }));
+  };
+
+  const handleAddCarne = () => {
+    const novaLista = [...(form.carnes || []), { vencimento: "", valor: "" }];
+    setForm(prev => ({ ...prev, carnes: novaLista }));
+  };
+
+  const handleRemoveCarne = (index) => {
+    const novaLista = [...(form.carnes || [])];
+    novaLista.splice(index, 1);
+    setForm(prev => ({ ...prev, carnes: novaLista }));
+  };
+
   const handleChangePremio = (field, value) => {
     setForm(prev => ({
       ...prev,
@@ -242,12 +259,24 @@ const EditAutomovel = ({ veiculo, onCancel, onUpdate }) => {
         <Section>
           <Subsection>
             <SubsectionTitle>Carnês</SubsectionTitle>
-            {form.carnes && form.carnes.map((item, idx) => (
+            {(form.carnes || []).map((item, idx) => (
               <ValueRow key={idx}>
-                <Label>Vencimento:</Label> <Value>{formatDateBR(item.vencimento)}</Value>
-                <Label>Valor:</Label> <Value>{item.valor}</Value>
+                <Label>Vencimento:</Label>
+                <Input
+                  type="date"
+                  value={item.vencimento || ""}
+                  onChange={e => handleCarneChange(idx, "vencimento", e.target.value)}
+                />
+                <Label>Valor:</Label>
+                <Input
+                  value={item.valor || ""}
+                  onChange={e => handleCarneChange(idx, "valor", e.target.value)}
+                />
+                <Button type="button" onClick={() => handleRemoveCarne(idx)}>Remover</Button>
               </ValueRow>
             ))}
+
+            <Button type="button" onClick={handleAddCarne}>Adicionar Carnê</Button>
           </Subsection>
         </Section>
 
