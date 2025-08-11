@@ -45,11 +45,19 @@ const EditPatrimonial = ({ seguro, onClose, onAtualizado }) => {
     }));
   };
 
+  const handleChangeCarne = (index, field, value) => {
+    const novasCarnes = [...(form.carnes || [])];
+    novasCarnes[index][field] = value;
+    setForm((prev) => ({
+      ...prev,
+      carnes: novasCarnes,
+    }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
     try {
-      // Aqui você deve chamar seu serviço para atualizar (ex: updatePatrimonial)
       // await updatePatrimonial(form.id, form);
       onAtualizado(form);
       alert("Seguro patrimonial atualizado com sucesso!");
@@ -68,9 +76,13 @@ const EditPatrimonial = ({ seguro, onClose, onAtualizado }) => {
 
         <Section>
           <ValueRow>
+            <Label>Segurado:</Label>
+            <Input value={form.segurado?.nome.toUpperCase() || ""} disabled />
+          </ValueRow>
+          <ValueRow>
             <Label>Seguradora:</Label>
             <Input
-              value={form.nomeseguradora.toUpperCase() || ""}
+              value={form.nomeseguradora || ""}
               onChange={(e) => handleChange("nomeseguradora", e.target.value)}
             />
           </ValueRow>
@@ -78,14 +90,14 @@ const EditPatrimonial = ({ seguro, onClose, onAtualizado }) => {
             <Label>Corretora:</Label>
             <Input
               value={form.corretora || ""}
-              onChange={e => handleChange("corretora", e.target.value)}
+              onChange={(e) => handleChange("corretora", e.target.value)}
             />
           </ValueRow>
 
           <ValueRow>
             <Label>Apólice:</Label>
             <Input
-              value={form.apolice.toUpperCase() || ""}
+              value={form.apolice || ""}
               onChange={(e) => handleChange("apolice", e.target.value)}
             />
           </ValueRow>
@@ -93,11 +105,10 @@ const EditPatrimonial = ({ seguro, onClose, onAtualizado }) => {
           <ValueRow>
             <Label>Endoso:</Label>
             <Input
-              value={form.endoso.toUpperCase() || ""}
+              value={form.endoso || ""}
               onChange={(e) => handleChange("endoso", e.target.value)}
             />
           </ValueRow>
-
           <ValueRow>
             <Label>Vigência Início:</Label>
             <Input
@@ -115,35 +126,31 @@ const EditPatrimonial = ({ seguro, onClose, onAtualizado }) => {
               onChange={(e) => handleChange("vigenciafim", e.target.value)}
             />
           </ValueRow>
-
           <ValueRow>
             <Label>Bairro:</Label>
             <Input
-              value={form.bairro.toUpperCase() || ""}
+              value={form.bairro || ""}
               onChange={(e) => handleChange("bairro", e.target.value)}
             />
           </ValueRow>
-
           <ValueRow>
             <Label>Cidade:</Label>
             <Input
-              value={form.cidade.toUpperCase() || ""}
+              value={form.cidade || ""}
               onChange={(e) => handleChange("cidade", e.target.value)}
             />
           </ValueRow>
-
           <ValueRow>
             <Label>Item:</Label>
             <Input
-              value={form.item.toUpperCase() || ""}
+              value={form.item || ""}
               onChange={(e) => handleChange("item", e.target.value)}
             />
           </ValueRow>
-
           <ValueRow>
             <Label>Atividade:</Label>
             <Input
-              value={form.atividade.toUpperCase() || ""}
+              value={form.atividade || ""}
               onChange={(e) => handleChange("atividade", e.target.value)}
             />
           </ValueRow>
@@ -183,7 +190,7 @@ const EditPatrimonial = ({ seguro, onClose, onAtualizado }) => {
                 <Label>Data Cotação:</Label>
                 <Input
                   type="date"
-                  value={formatDateBR(form.premios?.dataCotacao || "")}
+                  value={form.premios?.dataCotacao || ""}
                   onChange={(e) =>
                     handleChangePremios("dataCotacao", e.target.value)
                   }
@@ -201,7 +208,7 @@ const EditPatrimonial = ({ seguro, onClose, onAtualizado }) => {
               <ValueRow>
                 <Label>Forma de Pagamento:</Label>
                 <Input
-                  value={form.premios?.pagamento.toUpperCase() || ""}
+                  value={form.premios?.pagamento || ""}
                   onChange={(e) =>
                     handleChangePremios("pagamento", e.target.value)
                   }
@@ -236,23 +243,23 @@ const EditPatrimonial = ({ seguro, onClose, onAtualizado }) => {
                   }
                 />
               </ValueRow>
-
               <ValueRow>
                 <Label>Houve Sinistro?</Label>
                 <select
-                  value={form.houvesinistro || ''}
-                  onChange={e => handleChange('houvesinistro', e.target.value)}
+                  value={form.houvesinistro || ""}
+                  onChange={(e) =>
+                    handleChange("houvesinistro", e.target.value)
+                  }
                 >
                   <option value="" disabled>Selecione</option>
                   <option value="Sim">Sim</option>
                   <option value="Não">Não</option>
                 </select>
               </ValueRow>
-
               <ValueRow>
                 <Label>Observações:</Label>
                 <Input
-                  value={form.premios?.observacoes.toUpperCase() || ""}
+                  value={form.premios?.observacoes || ""}
                   onChange={(e) =>
                     handleChangePremios("observacoes", e.target.value)
                   }
@@ -262,12 +269,43 @@ const EditPatrimonial = ({ seguro, onClose, onAtualizado }) => {
           </Subsection>
         </Section>
 
+        {form.carnes?.length > 0 && (
+          <Section>
+            <Subsection>
+              <SubsectionTitle>Carnês</SubsectionTitle>
+              {form.carnes.map((item, index) => (
+                <Grid key={index}>
+                  <ValueRow>
+                    <Label>Vencimento {index + 1}:</Label>
+                    <Input
+                      type="date"
+                      value={item.vencimento || ""}
+                      onChange={(e) =>
+                        handleChangeCarne(index, "vencimento", e.target.value)
+                      }
+                    />
+                  </ValueRow>
+                  <ValueRow>
+                    <Label>Valor:</Label>
+                    <Input
+                      value={item.valor || ""}
+                      onChange={(e) =>
+                        handleChangeCarne(index, "valor", e.target.value)
+                      }
+                    />
+                  </ValueRow>
+                </Grid>
+              ))}
+            </Subsection>
+          </Section>
+        )}
+
         <Button type="submit" disabled={saving}>
           Salvar
         </Button>
         <Button
           type="button"
-          onClick={() => onClose()}
+          onClick={onClose}
           disabled={saving}
           style={{ marginLeft: "1rem" }}
         >

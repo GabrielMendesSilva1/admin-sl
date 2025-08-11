@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import {
   Container, Section, Title, Label, Input, Button, ValueRow, Value,
-  Subsection, Grid, PageWrapper, SubsectionTitle, ButtonNavContainer
+  Subsection, Grid, SubsectionTitle
 } from "./styles";
 import { updateAutomovel } from "../../../services/AutomovelService";
 import { formatDateBR } from "../../cadastro/utils";
@@ -22,6 +22,23 @@ const EditAutomovel = ({ veiculo, onCancel, onUpdate }) => {
         [field]: value
       }
     }));
+  };
+
+  const handleCarneChange = (index, field, value) => {
+    const updatedCarnes = [...(form.carnes || [])];
+    updatedCarnes[index] = { ...updatedCarnes[index], [field]: value };
+    setForm(prev => ({ ...prev, carnes: updatedCarnes }));
+  };
+
+  const handleAddCarne = () => {
+    const novaLista = [...(form.carnes || []), { vencimento: "", valor: "" }];
+    setForm(prev => ({ ...prev, carnes: novaLista }));
+  };
+
+  const handleRemoveCarne = (index) => {
+    const novaLista = [...(form.carnes || [])];
+    novaLista.splice(index, 1);
+    setForm(prev => ({ ...prev, carnes: novaLista }));
   };
 
   const handleChangePremio = (field, value) => {
@@ -57,7 +74,7 @@ const EditAutomovel = ({ veiculo, onCancel, onUpdate }) => {
           <Label>Segurado:</Label>
           <Input
             value={form.segurado?.nome || ""}
-            onChange={e => handleChange("segurado", e.target.value)}
+            onChange={e => handleChange("segurado", { ...form.segurado, nome: e.target.value })}
           />
         </Section>
 
@@ -85,6 +102,21 @@ const EditAutomovel = ({ veiculo, onCancel, onUpdate }) => {
                 onChange={e => handleChange("apolice", e.target.value)}
               />
             </ValueRow>
+            <ValueRow>
+              <Label>Endosso:</Label>
+              <Input
+                value={form.endoso || ""}
+                onChange={e => handleChange("endoso", e.target.value)}
+              />
+            </ValueRow>
+            <ValueRow>
+              <Label>Data do Endosso:</Label>
+              <Input
+                type="date"
+                value={form.dataendosso || ""}
+                onChange={e => handleChange("dataendosso", e.target.value)}
+              />
+            </ValueRow>
           </Subsection>
 
           <Subsection>
@@ -110,6 +142,13 @@ const EditAutomovel = ({ veiculo, onCancel, onUpdate }) => {
               <Input
                 value={form.cobertura || ""}
                 onChange={e => handleChange("cobertura", e.target.value)}
+              />
+            </ValueRow>
+            <ValueRow>
+              <Label>Item:</Label>
+              <Input
+                value={form.item || ""}
+                onChange={e => handleChange("item", e.target.value)}
               />
             </ValueRow>
           </Subsection>
@@ -159,19 +198,13 @@ const EditAutomovel = ({ veiculo, onCancel, onUpdate }) => {
             <SubsectionTitle>Importâncias Seguradas</SubsectionTitle>
             <Grid>
               {[
-                "casco",
-                "franquia",
-                "dmateriais",
-                "dpessoais",
-                "appMorte",
-                "outras",
-                "martelinho",
-                "pequenosReparos",
-                "pneu",
-                "rodas",
+                "casco", "franquia", "carroceria", "franquia2", "dmateriais",
+                "dpessoais", "dmh", "bonus", "appMorte", "invalidez",
+                "martelinho", "pequenosReparos", "pneu", "rodas",
+                "acessorios", "outras"
               ].map((key) => (
                 <ValueRow key={key}>
-                  <Label>{key.charAt(0) + key.slice(1)}:</Label>
+                  <Label>{key.charAt(0).toUpperCase() + key.slice(1)}:</Label>
                   <Input
                     value={(form.importancias && form.importancias[key]) || ""}
                     onChange={(e) => handleChangeImportancia(key, e.target.value)}
@@ -185,6 +218,20 @@ const EditAutomovel = ({ veiculo, onCancel, onUpdate }) => {
         <Section>
           <Subsection>
             <SubsectionTitle>Prêmios</SubsectionTitle>
+            <ValueRow>
+              <Label>Valor:</Label>
+              <Input
+                value={(form.premios && form.premios.valor) || ""}
+                onChange={e => handleChangePremio("valor", e.target.value)}
+              />
+            </ValueRow>
+            <ValueRow>
+              <Label>Prêmio Líquido:</Label>
+              <Input
+                value={(form.premios && form.premios.liquido) || ""}
+                onChange={e => handleChangePremio("liquido", e.target.value)}
+              />
+            </ValueRow>
             <ValueRow>
               <Label>Total:</Label>
               <Input
@@ -212,13 +259,24 @@ const EditAutomovel = ({ veiculo, onCancel, onUpdate }) => {
         <Section>
           <Subsection>
             <SubsectionTitle>Carnês</SubsectionTitle>
-            {/* Simplificando: não edita carnês */}
-            {form.carnes && form.carnes.map((item, idx) => (
+            {(form.carnes || []).map((item, idx) => (
               <ValueRow key={idx}>
-                <Label>Vencimento:</Label> <Value>{formatDateBR(item.vencimento)}</Value>
-                <Label>Valor:</Label> <Value>{item.valor}</Value>
+                <Label>Vencimento:</Label>
+                <Input
+                  type="date"
+                  value={item.vencimento || ""}
+                  onChange={e => handleCarneChange(idx, "vencimento", e.target.value)}
+                />
+                <Label>Valor:</Label>
+                <Input
+                  value={item.valor || ""}
+                  onChange={e => handleCarneChange(idx, "valor", e.target.value)}
+                />
+                <Button type="button" onClick={() => handleRemoveCarne(idx)}>Remover</Button>
               </ValueRow>
             ))}
+
+            <Button type="button" onClick={handleAddCarne}>Adicionar Carnê</Button>
           </Subsection>
         </Section>
 
