@@ -197,20 +197,125 @@ const EditAutomovel = ({ veiculo, onCancel, onUpdate }) => {
           <Subsection>
             <SubsectionTitle>Importâncias Seguradas</SubsectionTitle>
             <Grid>
-              {[
-                "casco", "franquia", "carroceria", "franquia2", "dmateriais",
-                "dpessoais", "dmh", "bonus", "appMorte", "invalidez",
-                "martelinho", "pequenosReparos", "pneu", "rodas",
-                "acessorios", "outras"
-              ].map((key) => (
-                <ValueRow key={key}>
-                  <Label>{key.charAt(0).toUpperCase() + key.slice(1)}:</Label>
-                  <Input
-                    value={(form.importancias && form.importancias[key]) || ""}
-                    onChange={(e) => handleChangeImportancia(key, e.target.value)}
-                  />
-                </ValueRow>
-              ))}
+              <ValueRow>
+                <Label>Franquia:</Label>
+                <Input
+                  value={form.importancias?.franquia || ""}
+                  onChange={(e) => handleChangeImportancia("franquia", e.target.value)}
+                />
+              </ValueRow>
+
+              <ValueRow>
+                <Label>Carroceria:</Label>
+                <Input
+                  value={form.importancias?.carroceria || ""}
+                  onChange={(e) => handleChangeImportancia("carroceria", e.target.value)}
+                />
+              </ValueRow>
+
+              <ValueRow>
+                <Label>Franquia Carroceria:</Label>
+                <Input
+                  value={form.importancias?.franquia2 || ""}
+                  onChange={(e) => handleChangeImportancia("franquia2", e.target.value)}
+                />
+              </ValueRow>
+
+              <ValueRow>
+                <Label>RCF Morais:</Label>
+                <Input
+                  value={form.importancias?.dmateriais || ""}
+                  onChange={(e) => handleChangeImportancia("dmateriais", e.target.value)}
+                />
+              </ValueRow>
+
+              <ValueRow>
+                <Label>RCF Materiais:</Label>
+                <Input
+                  value={form.importancias?.dpessoais || ""}
+                  onChange={(e) => handleChangeImportancia("dpessoais", e.target.value)}
+                />
+              </ValueRow>
+
+              <ValueRow>
+                <Label>RCF Corporais:</Label>
+                <Input
+                  value={form.importancias?.dmh || ""}
+                  onChange={(e) => handleChangeImportancia("dmh", e.target.value)}
+                />
+              </ValueRow>
+
+              <ValueRow>
+                <Label>Bônus:</Label>
+                <Input
+                  value={form.importancias?.bonus || ""}
+                  onChange={(e) => handleChangeImportancia("bonus", e.target.value)}
+                />
+              </ValueRow>
+
+              <ValueRow>
+                <Label>APP Morte:</Label>
+                <Input
+                  value={form.importancias?.appMorte || ""}
+                  onChange={(e) => handleChangeImportancia("appMorte", e.target.value)}
+                />
+              </ValueRow>
+
+              <ValueRow>
+                <Label>APP Invalidez:</Label>
+                <Input
+                  value={form.importancias?.invalidez || ""}
+                  onChange={(e) => handleChangeImportancia("invalidez", e.target.value)}
+                />
+              </ValueRow>
+
+              <ValueRow>
+                <Label>Martelinho:</Label>
+                <Input
+                  value={form.importancias?.martelinho || ""}
+                  onChange={(e) => handleChangeImportancia("martelinho", e.target.value)}
+                />
+              </ValueRow>
+
+              <ValueRow>
+                <Label>Pequenos Reparos:</Label>
+                <Input
+                  value={form.importancias?.pequenosReparos || ""}
+                  onChange={(e) => handleChangeImportancia("pequenosReparos", e.target.value)}
+                />
+              </ValueRow>
+
+              <ValueRow>
+                <Label>Pneu:</Label>
+                <Input
+                  value={form.importancias?.pneu || ""}
+                  onChange={(e) => handleChangeImportancia("pneu", e.target.value)}
+                />
+              </ValueRow>
+
+              <ValueRow>
+                <Label>Rodas:</Label>
+                <Input
+                  value={form.importancias?.rodas || ""}
+                  onChange={(e) => handleChangeImportancia("rodas", e.target.value)}
+                />
+              </ValueRow>
+
+              <ValueRow>
+                <Label>Acessórios:</Label>
+                <Input
+                  value={form.importancias?.acessorios || ""}
+                  onChange={(e) => handleChangeImportancia("acessorios", e.target.value)}
+                />
+              </ValueRow>
+
+              <ValueRow>
+                <Label>Outras:</Label>
+                <Input
+                  value={form.importancias?.outras || ""}
+                  onChange={(e) => handleChangeImportancia("outras", e.target.value)}
+                />
+              </ValueRow>
             </Grid>
           </Subsection>
         </Section>
