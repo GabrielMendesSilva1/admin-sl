@@ -11,7 +11,7 @@ const ModalConfirmarExclusao = ({ onConfirm, onCancel }) => {
   return (
     <ModalContainer>
       <ModalContent>
-        <ModalTitle>Deseja realmente excluir este segurado?</ModalTitle>
+        <ModalTitle>Deseja realmente excluir ?</ModalTitle>
         <OptionButton onClick={onConfirm}>Sim, excluir</OptionButton>
         <CancelButton onClick={onCancel}>Cancelar</CancelButton>
       </ModalContent>
