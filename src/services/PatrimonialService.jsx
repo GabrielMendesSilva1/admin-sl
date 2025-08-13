@@ -45,3 +45,17 @@ export const updatePatrimonial = async (id, dadosAtualizados) => {
 
   return data;
 };
+
+export const deletePatrimonial = async (id) => {
+  const { error } = await supabase
+    .from('seguros_patrimoniais')
+    .delete()
+    .eq('id', id); // ou .eq('cpfcnpj', cpfcnpj) se quiser deletar pelo segurado
+
+  if (error) {
+    console.error('Erro ao excluir seguro patrimonial:', error.message);
+    throw error;
+  }
+
+  return { status: 200, message: 'Seguro patrimonial excluído com sucesso.' };
+};

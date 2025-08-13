@@ -31,3 +31,12 @@ export async function updateAutomovel(id, dados) {
 
   if (error) throw error;
 }
+
+export async function deleteAutomovel(id) {
+  const { error } = await supabase
+    .from('seguros_automotivos')
+    .delete()
+    .eq('id', id);
+
+  if (error) throw error;
+}
